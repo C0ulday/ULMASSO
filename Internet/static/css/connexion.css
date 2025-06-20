@@ -1,0 +1,168 @@
+/* Réinitialisation globale */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Section de connexion/inscription stylée */
+section {
+    position: relative;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    background-color: #fff;
+}
+
+/* Image de fond */
+.imgBox {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+.imgBox::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(3, 94, 251, 0.082); /* même couleur que .home::before */
+    z-index: 2;
+    pointer-events: none; /* pour ne pas bloquer les clics */
+}
+
+.slideshow {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 0;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+.slide {
+    z-index: 1; /* en dessous de l'overlay à z-index:2 */
+}
+
+
+.slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+
+/* Conteneur du formulaire */
+section .contentBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    padding: 100px 60px;
+    background-color: #fff;
+}
+
+section .contentBox .formBox {
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Titre du formulaire */
+.formBox h2 {
+    color: #F9AE5D;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 35px;
+    border-bottom: 3px solid #F9AE5D;
+    padding-bottom: 5px;
+    letter-spacing: 1.5px;
+}
+
+/* Groupe de champs */
+.inputBx {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s ease;
+}
+
+.inputBx span {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.inputBx input {
+    width: 100%;
+    padding: 14px 18px;
+    font-weight: 500;
+    border: 1px solid #ccc;
+    letter-spacing: 0.5px;
+    color: #000;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.inputBx input:focus {
+    border-color: #F9AE5D;
+    background-color: #fff;
+}
+
+/* Bouton de soumission */
+.inputBx input[type="submit"] {
+    background-color: #fff;
+    color: #1680AC;
+    border: 2px solid #1680AC;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+    border-radius: 4px;
+}
+
+.inputBx input[type="submit"]:hover {
+    background-color: #1680AC;
+    color: #fff;
+}
+
+/* Case à cocher "se souvenir" */
+.remember {
+    margin-bottom: 15px;
+    color: #607d8b;
+    font-weight: 400;
+    font-size: 0.85rem;
+}
+
+/* Texte sous formulaire */
+.inputBx p {
+    color: #607d8b;
+    text-align: center;
+    font-size: 0.85rem;
+    margin-top: 15px;
+}
+
+.inputBx p a {
+    color: #F9AE5D;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.inputBx p a:hover {
+    text-decoration: underline;
+}

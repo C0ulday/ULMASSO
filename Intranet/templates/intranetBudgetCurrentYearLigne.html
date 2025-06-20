@@ -1,0 +1,65 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Budget
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetBudgetCurrentYearLignePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Budget {{current_year}} - Bilan par ligne</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Budget_Current_Year_Ligne" %}" method = "post">
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+		{% csrf_token %}
+		{{ form.as_p }}		
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if ligne %}
+			<table class="table">
+  				<thead>
+    				<tr>
+      					<th scope="col"></th>
+      					<th scope="col">Date</th>
+      					<th scope="col">Aéronef</th>
+      					<th scope="col">Charges</th>
+      					<th scope="col">Produits</th>
+      					<th scope="col">Résultats</th>
+    				</tr>
+  				</thead>
+  				<tbody>	
+					<tr bgcolor="lightyellow">
+						<td align = left><b>{{ligne.code}} - {{ligne.name}}</b></td>
+						<td align = right><b></b></td>
+						<td align = right><b></b></td>
+						<td align = right><b>{{ligne.charge}} €</b></td>
+						<td align = right><b>{{ligne.produit}} €</b></td>
+						<td align = right><b>{{ligne.resultat}} €</b></td>
+					</tr>
+					{% for Op in allOp %}
+						{% if Op.ligne == ligne %}
+							<tr>
+								<td align = left>{{Op.code}} - {{Op.name}}</td>
+								<td align = left>{{Op.date|date:"d/m/Y"}}</td>
+								<td align = left>{{Op.aeronef}}</td>
+								<td align = right>{{Op.charge}} €</td>
+								<td align = right>{{Op.produit}} €</td>
+								<td align = right>{{Op.resultat}} €</td>
+							</tr>
+						{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+{% endblock %}

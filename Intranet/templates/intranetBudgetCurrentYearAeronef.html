@@ -1,0 +1,58 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Budget
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetBudgetCurrentYearAeronefPage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Budget {{current_year}} - Bilan par aéronef</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Budget_Current_Year_Aeronef" %}" method = "post">
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+		{% csrf_token %}
+		{{ form.as_p }}		
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<h2>Bilan financier {{aeronef}}</h2>
+	<div>
+		{% if ligneList %}
+			<table class="table">
+  				<thead>
+    				<tr>
+      					<th scope="col"></th>
+      					<th scope="col">Charges</th>
+      					<th scope="col">Produits</th>
+      					<th scope="col">Résultat</th>
+    				</tr>
+  				</thead>
+  				<tbody>	
+					{% for ligne in ligneList %}
+						<tr>
+							<td align = left>{{ligne.0}}</td>
+							<td align = right>{{ligne.1}} €</td>
+							<td align = right>{{ligne.2}} €</td>
+							<td align = right>{{ligne.3}} €</td>
+						</tr>
+					{% endfor %}
+					<tr>
+						<td align = left><b>Bilan</b></td>
+						<td align = left><b>{{bilan.0}} €<b></td>
+						<td align = right><b>{{bilan.1}} €</b></td>
+						<td align = right><b>{{bilan.2}} €</b></td>
+					</tr>
+  				</tbody>
+			</table>
+		{% endif %}
+	</div>
+{% endblock %}

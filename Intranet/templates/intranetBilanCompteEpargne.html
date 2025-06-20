@@ -1,0 +1,79 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Budget
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetBilanCompteEpargnePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Bilan par compte épargne</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Bilan_Compte_Epargne" %}" method = "post">
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+		{% csrf_token %}
+		{{ form.as_p }}		
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if bilanBudget %}
+			<table class="table">
+				<head>
+					<tr>
+						<th scope="col"></th>
+						<th scope="col">Résultat</th>
+					</tr>
+				</head>
+				<tbody>
+					<tr>
+						<td align = left><b>Compte courant {{currentYear}}</b></td>
+						<td align = right><b>{{bilanBudget.resultat}} €</b></td>
+					</tr>
+				</tbody>
+			</table>
+		{% endif %}
+		
+		{% if compteEpargne %}
+			<table class="table">
+  				<thead>
+    				<tr>
+      					<th scope="col"></th>
+      					<th scope="col">Date</th>
+      					<th scope="col">Charges</th>
+      					<th scope="col">Produits</th>
+      					<th scope="col">Résultats</th>
+    				</tr>
+  				</thead>
+  				<tbody>	
+					<tr bgcolor="lightyellow">
+						<td align = left><b>{{compteEpargne.name}}</b></td>
+						<td align = right><b></b></td>
+						<td align = right><b>{{compteEpargne.charge}} €</b></td>
+						<td align = right><b>{{compteEpargne.produit}} €</b></td>
+						<td align = right><b>{{compteEpargne.resultat}} €</b></td>
+					</tr>
+					{% for Op in allOp %}
+						{% if Op.compteEpargne == compteEpargne %}
+							<tr>
+								<td align = left>{{Op.code}} - {{Op.name}}</td>
+								<td align = left>{{Op.date|date:"d/m/Y"}}</td>
+								<td align = right>{{Op.charge}} €</td>
+								<td align = right>{{Op.produit}} €</td>
+								<td align = right>{{Op.resultat}} €</td>
+							</tr>
+						{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+{% endblock %}

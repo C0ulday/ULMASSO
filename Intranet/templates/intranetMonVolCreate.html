@@ -1,0 +1,76 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Compte pilote
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetMonVolCreatePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Gestion de mes vols</p>
+{% endblock %}
+
+{% block asideContent %}
+	<p><b>Pilote : {{loggedMember}}</b></p>
+	<form action = "{% url "intranet_Mon_Vol_Create" %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if volAll %}
+			<table class="table">
+  				<thead>
+    				<tr>
+      					<th scope="col">Date</th>
+      					<th scope="col">Aéronef</th>
+      					<th scope="col">durée vol (min)</th>
+      					<th scope="col">Prix vol (€)</th>
+      					<th scope="col">Prix instruction (€)</th>
+      					<th scope="col">Remise (€)</th>
+      					<th scope="col">Prix total (€)</th>
+      					<th scope="col" colspan = '2'>Actions</th>
+    				</tr>
+  				</thead>
+  				<tbody>	
+					{% for vol in volAll%}
+						<tr>
+							<td>{{vol.date|date:"d/m/Y"}}</td>
+							<td>{{vol.aeronef}}</td>
+		      				<td align = right>{{vol.dureeVol}}</td>  
+		      				<td align = right>{{vol.prixVol}}</td>
+		      				<td align = right>{{vol.tarifInstruction}}</td>
+		      				<td align = right>{{vol.remise}}</td>
+		      				<td align = right>{{vol.prixTotal}}</td>
+		      				<td>
+								<form action ="{% url "intranet_Mon_Vol_Modify" vol.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Modifier" class = "BtnModify"/>
+								</form>
+							</td>
+      						<td>
+								<form action ="{% url "intranet_Mon_Vol_Delete" vol.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Supprimer" class = "BtnDelete"/>
+								</form>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>	
+		{% else %}
+			<p>Aucun vol n'est actuellement enregistrée pour le pilote <i>{{loggedMember}}</i></p>
+		{% endif %}
+	</div>
+{% endblock %}
+
+<p>{{vol.aeronef}} - {{vol.date|date:"d/m/Y"}} : {{vol.dureeVol}} min : {{vol.prixVol}} € (Vol) + {{vol.tarifInstruction}} € (Instruction) = {{vol.prixTotal}} €</p>
+			

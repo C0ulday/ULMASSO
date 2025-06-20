@@ -1,0 +1,87 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Budget
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetCompteEpargneGererOperationPage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Comptes Épargne - Gestion des opérations</p>
+{% endblock %}
+
+{% block asideContent %}
+	{% if activeCompteEpargne %}
+		<p>{{activeCompteEpargne.name}}</p>
+	{% endif %}
+	<p class = 'error'>{{error}}</p>
+	<form action = "{% url "intranet_Compte_Epargne_Operation_Add_Show" activeCompteEpargne.id %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if compteEpargneOpAll %}
+			<table class="table">
+  				<thead>
+    				<tr>
+      					<th scope="col">Code</th>
+      					<th scope="col">Objet</th>
+      					<th scope="col">Date</th>
+      					<th scope="col">Charge (€)</th>
+      					<th scope="col">Produit (€)</th>
+      					<th scope="col" colspan = '2'>Actions</th>
+    				</tr>
+  				</thead>
+  				<tbody>	
+					{% for Op in compteEpargneOpAll %}
+						<tr>
+							<td>{{Op.code}}</td>
+							<td>{{Op.name}}</td>
+		      				<td>{{Op.date|date:"d/m/Y"}}</td>  
+		      				<td align = right>{{Op.charge}}</td>
+		      				<td align = right>{{Op.produit}}</td>
+		      				<td>
+								<form action ="{% url "intranet_Compte_Epargne_Operation_Modify" Op.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Modifier" class = "BtnModify"/>
+								</form>
+							</td>
+		      				<td>
+								<form action ="{% url "intranet_Compte_Epargne_Operation_Delete" Op.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Supprimer" class = "BtnDelete"/>
+								</form>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>	
+		{% else %}
+			<p>Aucune opération n'est actuellement enregistrée pour le compte épargne <i>{{activeCompteEpargne.name}}</i></p>
+		{% endif %}
+	</div>
+	
+{% endblock %}
+
+
+							<td>
+								<form action ="{% url "intranet_Budget_Operation_Modify" Op.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Modifier" class = "BtnSubmit"/>
+								</form>
+							</td>
+      						<td>
+								<form action ="{% url "intranet_Budget_Operation_Delete" Op.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Supprimer" class = "BtnSubmit"/>
+								</form>
+							</td>

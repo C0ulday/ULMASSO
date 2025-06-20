@@ -1,0 +1,50 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Membres
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetVoirMembresPage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Membres {{current_year}}</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Member_Show" %}" method = "post">
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+		{% csrf_token %}
+		{{ form.as_p }}		
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	{% if member %}
+		<p><b>Nom		:</b> {{member.name}}</p>
+		<p><b>Prénom	:</b> {{member.vorname}}</p>
+		<p><b>Fonction	:</b> {{member.statut}} d'AUV</p>
+		<p><b>Genre		:</b> {{member.genre}}</p>
+		<p><b>Date de naissance	:</b> {{member.birthday|date:"d/m/Y"}}</p>
+		<p><b>Age		:</b> {{member.age}} ans</p>
+		<p><b>Téléphone	:</b> {{member.phone}}</p>
+		<p><b>Courriel 	:</b> {{member.email}}</p>
+		<p><b>Adresse 	:</b> {{member.adress}}, {{member.zip}} {{member.city}}</p>
+		<p><b>N° licence 	:</b> {{member.licenceFFPLUM}}</p>
+		<p><b>Licencié AUV 	:</b> {{member.licenceAUV.value}}</p>
+		<p><b>Instructeur 	:</b> {{member.brevetInstructeur.value}}</p>
+		<p><b>Brevet pilote Classe 2 	:</b> {{member.datePiloteC2|date:"d/m/Y"}}</p>
+		<p><b>Brevet pilote Classe 3 	:</b> {{member.datePiloteC3|date:"d/m/Y"}}</p>
+		<p><b>Brevet pilote Classe 4 	:</b> {{member.datePiloteC4|date:"d/m/Y"}}</p>
+		<p><b>Brevet emport passager Classe 2 	:</b> {{member.dateEmportC2|date:"d/m/Y"}}</p>
+		<p><b>Brevet emport passager Classe 3 	:</b> {{member.dateEmportC3|date:"d/m/Y"}}</p>
+		<p><b>Brevet emport passager Classe 4 	:</b> {{member.dateEmportC4|date:"d/m/Y"}}</p>
+		<p><b>Vol découverte Classe 2 	:</b> {{member.dateBaptemeC2|date:"d/m/Y"}}</p>
+		<p><b>Vol découverte Classe 3 	:</b> {{member.dateBaptemeC3|date:"d/m/Y"}}</p>
+		<p><b>Vol découverte Classe 4 	:</b> {{member.dateBaptemeC4|date:"d/m/Y"}}</p>
+	{% endif %}
+{% endblock %}

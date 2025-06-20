@@ -1,0 +1,57 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Réservation
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetReservationCreatePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Réservation {{myAeronef}}</p>
+{% endblock %}
+
+{% block asideContent %}
+	<p align = center><b>Créer réservation</b></p>
+	<form action = "{% url 'intranet_Reservation_Calendrier' myAeronef %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>		
+	</form>	
+{% endblock %}
+
+{% block mainContent %}
+	<div class="toolbar">
+		<input type="button" onclick="reculer()" value = &#9204; class = "BtnAction" />
+		<input type="button" onclick="aujourdhui()" value = "Aujourd'hui" class = "BtnAction" />
+		<input type="button" onclick="avancer()" value = &#9205; class = "BtnAction" />
+	</div>
+	<canvas id="canv" width="1200" height="550"></canvas>
+{% endblock %}
+
+{% block extra_js %}
+	<script src = "static/js/reservation.js"></script>
+	<script src = "static/js/calendar.js"></script>  
+	<script src = "static/js/btnCalendar.js"></script>
+	
+	<script>
+		const allMyReservation = []
+		mainCalendar()
+	</script>
+	{% for reservation in allReservation %}
+		<script>			
+			hInit = "{{reservation.hInit|safe}}"
+			hEnd = "{{reservation.hEnd|safe}}"
+			date =  "{{reservation.date|safe}}"
+			pilot = "{{reservation.pilote|safe}}"
+			typeVol = "{{reservation.typeVol|safe}}"
+			myReservation = [hInit, hEnd, date, pilot, typeVol]
+			allMyReservation.push(myReservation)
+			mainReservation(hInit, hEnd, date, pilot, typeVol)
+		</script>
+	{% endfor %}		
+{% endblock %}

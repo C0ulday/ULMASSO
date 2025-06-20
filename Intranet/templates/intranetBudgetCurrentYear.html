@@ -1,0 +1,96 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Budget
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetBudgetCurrentYearPage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Budget {{current_year}} - Bilan</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "pdf_Budget" %}" method = "post">	
+		{% csrf_token %}	
+		<p>
+			<input type="submit" value= "Générer PDF" class = "BtnPDF" />
+		</p>
+	</form>	
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if allCompteEpargne %}
+			<table class='table'>
+				<thead>
+					<tr>
+						<th scope="col">Compte Épargne</th>
+						<th scope="col">Bilan</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for activeCompteEpargne in allCompteEpargne %}
+						<tr>
+							<td align = left><b>{{activeCompteEpargne}}</b></td>
+							<td align = right><b>{{activeCompteEpargne.resultat}} €</b></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+		{% if allSection %}
+			<table class="table">
+  				<thead>
+    				<tr>
+      					<th scope="col"></th>
+      					<th scope="col">Charges</th>
+      					<th scope="col">Produits</th>
+      					<th scope="col">Résultats</th>
+    				</tr>
+  				</thead>
+  				<tbody>	
+					<tr>
+						<td align = left><b>Bilan {{activeBudget}}</b></td>
+						<td align = right><b>{{activeBudget.charge}} €</b></td>
+						<td align = right><b>{{activeBudget.produit}} €</b></td>
+						<td align = right><b>{{activeBudget.resultat}} €</b></td>
+					</tr>
+					{% for section in allSection %}
+						<tr bgcolor="gold">
+							<td align = left>{{section.code}} - {{section.name}}</td>
+							<td align = right>{{section.charge}} €</td>
+		      				<td align = right>{{section.produit}} €</td>  
+		      				<td align = right>{{section.resultat}} €</td>
+						</tr>
+						{% for projet in allProjet %}
+							{% if projet.section == section %}
+								<tr bgcolor = "lightgreen">
+									<td align = left>{{projet.code}} - {{projet.name}}</td>
+									<td align = right>{{projet.charge}} €</td>
+				      				<td align = right>{{projet.produit}} €</td>  
+				      				<td align = right>{{projet.resultat}} €</td>
+								</tr>
+								{% for ligne in allLigne %}
+									{% if ligne.projet == projet %}
+										<tr>
+											<td align = left>{{ligne.code}} - {{ligne.name}}</td>
+											<td align = right>{{ligne.charge}} €</td>
+						      				<td align = right>{{ligne.produit}} €</td>  
+						      				<td align = right>{{ligne.resultat}} €</td>
+										</tr>
+									{% endif %}
+								{% endfor %}
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Budget
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetBudgetGererSectionPage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Budget {{current_year}} - Gestion des sections</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Budget_Section_Add_Show" %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<br>
+		<p style="text-align:center"><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit"/></p>
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if budgetSectionAll %}
+			<table class="table">
+  				<thead>
+    				<tr style="text-align:center">
+						<th scope="col">Code</th>
+      					<th scope="col">Section</th>
+      					<th scope="col" colspan = '2'></th>
+    				</tralign = "center">
+  				</thead>
+  				<tbody>
+					{% for budgetSection in budgetSectionAll %}
+					  	<tr>
+							<td>{{budgetSection.code}}</td>
+      						<td>{{budgetSection.name}}</td>
+      						<td style="text-align:center">
+								<form action ="{% url "intranet_Budget_Section_Modify" budgetSection.id %}" method="POST">
+										{% csrf_token %}
+										<input type = "submit" value="Modifier" class = "BtnModify"/>
+								</form>
+							</td>
+      						<td style="text-align:center">
+								<form action ="{% url "intranet_Budget_Section_Delete" budgetSection.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Supprimer" class = "BtnDelete"/>
+								</form>
+							</td>	
+    					</tr>
+    				{% endfor %}
+  				</tbody>
+			</table>
+		{% else %}
+			<p>Aucune section n'est actuellement enregistrée</p>
+		{% endif %}
+	</div>
+{% endblock %}

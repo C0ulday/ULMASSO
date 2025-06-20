@@ -1,0 +1,33 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Intranet
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetProfilmembresPage
+{% endblock %}
+
+{% block titrePage %}
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "member_Profile" %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<p><b>Nom :</b> {{loggedMember.name}}</p>
+	<p><b>Prénom :</b> {{loggedMember.vorname}}</p>
+	<p><b>Genre :</b> {{loggedMember.genre}}</p>
+	<p><b>Date de naissance :</b> {{loggedMember.birthday|date:"d/m/Y"}}</p>
+	<p><b>Téléphone :</b> {{loggedMember.phone}}</p>
+	<p><b>Courriel :</b> {{loggedMember.email}}</p>
+	<p><b>Adresse :</b> {{loggedMember.adress}}, {{loggedMember.zip}} {{loggedMember.city}}</p>
+{% endblock %}

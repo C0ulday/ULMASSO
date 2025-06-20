@@ -1,0 +1,60 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Budget
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetGererCompteEpargnePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Gestion des comptes épargne</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Compte_Epargne_Add_Show" %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if compteEpargneAll %}
+			<table class="table">
+  				<thead>
+    				<tr>
+      					<th scope="col">Compte épargne</th>
+      					<th scope="col" colspan = '2'>Actions</th>
+    				</tr>
+  				</thead>
+  				<tbody>
+					{% for compteEpargne in compteEpargneAll %}
+					  	<tr>
+      						<td>{{compteEpargne.name}}</td>
+      						<td>
+								<form action ="{% url "intranet_Compte_Epargne_Modify" compteEpargne.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Modifier" class = "BtnModify"/>
+								</form>
+							</td>
+      						<td>
+								<form action ="{% url "intranet_Compte_Epargne_Delete" compteEpargne.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Supprimer" class = "BtnDelete"/>
+								</form>
+							</td>
+    					</tr>
+    				{% endfor %}
+  				</tbody>
+			</table>
+		{% else %}
+			<p>Aucun compte épargne n'est actuellement enregistré</p>
+		{% endif %}
+	</div>
+{% endblock %}

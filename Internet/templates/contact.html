@@ -1,0 +1,26 @@
+{% extends "baseInternet.html" %}
+
+{% block title %}
+	Contact
+{% endblock %}
+
+{% block bodyId %}
+	contactPage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Contact</p>
+{% endblock %}
+
+{% block mainContent %}
+	{% if error %}
+		<p class="error">
+			{{error}}
+		</p>
+	{% endif %}
+	<form action = "{% url "internet_contact" %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+	</form>
+{% endblock %}

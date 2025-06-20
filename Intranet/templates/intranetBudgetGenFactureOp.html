@@ -1,0 +1,79 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Intranet
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetBudgetGenFactureOpPage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Générateur de facture</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "pdf_Facture" activeFacture.id %}" method = "post">	
+		{% csrf_token %}	
+		<input type="submit" value= "Générer PDF" class = "BtnSubmit" />
+	</form>
+	<br>
+	<form action = "{% url "intranet_Budget_Gen_Facture_Op" activeFacture.id %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<br>
+		<p style="text-align:center"><input type="submit" value= "{{ actionBtnName }}" class="btn btn-outline-success" /></p>
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<p><b>Facture n°{{activeFacture.code}} datée du {{activeFacture.date|date:"d/m/Y"}}</b></p>
+	<p><b>Facture acquitée :</b> {{activeFacture.acquite}}</p>
+	<p><b>Client :</b> {{activeFacture.clientName}} {{activeFacture.clientVorname}}, 
+			{{activeFacture.clientAdress}}, {{activeFacture.clientZip}} {{activeFacture.clientCity}}, {{activeFacture.clientCountry}}</p>
+	<br>
+	<div>
+		{% if factureOpList%}
+			<table class="table">
+				<head>
+					<tr>
+						<th scope="col">Code</th>
+						<th scope="col">Objet</th>
+						<th scope="col">Prix unitaire HT</th>
+						<th scope="col">Nombre</th>
+						<th scope="col">Prix total HT</th>
+						<th scope="col" colspan = '2'></th>
+					</tr>
+				</head>
+				{% for factureOp in factureOpList %}
+					<tbody>
+						<tr>
+							<td align = left>{{factureOp.code}}</td>
+							<td align = left>{{factureOp.objet}}</td>
+							<td align = left>{{factureOp.prixHT}}</td>
+							<td align = left>{{factureOp.nb}}</td>
+							<td align = left>{{factureOp.prixTotalHT}}</td>
+							<td style="text-align:center">
+								<form action ="{% url "intranet_Budget_Facture_Op_Modify" factureOp.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Modifier" class = "btn btn-outline-primary btn-sm"/>
+								</form>
+							</td>
+							<td style="text-align:center">
+								<form action ="{% url "intranet_Budget_Facture_Op_Delete" factureOp.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Supprimer" class = "btn btn-outline-danger btn-sm"/>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</table>
+		{% else %}
+			<p><i>Aucune ligne n'est actuellement enregistrée sur cette facture</i><p>
+		{% endif %}
+	</div>
+{% endblock %}

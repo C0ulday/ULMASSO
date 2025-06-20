@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUV | Connexion à mon espace</title>
+    <link rel="stylesheet" href="{% static 'css/connexion.css' %}">
+</head>
+<body>
+    <section>
+        <div class="imgBox">
+            <div class="slideshow">
+            <img src="{% static 'res/images/image7.jpeg' %}" alt="image1" class="slide active">
+            <img src="{% static 'res/images/image8.jpeg' %}" alt="image2" class="slide">
+            <img src="{% static 'res/images/image10.jpeg' %}" alt="image3" class="slide">
+            <img src="{% static 'res/images/image20.jpeg' %}" alt="image4" class="slide">
+            <img src="{% static 'res/images/image13.jpeg' %}" alt="image5" class="slide">
+            <img src="{% static 'res/images/image21.jpg' %}" alt="image5" class="slide">
+            </div>
+        </div>
+          
+        <div class="contentBox">
+            <div class="formBox">
+                <h2>Connexion à mon espace</h2>
+                <form action= "{% url 'mon_Espace' %}" method="POST" >
+					{% csrf_token %}
+					<div class="inputBx">
+                    	{{ form.as_p }}
+					</div>	
+                    <div class="remember">
+                        <label>
+                            <input type="checkbox"> Se souvenir de moi
+                        </label>
+                    </div>
+                    <div>
+                        <div class="inputBx">
+                            <input type="submit" value="Connexion">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="inputBx">
+                            <p>Pas de compte ? <a href="#">Nous contacter</a></p>
+                        </div>
+                    </div> 
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+<script>
+    const slides = document.querySelectorAll('.slide');
+    let index = 0;
+
+    setInterval(() => {
+        slides[index].classList.remove('active');
+        index = (index + 1) % slides.length;
+        slides[index].classList.add('active');
+    }, 5000);
+</script>
+
+</html>

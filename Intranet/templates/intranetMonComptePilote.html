@@ -1,0 +1,103 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Compte pilote
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetMonComptePilotePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Mon Compte pilote</p>
+	
+{% endblock %}
+
+{% block asideContent %}
+	<p><b>Virements instruction/location</b></p>
+	<br>
+	<div>
+		{% if paiementVolList %}
+			<table class="table">
+	  			<thead>
+	    			<tr>
+	      				<th scope="col">Date</th>
+	      				<th scope="col">Produits (€)</th>
+	      				<th scope="col">Charges (€)</th>
+	    			</tr>
+	  			</thead>
+	  			<tbody>	
+					{% for paiement in paiementVolList %}
+						<tr>
+							<td>{{paiement.date|date:"d/m/Y"}}</td>
+							<td align = right>{{paiement.produit}}</td>
+			      			<td align = right>{{paiement.charge}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>{{loggedMember}} n'a aucun vol enregistré</p>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block mainContent %}
+	<table id="table1">
+		<tr>
+			<td>
+				<p><b>Total des charges : </b>{{loggedMember.chargeComptePilote}} €</p>
+				<p><b>Total des produits : </b>{{loggedMember.produitComptePilote}} €</p>
+				<p><b>Bilan compte pilote : </b>{{loggedMember.bilanComptePilote}} €</p>
+			</td>
+			<td>
+				{% if loggedMember.bilanComptePilote >= 0 %}
+					<div id="moncerclevert"></div>
+				{% else %}
+					<div id="moncerclerouge"></div>
+				{% endif %}
+			</td>
+		</tr>
+	</table>
+	
+	<p><b>Vols d'instruction/location</b></p>
+	<div>
+		{% if volPiloteList %}
+			<table class="table">
+	  			<thead>
+	    			<tr>
+	      				<th scope="col">Date</th>
+	      				<th scope="col">Aéronef</th>
+	      				<th scope="col">Horomètre début vol</th>
+	      				<th scope="col">Horomètre fin vol</th>
+	      				<th scope="col">durée vol (min)</th>
+	      				<th scope="col">Tarif vol (€)</th>
+	      				<th scope="col">Tarif instruction (€)</th>
+	      				<th scope="col">Produits (€)</th>
+	      				<th scope="col">Charges (€)</th>
+	    			</tr>
+	  			</thead>
+	  			<tbody>	
+					{% for vol in volPiloteList %}
+						<tr>
+							<td>{{vol.date|date:"d/m/Y"}}</td>
+							<td>{{vol.aeronef}}</td>
+							<td align = right>{{vol.horoInit}}</td>
+							<td align = right>{{vol.horoFin}}</td>
+			      			<td align = right>{{vol.dureeVol}}</td>  
+			      			<td align = right>{{vol.prixVol}}</td>
+			      			<td align = right>{{vol.tarifInstruction}}</td>
+			      			<td align = right>0.00</td>
+			      			<td align = right>{{vol.prixTotal}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>{{loggedMember}} n'a aucun vol enregistré</p>
+		{% endif %}
+	</div>
+{% endblock %}

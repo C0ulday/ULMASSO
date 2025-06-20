@@ -1,0 +1,28 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Budget
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetBudgetLigneChoicePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Budget {{current_year}} - Gestion des opérations</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Budget_Ligne_Choice" %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<br>
+		<p style="text-align:center"><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit"/></p>
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+{% endblock %}

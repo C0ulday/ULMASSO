@@ -1,0 +1,27 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Budget
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetCompteEpargneChoicePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Comptes épargnes - Gestion des opérations</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Compte_Epargne_Choice" %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+{% endblock %}

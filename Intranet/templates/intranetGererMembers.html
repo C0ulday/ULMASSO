@@ -1,0 +1,67 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Membres
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetGererMembresPage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Membres {{current_year}}</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Member_Add_Show" %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if memberAll %}
+			<table class="table">
+  				<thead>
+    				<tr>
+						<th scope="col">Nom</th>
+      					<th scope="col">Prénom</th>
+      					<th scope="col">Téléphone</th>
+      					<th scope="col">email</th>
+      					<th scope="col"></th>
+    				</tr>
+  				</thead>
+  				<tbody>
+					{% for member in memberAll %}
+					  	<tr>
+							<td>{{member.name}}</td>
+      						<td>{{member.vorname}}</td>
+      						<td>{{member.phone}}</td>
+      						<td>{{member.email}}</td>
+      						<td>
+								<form action ="{% url "intranet_Member_Modify" member.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Modifier" class = "BtnModify"/>
+								</form>
+							</td>
+      						<td>
+								<form action ="{% url "intranet_Member_Delete" member.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Supprimer" class = "BtnDelete"/>
+								</form>
+							</td>	
+    					</tr>
+    				{% endfor %}
+  				</tbody>
+			</table>
+		{% else %}
+			<p>Aucun membre n'est actuellement enregistré</p>
+		{% endif %}
+	</div>
+	
+{% endblock %}

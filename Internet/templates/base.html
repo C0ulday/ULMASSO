@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AUV - Aero ULM Valence{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Header commun -->
+    <header>
+        <div class="logo-container">
+            <a href="{% url 'internetAccueil' %}" class="logo">
+                <img class="logo-icone" src="{% static 'res/icones/logo.png' %}" alt="Logo du site">
+            </a>
+        </div>
+        <div class="menu-btn"></div>
+        <nav class="navigation">
+            <div class="navigation-items">
+                <a href="{% url 'internetAccueil' %}">Accueil</a>
+                <a href="{% url 'volsDecouverte' %}">Vols Découverte</a>
+                <a href="#">École de Sport</a>
+                <a href="#">Navigation</a>
+                <a href="#">Le Club</a>
+                <a href= "{% url 'mon_Espace' %}">
+                    <i class="fa fa-user" aria-hidden="true" style="color: white;"></i> Mon Espace
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenu spécifique de chaque page -->
+    {% block content %}{% endblock %}
+
+    <!-- JavaScript commun -->
+    <script type="text/javascript">
+        document.querySelector('.menu-btn').addEventListener('click', function() {
+            const navigation = document.querySelector('.navigation');
+            navigation.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

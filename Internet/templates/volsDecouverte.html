@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Vols Découverte - Aero ULM Valence{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/volsdecouverte.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="reservation">
+    <img src="{% static 'res/images/image11.jpeg' %}" class="img" id="img2" alt="Image de la montagne enneigée">
+      <!-- SECTION ULM -->
+      <div class="ulm-section">
+        <!-- Zone image : slides -->
+        <div class="container-slide">
+          <div class="image-container">
+            <!-- Slide 1 -->
+            <div class="slide_div" id="slide_1">
+              <a href="#slide_1" id="button-slide1"></a>
+              <img src="{% static 'res/images/image13.jpeg' %}" class="img" id="img2" alt="Image d'un pendulaire">
+            </div>
+            <!-- Slide 2 -->
+            <div class="slide_div" id="slide_2">
+              <a href="#slide_2" id="button-slide2"></a>
+              <img src="{% static 'res/images/image2.jpg' %}" class="img" id="img1" alt="Image d'un multiaxe">
+            </div>
+          </div>
+        </div>
+
+{% endblock %}

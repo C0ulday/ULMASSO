@@ -1,0 +1,65 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Budget
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetBudgetGererLignePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Budget {{current_year}} - Gestion des lignes</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Budget_Ligne_Add_Show" %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<br>
+		<p style="text-align:center"><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit"/></p>
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if budgetLigneAll %}
+			<table class="table">
+  				<thead>
+    				<tr>
+      					<th scope="col">Projet</th>
+      					<th scope="col">Code</th>
+      					<th scope="col">Ligne</th>
+      					<th scope="col" colspan = '2'>Actions</th>
+    				</tr>
+  				</thead>
+  				<tbody>
+					{% for budgetLigne in budgetLigneAll %}
+					  	<tr>
+							<td>{{budgetLigne.projet}}</td>
+							<td>{{budgetLigne.code}}</td>
+      						<td>{{budgetLigne.name}}</td>
+      						<td style="text-align:center">
+								<form action ="{% url "intranet_Budget_Ligne_Modify" budgetLigne.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Modifier" class = "BtnModify"/>
+								</form>
+							</td>
+      						<td style="text-align:center">
+								<form action ="{% url "intranet_Budget_Ligne_Delete" budgetLigne.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Supprimer" class = "BtnDelete"/>
+								</form>
+							</td>	
+    					</tr>
+    				{% endfor %}
+  				</tbody>
+			</table>
+		{% else %}
+			<p>Aucune ligne n'est actuellement enregistrée</p>
+		{% endif %}
+	</div>
+{% endblock %}

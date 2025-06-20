@@ -1,0 +1,115 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Compte pilote
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetCarnetVolPage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Carnet de vol AUV {{current_year}} de {{activePilote}}</p>
+{% endblock %}
+
+{% block asideContent %}
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if volAllPilote %}
+			<p><b>Vols en tant que pilote en {{current_year}} sur les aéronefs AUV - durée totale : {{dureeVolAllPilote}}</b></p>
+			<table class="table">
+  				<thead>
+    				<tr>
+      					<th scope="col">Date</th>
+      					<th scope="col">Aéronef</th>
+      					<th scope="col">durée vol (min)</th>
+      					<th scope="col">Vent</th>
+      					<th scope="col">Altitude</th>
+      					<th scope="col">Stress</th>
+      					<th scope="col">Décollage</th>
+      					<th scope="col">Vol</th>
+      					<th scope="col">Navigation</th>
+      					<th scope="col">Radio</th>
+      					<th scope="col">Atterrissage</th>
+      					<th scope="col">Tour de piste</th>
+      					<th scope="col">Aérodromes et bases visités</th>
+      					<th scope="col">Commentaires</th>
+    				</tr>
+  				</thead>
+  				<tbody>	
+					{% for vol in volAllPilote%}
+						<tr>
+							<td>{{vol.date|date:"d/m/Y"}}</td>
+							<td>{{vol.aeronef}}</td>
+		      				<td align = right>{{vol.dureeVol}}</td>  
+		      				<td>{{vol.textVVent}}</td>
+		      				<td>{{vol.textAltitude}}</td>
+		      				<td>{{vol.textStress}}</td>
+		      				<td>{{vol.textDecollage}}</td>
+		      				<td>{{vol.textVol}}</td>
+		      				<td>{{vol.textNav}}</td>
+		      				<td>{{vol.textRadio}}</td>
+		      				<td>{{vol.textAtterrissage}}</td>
+		      				<td>{{vol.textTdp}}</td>
+		      				<td>{{vol.textBaseULM}}</td>
+		      				<td>{{vol.textCommentaire}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>	
+		{% else %}
+			<p>Aucun vol en tant que pilote n'est actuellement enregistré</p>
+		{% endif %}
+		<br>
+		{% if volAllEleve %}
+			<p><b>Vols en tant qu'élève pilote en {{current_year}} sur les aéronefs AUV - durée totale : {{dureeVolAllEleve}}</b></p>
+			<table class="table">
+  				<thead>
+    				<tr>
+      					<th scope="col">Date</th>
+      					<th scope="col">Aéronef</th>
+      					<th scope="col">durée vol (min)</th>
+      					<th scope="col">Vent</th>
+      					<th scope="col">Altitude</th>
+      					<th scope="col">Stress</th>
+      					<th scope="col">Décollage</th>
+      					<th scope="col">Vol</th>
+      					<th scope="col">Navigation</th>
+      					<th scope="col">Radio</th>
+      					<th scope="col">Atterrissage</th>
+      					<th scope="col">Tour de piste</th>
+      					<th scope="col">Aérodromes et bases visités</th>
+      					<th scope="col">Commentaires</th>
+    				</tr>
+  				</thead>
+  				<tbody>	
+					{% for vol in volAllEleve%}
+						<tr>
+							<td>{{vol.date|date:"d/m/Y"}}</td>
+							<td>{{vol.aeronef}}</td>
+		      				<td align = right>{{vol.dureeVol}}</td>  
+		      				<td>{{vol.textVVent}}</td>
+		      				<td>{{vol.textAltitude}}</td>
+		      				<td>{{vol.textStress}}</td>
+		      				<td>{{vol.textDecollage}}</td>
+		      				<td>{{vol.textVol}}</td>
+		      				<td>{{vol.textNav}}</td>
+		      				<td>{{vol.textRadio}}</td>
+		      				<td>{{vol.textAtterrissage}}</td>
+		      				<td>{{vol.textTdp}}</td>
+		      				<td>{{vol.textBaseULM}}</td>
+		      				<td>{{vol.textCommentaire}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>	
+		{% else %}
+			<p>Aucun vol en tant qu'élève pilote n'est actuellement enregistré</p>
+		{% endif %}
+	</div>
+{% endblock %}			

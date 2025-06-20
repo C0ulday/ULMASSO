@@ -1,0 +1,47 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Intranet
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetWeatherPage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Quel temps fait-il ?</p>
+{% endblock %}
+
+{% block asideContent %}
+	<p align = center><b>Ajouter ville</b></p>
+	<form action = "{% url 'intranet_Weather' %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>		
+	</form>	
+{% endblock %}
+
+{% block mainContent %}
+	<div class=current_meteo>	
+		<img src="http://openweathermap.org/img/w/{{weather.icon}}.png" alt="Image">
+    	<br><b>Valence</b>
+    	<p>
+	        <br>{{ weather.temperature }} °C
+	        <br>{{ weather.description }}
+    	</p>
+        <hr>
+        <p>Pressions
+	        <br>QNH : {{ weather.QNH }} HPa
+	        <br>QFE : {{ weather.QFE }} HPa
+        </p>
+        <hr>
+        <p>Vent
+	        <br>vitesse : {{ weather.v_vent }} km/h
+	        <br>origine : {{ weather.d_vent }}°
+	        <br>rafale : {{ weather.rafale }} km/h
+        </p>
+	</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Intranet
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetBudgetGenFacturePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Générateur de facture</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Budget_Gen_Facture" %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<hr/>
+		<p align = center ><b>Client</b></p>
+		{{ formClient.as_p }}
+		<br>
+		<p style="text-align:center"><input type="submit" value= "{{ actionBtnName }}" class="BtnSubmit" /></p>
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if factureList%}
+			<table class="table">
+				<head>
+					<tr>
+						<th scope="col">Code</th>
+						<th scope="col">Date</th>
+						<th scope="col">Client</th>
+						<th scope="col" colspan = '2'></th>
+					</tr>
+				</head>
+				{% for facture in factureList %}
+					<tbody>
+						<tr>
+							<td align = left>{{facture.code}}</td>
+							<td align = left>{{facture.date|date:"d/m/Y"}}</td>
+							<td align = left>{{facture.clientName}} {{facture.clientVorname}}</td>
+							<td style="text-align:center">
+								<form action = "{% url "pdf_Facture" facture.id %}" method = "post">	
+									{% csrf_token %}	
+										<input type="submit" value= "PDF" class = "BtnPDF" />
+								</form>
+							</td>
+							<td style="text-align:center">
+								<form action ="{% url "intranet_Budget_Facture_Modify" facture.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Modifier" class = "BtnModify"/>
+								</form>
+							</td>
+							<td style="text-align:center">
+								<form action ="{% url "intranet_Budget_Facture_Delete" facture.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Supprimer" class = "BtnDelete"/>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				{% endfor %}
+			</table>
+		{% else %}
+			<p>Aucune facture n'est actuellement enregistrée</p>
+		{% endif %}
+	</div>
+{% endblock %}

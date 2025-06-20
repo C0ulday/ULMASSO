@@ -1,0 +1,84 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Aéronef
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetAeronefCreatePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Gérer les aéronefs</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Aeronef_Create" %}" method = "post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+	</form>
+{% endblock %}
+	
+{% block mainContent %}
+	<div>
+		{% if listAeronef %}
+			<table class="table">
+  				<thead>
+					<tr>
+						<th scope="col"></th>
+						<th scope="col"></th>
+						<th scope="col"></th>
+						<th scope="col"></th>
+						<th scope="col" colspan = '3'>Limites</th>
+						<th scope="col" colspan = '2'>Tarifs (€/min)</th>
+						
+					</tr>
+    				<tr>
+      					<th scope="col">Type</th>
+      					<th scope="col">Classe</th>
+      					<th scope="col">Immatriculation</th>
+      					<th scope="col">LSA</th>
+      					<th scope="col">Aptitude vol</th>
+      					<th scope="col">LSA</th>
+      					<th scope="col">Parachute</th>
+      					<th scope="col">Location</th>
+      					<th scope="col">instruction</th>
+    				</tr>
+  				</thead>
+  				<tbody>
+					{% for aeronef in listAeronef %}
+					  	<tr>
+							<td>{{aeronef.type}}</td>
+							<td>{{aeronef.classeULM.name}}</td>
+							<td>{{aeronef.immatriculation}}</td>
+							<td>{{aeronef.indicatifRadio}}</td>
+							<td>{{aeronef.limiteAptitudeVol|date:"d/m/Y"}}</td>
+							<td>{{aeronef.limiteLSA|date:"d/m/Y"}}</td>
+							<td>{{aeronef.limiteParachute|date:"d/m/Y"}}</td>
+      						<td align = right>{{aeronef.tarifPilote}}</td>
+      						<td align = right>{{aeronef.tarifElevePilote}}</tdalign = right>
+      						<td>
+								<form action ="{% url "intranet_Aeronef_Modify" aeronef.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Modifier" class = "BtnModify"/>
+								</form>
+							</td>
+      						<td>
+								<form action ="{% url "intranet_Aeronef_Delete" aeronef.id %}" method="POST">
+									{% csrf_token %}
+									<input type = "submit" value="Supprimer" class = "BtnDelete"/>
+								</form>
+							</td>	
+    					</tr>
+    				{% endfor %}
+  				</tbody>
+			</table>
+		{% else %}
+			<p>Aucun aéronef n'est actuellement enregistré</p>
+		{% endif %}
+	</div>
+{% endblock %}

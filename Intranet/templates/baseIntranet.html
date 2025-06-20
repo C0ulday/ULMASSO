@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="static/css/styleIntranet.css" />
+<link rel="stylesheet" type="text/css" href="static/css/styleMenuPrincipal.css" />
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+			AUV | 
+            {% block title%}
+            {% endblock %}
+        </title>
+    </head>
+    
+    <body id = "{% block bodyId %}genericPage{% endblock %}">	
+		<header>
+			{% block headerContent %}
+			{% endblock %}
+		</header>
+		<section id = "msgAccueil">
+			<form action = "intranetDeconnect">			
+				<p>
+					<input type="submit" value= "Déconnexion" class = "BtnSubmit" />
+				</p>
+			</form>
+			<form action = "memberProfile" >			
+				<p>
+					<input type="submit" value= "Modifier mot de passe" class = "BtnSubmit" />
+				</p>
+			</form>
+			<p><b>Connection : </b>{{current_date_time}}</p>
+			<p><b>Membre AUV : </b>{{loggedMember}}</p>
+			<p><b>Statut : </b>{{loggedMember.statut}} d'AUV</p>
+		</section>
+		<section id="titrePage">
+			{% block titrePage %}
+			{% endblock %}
+		</section>
+		<section id = "menuPrincipal">
+			{% if loggedMember.statut.id == 1 or loggedMember.statut.id == 2 or loggedMember.statut.id == 3 %}
+				<nav>
+					<ul>
+						<li><a href = "#" style="color:lightgrey">École Charles Bono</a></li>
+						<li><a href = "#" style="color:lightgrey">BIA</a></li>	
+						<li><a href = "#" style="color:lightgrey">Fond documentaire</a></li>
+						<li><a href = "#">Membres</a>
+							<ul>
+								<li><a href = "intranetGererMembers">Gérer Membres</a></li>
+								<li><a href = "intranetVoirMembers">Visualiser Membres</a></li>
+								<li><a href = "#" style="color:lightgrey">Statistiques</a></li>
+							</ul>
+						</li>
+						<li><a href = "#">Budget</a>
+							<ul>
+								<li><a href = "intranetBudgetGererSection">Gérer sections</a></li>
+								<li><a href = "intranetBudgetGererProjet">Gérer Projets</a></li>
+								<li><a href = "intranetBudgetGererLigne">Gérer lignes</a></li>
+								<li><a href = "intranetBudgetLigneChoice">Gérer opérations</a></li>
+								<hr/>
+								<li><a href = "intranetBudgetCurrentYear">Budget {{current_year}}</a></li>
+								<li><a href = "intranetBudgetCurrentYearLigne">Budget {{current_year}} par ligne</a></li>
+								<li><a href = "intranetBudgetCurrentYearAeronef">Budget {{current_year}} par aeronef</a></li>
+								<hr/>
+								<li><a href = "intranetGererCompteEpargne">Gérer comptes épargne</a></li>
+								<li><a href = "intranetCompteEpargneChoice">Opérations comptes épargne</a></li>
+								<li><a href = "intranetBilanCompteEpargne">Bilan comptes épargne</a></li>
+								<hr/>
+								<li><a href = "intranetBudgetGenFacture">Générateur de factures</a></li>
+							</ul>
+						</li>
+						<li><a href = "#">Comptes pilotes</a>
+							<ul>
+								<li><a href = "intranetMonVolCreate">Gérer mes vols</a></li>
+								<li><a href = "intranetMonCarnetVol">Mon Carnet de vols AUV</a></li>
+								<li><a href = "intranetMonComptePilote">Mon Compte pilote</a></li>
+								<hr/>
+								<li><a href = "intranetVolCreate">Gérer les vols</a></li>
+								<li><a href = "intranetCarnetVolChoice">Carnets de vol</a></li>
+								<li><a href = "intranetComptePiloteChoice">Comptes pilotes</a></li>
+								<li><a href = "intranetBilanComptePilote">Bilan comptes pilotes</a></li>
+							</ul>
+						</li>
+						<li><a href = "#">Aéronefs</a>
+							<ul>
+								<li><a href = "intranetAeronefCreate">Paramètres</a></li>
+								<li><a href = "#" style="color:lightgrey">Suivi mécanique</a></li>
+								<li><a href = "intranetAeronefStatistiques">Statistiques</a></li>
+							</ul>
+						</li>
+						<li><a href = "#">Réservations</a>
+							<ul>
+								<li><a href = "intranetWeather">Météo</a></li>
+								<li><a href = "#" style="color:lightgrey">NOTAM</a></li> 
+								{% for aeronef in allAeronef %}
+									<li><a href = "{% url 'intranet_Reservation_Calendrier' aeronef%}">Classe{{aeronef.classeULM.number}} - {{aeronef}}</a></li>
+								{% endfor %}
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			{% elif loggedMember.statut.id == 4 %}
+				<nav>
+					<ul>
+						<li><a href = "#" style="color:lightgrey">École Charles Bono</a></li>
+						<li><a href = "#" style="color:lightgrey">BIA</a></li>	
+						<li><a href = "#" style="color:lightgrey">Fond documentaire</a></li>
+						<li><a href = "#">Membres</a>
+							<ul>
+								<li><a href = "intranetVoirMembers">Visualiser Membres</a></li>
+								<li><a href = "#" style="color:lightgrey">Statistiques</a></li>
+							</ul>
+						</li>
+						<li><a href = "#">Budget</a>
+							<ul>
+								<li><a href = "intranetBudgetCurrentYear">Budget {{current_year}}</a></li>
+								<li><a href = "intranetBudgetCurrentYearLigne">Budget {{current_year}} par ligne</a></li>
+								<li><a href = "intranetBudgetCurrentYearAeronef">Budget {{current_year}} par aeronef</a></li>
+								<hr/>
+								<li><a href = "intranetBilanCompteEpargne">Bilan comptes épargne</a></li>
+							</ul>
+						</li>
+						<li><a href = "#">Comptes pilotes</a>
+							<ul>
+								<li><a href = "intranetMonVolCreate">Gérer mes vols</a></li>
+								<li><a href = "intranetMonCarnetVol">Mon Carnet de vols AUV</a></li>
+								<li><a href = "intranetMonComptePilote">Mon Compte pilote</a></li>
+								<hr/>
+								<li><a href = "intranetCarnetVolChoice">Carnets de vol</a></li>
+								<li><a href = "intranetComptePiloteChoice">Comptes pilotes</a></li>
+								<li><a href = "intranetBilanComptePilote">Bilan comptes pilotes</a></li>
+							</ul>
+						</li>
+						<li><a href = "#">Aéronefs</a>
+							<ul>
+								<li><a href = "#" style="color:lightgrey">Suivi mécanique</a></li>
+								<li><a href = "intranetAeronefStatistiques">Statistiques</a></li>
+							</ul>
+						</li>
+						<li><a href = "#">Réservations</a>
+							<ul>
+								<li><a href = "intranetWeather">Météo</a></li>
+								<li><a href = "#" style="color:lightgrey">NOTAM</a></li> 
+								{% for aeronef in allAeronef %}
+									<li><a href = "{% url 'intranet_Reservation_Calendrier' aeronef%}">Classe{{aeronef.classeULM.number}} - {{aeronef}}</a></li>
+								{% endfor %}
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			{% elif loggedMember.statut.id == 5 %}
+				<nav>
+					<ul>
+						<li><a href = "#" style="color:lightgrey">École Charles Bono</a></li>
+						<li><a href = "#" style="color:lightgrey">BIA</a></li>	
+						<li><a href = "#" style="color:lightgrey">Fond documentaire</a></li>
+						<li><a href = "#">Comptes pilotes</a>
+							<ul>
+								<li><a href = "intranetMonVolCreate">Gérer mes vols</a></li>
+								<li><a href = "intranetMonCarnetVol">Mon Carnet de vols AUV</a></li>
+								<li><a href = "intranetMonComptePilote">Mon Compte pilote</a></li>
+							</ul>
+						</li>
+						<li><a href = "#">Réservations</a>
+							<ul>
+								<li><a href = "intranetWeather">Météo</a></li>
+								<li><a href = "#" style="color:lightgrey">NOTAM</a></li> 
+								{% for aeronef in allAeronef %}
+									<li><a href = "{% url 'intranet_Reservation_Calendrier' aeronef%}">Classe{{aeronef.classeULM.number}} - {{aeronef}}</a></li>
+								{% endfor %}
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			{% endif %}
+		</section>	
+		<aside id = "asideContent">
+			{% block asideContent %}
+				
+			{% endblock %}	
+		</aside >	
+		<section id = "mainContent">
+			{% block mainContent %}
+			{% endblock %}
+		</section>	
+		{% block extra_js %}{% endblock %}		
+    </body>
+</html>

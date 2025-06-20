@@ -1,0 +1,27 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Compte pilote
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetCarnetVolChoicePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Carnets de vol des pilotes</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Carnet_Vol_Choice" %}" method = "post">
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+		{% csrf_token %}
+		{{ form.as_p }}
+	</form>
+{% endblock %}
+
+{% block mainContent %}
+{% endblock %}

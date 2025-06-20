@@ -1,0 +1,75 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Aéronef
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetAeronefStatistiquesPage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Statistiques aéronefs {{current_year}}</p>
+{% endblock %}
+
+{% block asideContent %}
+	<form action = "{% url "intranet_Aeronef_Statistiques" %}" method = "post">
+		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
+		{% csrf_token %}
+		{{ form.as_p }}
+	</form>
+	<div id='graphc'>
+		<canvas id="myChart" width="120px" height="120px"></canvas>
+		<br>
+	</div>
+	
+{% endblock %}
+	
+{% block mainContent %}
+	{% if aeronef %}
+		<p><b>Temps de vol total :</b> {{tpsVol.0}} heures {{tpsVol.1}} minutes</p>
+		<p><b>Temps de vol maintenance :</b> {{tpsTypeVol.0.0}} heures {{tpsTypeVol.0.1}} minutes</p>
+		<p><b>Temps de vol découverte :</b> {{tpsTypeVol.1.0}} heures {{tpsTypeVol.1.1}} minutes</p>
+		<p><b>Temps de vol instruction :</b> {{tpsTypeVol.2.0}} heures {{tpsTypeVol.2.1}} minutes</p>
+		<p><b>Temps de vol location :</b> {{tpsTypeVol.3.0}} heures {{tpsTypeVol.3.1}} minutes</p>
+		<p><b>Volume carburant :</b> {{volumeCarburant}} litres</p>
+		<p><b>Consommation :</b> {{consommation}} litres/heure</p>
+		
+	{% else %}
+		<p><i>Aucun aéronef n'est s'électionné</i></p>
+	{% endif %}
+	
+{% endblock %}
+
+{% block extra_js %}
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+	<script>
+		var barColors = {{ colors|safe }}
+		var xValues = {{ label|safe }};
+		var yValues = {{ tpsTypeVolPercent|safe }};
+		barColors = ["red", "green","blue","orange"];
+		ctx = document.getElementById("myChart"),
+		new Chart(ctx, {
+			type : "doughnut",
+			data: {
+    			labels : xValues,
+			    datasets : [{
+					backgroundColor: barColors,
+			    	data: yValues
+			    	}]
+		  		},
+		  	options: {
+				plugins :{
+				    title: {
+				      display: true,
+				      text: "Répartition des vols (%)"
+				    }
+				}
+		  	}
+		});
+	</script>
+{% endblock %}

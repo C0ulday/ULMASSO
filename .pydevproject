@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?eclipse-pydev version="1.0"?><pydev_project>
+        
+    <pydev_variables_property name="org.python.pydev.PROJECT_VARIABLE_SUBSTITUTION">
+        <key>DJANGO_MANAGE_LOCATION</key>
+        <value>manage.py</value>
+        <key>env_var:TMPDIR</key>
+        <value>/var/folders/kk/cx0kwz690pvfxqj03qcnc2dw0000gn/T/</value>
+        <key>env_var:SHELL</key>
+        <value>/bin/zsh</value>
+        <key>PY</key>
+        <value>311</value>
+        <key>env_var:PATH</key>
+        <value>/usr/bin:/bin:/usr/sbin:/sbin</value>
+        <key>env_var:LOGNAME</key>
+        <value>legreneur</value>
+        <key>env_var:XPC_SERVICE_NAME</key>
+        <value>application.epp.package.jee.225016360.225016390</value>
+        <key>DJANGO_SETTINGS_MODULE</key>
+        <value>ULMASSO.settings</value>
+        <key>env_var:USER</key>
+        <value>legreneur</value>
+        <key>env_var:SSH_AUTH_SOCK</key>
+        <value>/private/tmp/com.apple.launchd.WKRnp79umt/Listeners</value>
+        <key>env_var:HOME</key>
+        <value>/Users/legreneur</value>
+        <key>env_var:XPC_FLAGS</key>
+        <value>0x0</value>
+        <key>env_var:COMMAND_MODE</key>
+        <value>unix2003</value>
+        <key>env_var:APP_ICON_76142</key>
+        <value>../Resources/Eclipse.icns</value>
+        <key>env_var:__CF_USER_TEXT_ENCODING</key>
+        <value>0x1F5:0x0:0x1</value>
+        <key>env_var:JAVA_STARTED_ON_FIRST_THREAD_76142</key>
+        <value>1</value>
+        <key>env_var:__CFBundleIdentifier</key>
+        <value>epp.package.jee</value>
+    </pydev_variables_property>
+        
+    <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
+                
+        <path>/${PROJECT_DIR_NAME}</path>
+            
+    </pydev_pathproperty>
+        
+    <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python interpreter</pydev_property>
+        
+    <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Default</pydev_property>
+    
+</pydev_project>

@@ -1,0 +1,60 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}
+	Compte pilote
+{% endblock %}
+
+{% block headerContent %}
+{% endblock %}
+
+{% block bodyId %}
+	intranetBilanComptePilotePage
+{% endblock %}
+
+{% block titrePage %}
+	<p>Bilan Comptes pilotes</p>
+	
+{% endblock %}
+
+{% block asideContent %}
+<p align = center>Bilan financier des comptes pilotes</p>
+<i>Bilan positif : AUV doit de l'argent</i>
+<br>
+<i>Bilan négatif : Les pilotes doivent de l'argent à AUV</i>
+<p>Produits : {{totalProduit}} €</p>
+<p>Charges  : {{totalCharge}} €</p>
+<p>Bilan    : {{totalBilan}} €</p>
+{% endblock %}
+
+{% block mainContent %}
+	<div>
+		{% if allMember %}
+			<table class="table">
+	  			<thead>
+	    			<tr>
+	      				<th scope="col">Pilote</th>
+	      				<th scope="col">Produits (€)</th>
+	      				<th scope="col">Charges (€)</th>
+	      				<th scope="col">Bilan (€)</th>	      				
+	    			</tr>
+	  			</thead>
+	  			<tbody>	
+					{% for member in allMember %}
+						<tr>
+							<td>{{member}}</td>
+							<td align = right>{{member.produitComptePilote}}</td>
+							<td align = right>{{member.chargeComptePilote}}</td>
+							<td align = right>{{member.bilanComptePilote}}</td>
+							<td>
+							{% if member.bilanComptePilote >= 0 %}
+								<div id="monpetitcerclevert"></div>
+							{% else %}
+								<div id="monpetitcerclerouge"></div>
+							{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+	{% endif %}
+{% endblock %}
