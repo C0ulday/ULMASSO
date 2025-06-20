@@ -16,7 +16,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 150px;
+    padding: 0% 4%;
     background-color: transparent; /* Fond transparent pour le header */
     transition: 0.5s ease;
 }
@@ -24,13 +24,19 @@ header {
 
 /* Logo */
 .logo-icone {
-    width: 50%; 
-    height: 50%;
+    width: 40%; 
+    height: 40%;
     filter: saturate(100%);
     transition: transform 0.5s ease;
 }
 
-
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%; 
+    height: 30%;
+}
 
 .logo-icone:hover {
     transform: scale(1.1);
@@ -47,7 +53,7 @@ header .navigation .navigation-items a {
     font-size: 1em;
     font-weight: 500;
     text-decoration: none;
-    margin-left: 30px;
+    margin-left: 35px;
     transition: 0.3s ease;
 }
 
@@ -58,11 +64,11 @@ header .navigation .navigation-items a:before {
     bottom: 0;
     left: 0;
     width: 0;
-    height: 1px;
+    height: 3px;
     background-color: #fff;
     transition: width 0.3s ease;
 }
 
 header .navigation .navigation-items a:hover:before {
-    width: 60%;
+    width: 100%;
 }
