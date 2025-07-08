@@ -1,4 +1,38 @@
-.reservation {
-    min-height: 100vh; 
-    padding: 50px 20px;
+/* volsDecouverte.css */
+
+
+*{
+    background: #f6f5f7;
+}
+/* Navigation */
+header .navigation {
+    width: 70%;
+    position: relative;
+}
+
+
+header .navigation .navigation-items a {
+    position: relative;
+    color: #3F3F3F; /* Couleur du texte en blanc */
+    font-size: 1em;
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 35px;
+    transition: 0.3s ease;
+}
+
+/* Effet de survol sur le lien */
+header .navigation .navigation-items a:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background-color: #3F3F3F;
+    transition: width 0.3s ease;
+}
+
+header .navigation .navigation-items a:hover:before {
+    width: 100%;
 }
