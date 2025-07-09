@@ -2,7 +2,7 @@
 
 
 *{
-    background: #f6f5f7;
+    background: white;
 }
 
 /* Header */
@@ -47,6 +47,48 @@ header .navigation .navigation-items a:hover:before {
     margin-bottom: 1rem;
     text-align: center;
     font-weight: 600;
+    font-size: 50px;
     color: black;
     letter-spacing: 5px;
+}
+.plan-contenu .numero{
+    display: inline-block;
+    padding: 5px 15px;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--white);
+    background-color: var(--primary-color);
+    border-radius: 2rem;
+}
+
+.plan-contenu .number:nth-child(4){
+    background-color: #F9AE5D;
+}
+
+.plan-contenu .number:nth-child(7){
+    background-color: #ffcca3;
+}
+
+.plan-contenu h4{
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.plan-contenu p{
+    color: var(--text-light);
+    margin-bottom: 2rem;
+}
+
+.plan-images{
+    position: relative;
+}
+
+.plan-images img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 10rem;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
 }
