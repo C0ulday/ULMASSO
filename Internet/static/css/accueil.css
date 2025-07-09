@@ -197,13 +197,13 @@ section {
     }
 
     header .navigation .navigation-items a {
-        color: #222; /* Couleur de texte pour la version mobile */
+        color: #3F3F3F; /* Couleur de texte pour la version mobile */
         font-size: 1.2em;
         margin: 20px;
     }
 
     header .navigation .navigation-items a:before {
-        background: #222;
+        background: #3F3F3F;
         height: 5px;
     }
 

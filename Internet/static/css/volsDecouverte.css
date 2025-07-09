@@ -4,6 +4,9 @@
 *{
     background: #f6f5f7;
 }
+
+/* Header */
+
 /* Navigation */
 header .navigation {
     width: 70%;
@@ -35,4 +38,15 @@ header .navigation .navigation-items a:before {
 
 header .navigation .navigation-items a:hover:before {
     width: 100%;
+}
+
+/* Etapes de vol */
+
+.etapes-container .etapes-title {
+    padding-top: 150px;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: 600;
+    color: black;
+    letter-spacing: 5px;
 }
