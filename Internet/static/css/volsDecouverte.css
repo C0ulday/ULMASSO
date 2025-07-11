@@ -1,11 +1,26 @@
 /* volsDecouverte.css */
 
+:root {
+    --primary-color: #3d5cb8;
+    --primary-color-dark: #334c99;
+    --text-dark: #0f172a;
+    --text-light: #64748b;
+    --extra-light: #f1f5f9;
+    --white: #ffffff;
+    --max-width: 1200px;
+  }
+  
 
 *{
     background: white;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 /* Header */
+
+
 
 /* Navigation */
 header .navigation {
@@ -39,6 +54,126 @@ header .navigation .navigation-items a:before {
 header .navigation .navigation-items a:hover:before {
     width: 100%;
 }
+
+/*Image d'accueil*/
+.section-container {
+    max-width: var(--max-width);
+    margin: auto;
+    padding: 10rem 1rem;
+    text-align: center; /* Centrage du texte et de l'image si voulu */
+  }
+  
+  .section-header {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 3rem;
+    color: var(--text-dark);
+    margin-bottom: 2rem; /* Espace entre le texte et l'image */
+  }
+  
+  .section-container img {
+    max-width: 80%;
+    height: auto;
+  }
+
+  .booking-container {
+    border-radius: 2rem;
+    border: 1px solid var(--extra-light);
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .booking-nav {
+    max-width: 600px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    background-color: var(--extra-light);
+    border-radius: 5px;
+  }
+  
+  .booking-nav span {
+    flex: 1;
+    padding: 1rem 2rem;
+    font-weight: 500;
+    color: var(--text-light);
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .booking-nav span:nth-child(2) {
+    color: var(--white);
+    background-color: var(--primary-color);
+  }
+  
+  .booking-container form {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: 1rem;
+  }
+  
+  .booking-container .input-content {
+    width: 100%;
+  }
+  
+  .booking-container .form-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .booking-container .form-group span {
+    padding: 10px;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    background-color: var(--extra-light);
+    border-radius: 1rem;
+  }
+  
+  .booking-container .input-group {
+    width: 100%;
+    position: relative;
+  }
+  
+  .booking-container label {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    pointer-events: none;
+    transition: 0.3s;
+  }
+  
+  .booking-container input {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid var(--primary-color);
+    color: var(--text-dark);
+  }
+  
+  .booking-container input:focus ~ label {
+    font-size: 0.8rem;
+    top: 0;
+  }
+  
+  .booking-container .form-group p {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+  }
+  
+  .booking-container .btn {
+    padding: 1rem;
+    font-size: 1.5rem;
+  }
+  
 
 /* Etapes de vol */
 

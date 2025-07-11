@@ -10,37 +10,64 @@
 
 {% block content %}
 
-<section class="etapes-container">
-    <h1 class="etapes-title">AVANT DE DECOLLER</h1>
-    <p class="description">
-      Avant de réserver votre baptême de l'air en ULM, assurez-vous de remplir ces quelques conditions essentielles !
-    </p>
-    <div class="plan-grille">
-      <div class="plan-contenu">
-        <span class="numero">01</span>
-        <h2 class="plan-header">Pièce d'identité valide</h2>
-        <p>Munissez-vous d'une pièce d'identité en cours de validité pour pouvoir confirmer votre inscription sur place.</p>
-      </div>
-      <div class="plan-contenu">
-        <span class="numero">02</span>
-        <h2 class="plan-header">Condition physique adaptée</h2>
-        <p>Assurez-vous d’être en bonne forme physique et de ne présenter aucune contre-indication médicale à ce type d'activité.</p>
-      </div>
-      <div class="plan-contenu">
-        <span class="numero">03</span>
-        <h2 class="plan-header">Tenue confortable</h2>
-        <p>Portez des vêtements adaptés à la météo et évitez les objets encombrants. Des lunettes de soleil peuvent être utiles.</p>
-      </div>
-    </div>
+<section class="section-container section-header">
+  <h1 class="section-header">Réservez<br />votre premier baptême aérien</h1>
+  <img src="{% static 'res/images/header.png' %}" alt="Image d'en-tête" />
+</section>
 
-    <div class = "plan-images">
-        <img class="pendulaire" src="{% static 'res/images/pendulaire.jpg' %}" alt="">
-        <img class="3axes" src="{% static 'res/images/3axes.jpg' %}" alt="">
+<section class="section-container booking-container">
+  <div class="booking-nav">
+    <span>Multiaxes</span>
+    <span>Pendulaire</span>
+    <span>Autogire</span>
+  </div>
+  <form>
+    <div class="form-group">
+      <span><i class="ri-map-pin-line"></i></span>
+      <div class="input-content">
+        <div class="input-group">
+          <input type="text" />
+          <label>Nom</label>
+        </div>
+        <div class="input-group">
+          <input type="text" />
+          <label>Prénom</label>
+        </div>
+      </div>
     </div>
-  </section>
-  
+</section>
+
+<section class="etapes-container">
+  <h1 class="etapes-title">AVANT DE DÉCOLLER</h1>
+  <p class="description">
+    Avant de réserver votre baptême de l'air en ULM, assurez-vous de remplir ces quelques conditions essentielles !
+  </p>
+  <div class="plan-grille">
+    <div class="plan-contenu">
+      <span class="numero">01</span>
+      <h2 class="plan-header">Pièce d'identité valide</h2>
+      <p>Munissez-vous d'une pièce d'identité en cours de validité pour confirmer votre inscription sur place.</p>
+    </div>
+    <div class="plan-contenu">
+      <span class="numero">02</span>
+      <h2 class="plan-header">Condition physique adaptée</h2>
+      <p>Assurez-vous d’être en bonne forme physique et de ne présenter aucune contre-indication médicale à ce type d'activité.</p>
+    </div>
+    <div class="plan-contenu">
+      <span class="numero">03</span>
+      <h2 class="plan-header">Tenue confortable</h2>
+      <p>Portez des vêtements adaptés à la météo et évitez les objets encombrants. Des lunettes de soleil peuvent être utiles.</p>
+    </div>
+  </div>
+
+  <div class="plan-images">
+    <img class="pendulaire" src="{% static 'res/images/pendulaire.jpg' %}" alt="ULM pendulaire" />
+    <img class="3axes" src="{% static 'res/images/3axes.jpg' %}" alt="ULM 3 axes" />
+  </div>
+</section>
 
 {% endblock %}
+
 
 {% block extra_js %}
 <script>
