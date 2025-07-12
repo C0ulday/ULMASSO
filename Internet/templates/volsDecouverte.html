@@ -16,26 +16,66 @@
 </section>
 
 <section class="section-container booking-container">
-  <div class="booking-nav">
-    <span>Multiaxes</span>
-    <span>Pendulaire</span>
-    <span>Autogire</span>
+  <div class="booking-nav" role="tablist">
+    <span role="tab">Multiaxe</span>
+    <span role="tab">Pendulaire</span>
+    <span role="tab">Autogire</span>
   </div>
+
   <form>
     <div class="form-group">
-      <span><i class="ri-map-pin-line"></i></span>
+      <span><i class="ri-map-pin-line" aria-hidden="true"></i></span>
       <div class="input-content">
         <div class="input-group">
-          <input type="text" />
-          <label>Nom</label>
+          <input type="text" id="nom" name="nom" required />
+          <label for="nom">Nom</label>
         </div>
         <div class="input-group">
-          <input type="text" />
-          <label>Prénom</label>
+          <input type="text" id="prenom" name="prenom" required />
+          <label for="prenom">Prénom</label>
         </div>
+        <p>Qui fera le baptême&nbsp;?</p>
       </div>
     </div>
+
+    <div class="form-group">
+      <span><i class="ri-calendar-line" aria-hidden="true"></i></span>
+      <div class="input-content">
+        <div class="input-group">
+          <input type="date" id="date" name="date" required />
+          <label for="date">Date souhaitée</label>
+        </div>
+        <div class="input-group">
+          <input type="time" id="heure" name="heure" required />
+          <label for="heure">Heure</label>
+        </div>
+        <p>Quelle horaire vous conviendrait&nbsp;?</p> <!-- &nbsp; est une entité HTML qui signifie "non-breaking space"-->
+      </div>
+    </div>
+
+    <div class="form-group">
+      <span><i class="ri-phone-line" aria-hidden="true"></i></span>
+      <div class="input-content">
+        <div class="input-group">
+          <input type="tel" id="telephone" name="telephone" required />
+          <label for="telephone">Numéro de téléphone</label>
+        </div>
+        <div class="input-group">
+          <input type="email" id="email" name="email" required />
+          <label for="email">Email</label>
+        </div>
+        <p>Comment vous contacter&nbsp;?</p>
+      </div>
+    </div>
+
+    <button type="submit" class="btn" aria-label="Envoyer la réservation">
+      <i class="ri-send-plane-line" aria-hidden="true"></i>
+    </button>
+    
+  </form>
 </section>
+
+
 
 <section class="etapes-container">
   <h1 class="etapes-title">AVANT DE DÉCOLLER</h1>

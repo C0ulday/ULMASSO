@@ -1,15 +1,14 @@
 /* volsDecouverte.css */
 
 :root {
-    --primary-color: #3d5cb8;
-    --primary-color-dark: #334c99;
-    --text-dark: #0f172a;
-    --text-light: #64748b;
-    --extra-light: #f1f5f9;
-    --white: #ffffff;
-    --max-width: 1200px;
-  }
-  
+  --primary-color: #3d5cb8;
+  --primary-color-dark: #334c99;
+  --text-dark: #0f172a;
+  --text-light: #64748b;
+  --extra-light: #f1f5f9;
+  --white: #ffffff;
+  --max-width: 1200px;
+}
 
 *{
     background: white;
@@ -76,6 +75,7 @@ header .navigation .navigation-items a:hover:before {
     height: auto;
   }
 
+  /*section résa*/
   .booking-container {
     border-radius: 2rem;
     border: 1px solid var(--extra-light);
@@ -169,11 +169,33 @@ header .navigation .navigation-items a:hover:before {
     color: var(--text-light);
   }
   
-  .booking-container .btn {
-    padding: 1rem;
-    font-size: 1.5rem;
-  }
-  
+.btn {
+  background-color: var(--primary-color); /* ou une couleur directe comme #007bff */
+  color: white;
+  border: none;
+  width: 60px;
+  height: 60px;
+  padding: 0.8rem 1.2rem;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn i {
+  font-size: 1.5rem;
+}
+
+.btn:hover {
+  background-color:  #F9AE5D;
+  transform: scale(1.05);
+}
+
+
+
 
 /* Etapes de vol */
 
@@ -227,3 +249,4 @@ header .navigation .navigation-items a:hover:before {
     border-radius: 10rem;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
 }
+
