@@ -9,7 +9,6 @@
 /* Style du header */
 header {
     z-index: 999;
-    position: fixed; /* Fixer le header en haut de la page */
     top: 0;
     left: 0;
     width: 100%;
