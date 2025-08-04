@@ -1,4 +1,4 @@
-/* volsDecouverte.css */
+
 
 :root {
   --primary-color: #3d5cb8;
@@ -10,243 +10,221 @@
   --max-width: 1200px;
 }
 
-*{
-    background: white;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Header */
-
-
-
-/* Navigation */
-header .navigation {
-    width: 70%;
-    position: relative;
+body {
+  font-family: "Poppins", sans-serif;
 }
 
-
-header .navigation .navigation-items a {
-    position: relative;
-    color: #3F3F3F; /* Couleur du texte en blanc */
-    font-size: 1em;
-    font-weight: 500;
-    text-decoration: none;
-    margin-left: 35px;
-    transition: 0.3s ease;
+/* === SECTION HEADER === */
+.section-container.section-header {
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 5rem 1rem;
+  text-align: center;
 }
 
-/* Effet de survol sur le lien */
-header .navigation .navigation-items a:before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background-color: #3F3F3F;
-    transition: width 0.3s ease;
+.section-header {
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 4rem;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
 }
 
-header .navigation .navigation-items a:hover:before {
-    width: 100%;
+.section-container.section-header img {
+  width: 100%;
+  display: block;
 }
 
-/*Image d'accueil*/
-.section-container {
-    max-width: var(--max-width);
-    margin: auto;
-    padding: 10rem 1rem;
-    text-align: center; /* Centrage du texte et de l'image si voulu */
-  }
-  
-  .section-header {
-    font-size: 2.5rem;
-    font-weight: 600;
-    line-height: 3rem;
-    color: var(--text-dark);
-    margin-bottom: 2rem; /* Espace entre le texte et l'image */
-  }
-  
-  .section-container img {
-    max-width: 80%;
-    height: auto;
-  }
+/* === BOOKING FORM === */
+.booking-container {
+  max-width: var(--max-width);
+  margin: 4rem auto;
+  padding: 2rem;
+  border-radius: 2rem;
+  border: 1px solid var(--extra-light);
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
+}
 
-  /*section résa*/
-  .booking-container {
-    border-radius: 2rem;
-    border: 1px solid var(--extra-light);
-    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
-  }
-  
-  .booking-nav {
-    max-width: 600px;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    background-color: var(--extra-light);
-    border-radius: 5px;
-  }
-  
-  .booking-nav span {
-    flex: 1;
-    padding: 1rem 2rem;
-    font-weight: 500;
-    color: var(--text-light);
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .booking-nav span:nth-child(2) {
-    color: var(--white);
-    background-color: var(--primary-color);
-  }
-  
-  .booking-container form {
-    margin-top: 4rem;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr) auto;
-    gap: 1rem;
-  }
-  
-  .booking-container .input-content {
-    width: 100%;
-  }
-  
-  .booking-container .form-group {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .booking-container .form-group span {
-    padding: 10px;
-    font-size: 1.5rem;
-    color: var(--text-dark);
-    background-color: var(--extra-light);
-    border-radius: 1rem;
-  }
-  
-  .booking-container .input-group {
-    width: 100%;
-    position: relative;
-  }
-  
-  .booking-container label {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: var(--text-dark);
-    pointer-events: none;
-    transition: 0.3s;
-  }
-  
-  .booking-container input {
-    width: 100%;
-    padding: 10px 0;
-    font-size: 1rem;
-    outline: none;
-    border: none;
-    border-bottom: 1px solid var(--primary-color);
-    color: var(--text-dark);
-  }
-  
-  .booking-container input:focus ~ label {
-    font-size: 0.8rem;
-    top: 0;
-  }
-  
-  .booking-container .form-group p {
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
-    color: var(--text-light);
-  }
-  
-.btn {
-  background-color: var(--primary-color); /* ou une couleur directe comme #007bff */
-  color: white;
-  border: none;
-  width: 60px;
-  height: 60px;
-  padding: 0.8rem 1.2rem;
-  border-radius: 50px;
-  font-size: 1.2rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.booking-nav {
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  background-color: var(--extra-light);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.booking-nav span {
+  flex: 1;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-weight: 500;
+  color: var(--text-light);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: 0.3s;
 }
 
-.btn i {
+.booking-nav span:nth-child(2) {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.booking-container form {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.form-group span {
   font-size: 1.5rem;
+  color: var(--text-dark);
+  background-color: var(--extra-light);
+  padding: 0.75rem;
+  border-radius: 1rem;
+}
+
+.input-content {
+  flex: 1;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 1px solid var(--primary-color);
+  outline: none;
+  color: var(--text-dark);
+}
+
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: 0;
+  font-size: 0.8rem;
+}
+
+.form-group p {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+/* Bouton d’envoi */
+.btn {
+  grid-column: span 2;
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--white);
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .btn:hover {
-  background-color:  #F9AE5D;
-  transform: scale(1.05);
+  background-color: var(--primary-color-dark);
 }
 
-
-
-
-/* Etapes de vol */
-
-.etapes-container .etapes-title {
-    padding-top: 150px;
-    margin-bottom: 1rem;
-    text-align: center;
-    font-weight: 600;
-    font-size: 50px;
-    color: black;
-    letter-spacing: 5px;
-}
-.plan-contenu .numero{
-    display: inline-block;
-    padding: 5px 15px;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: var(--white);
-    background-color: var(--primary-color);
-    border-radius: 2rem;
+/* === ÉTAPES (AVANT DE DÉCOLLER) === */
+.etapes-container {
+  max-width: var(--max-width);
+  margin: 6rem auto;
+  padding: 0 1rem;
+  text-align: center;
 }
 
-.plan-contenu .number:nth-child(4){
-    background-color: #F9AE5D;
+.etapes-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  letter-spacing: 3px;
 }
 
-.plan-contenu .number:nth-child(7){
-    background-color: #ffcca3;
+.description {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 3rem;
 }
 
-.plan-contenu h4{
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.5rem;
+.plan-grille {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
 }
 
-.plan-contenu p{
-    color: var(--text-light);
-    margin-bottom: 2rem;
+.plan-contenu {
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 1.5rem;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
+  text-align: left;
 }
 
-.plan-images{
-    position: relative;
+.plan-contenu .numero {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  background-color: var(--primary-color);
+  border-radius: 2rem;
 }
 
-.plan-images img{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border-radius: 10rem;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+.plan-contenu .plan-header {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
 }
 
+.plan-contenu p {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  line-height: 1.5rem;
+}
+
+/* Images des étapes */
+.plan-images {
+  display: flex;
+  gap: 1rem;
+  margin-top: 4rem;
+  justify-content: center;
+}
+
+.plan-images img {
+  width: calc(50% - 0.5rem);
+  border-radius: 1rem;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+}
