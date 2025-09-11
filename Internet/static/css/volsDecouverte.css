@@ -24,7 +24,7 @@ header * {
 }
 
 
-header .navigation-items a:before {
+header .navigation-items a {
   background-color: #000 !important;
 }
 
@@ -54,120 +54,7 @@ body {
   display: block;
 }
 
-/* === BOOKING FORM === */
-.booking-container {
-  max-width: var(--max-width);
-  margin: 4rem auto;
-  padding: 2rem;
-  border-radius: 2rem;
-  border: 1px solid var(--extra-light);
-  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
-}
 
-.booking-nav {
-  max-width: 600px;
-  margin: auto;
-  display: flex;
-  background-color: var(--extra-light);
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.booking-nav span {
-  flex: 1;
-  padding: 1rem 2rem;
-  text-align: center;
-  font-weight: 500;
-  color: var(--text-light);
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.booking-nav span:nth-child(2) {
-  background-color: var(--primary-color);
-  color: var(--white);
-}
-
-.booking-container form {
-  margin-top: 3rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-.form-group {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.form-group span {
-  font-size: 1.5rem;
-  color: var(--text-dark);
-  background-color: var(--extra-light);
-  padding: 0.75rem;
-  border-radius: 1rem;
-}
-
-.input-content {
-  flex: 1;
-}
-
-.input-group {
-  position: relative;
-  margin-bottom: 0.5rem;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 0.5rem 0;
-  font-size: 1rem;
-  border: none;
-  border-bottom: 1px solid var(--primary-color);
-  outline: none;
-  color: var(--text-dark);
-}
-
-.input-group label {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--text-dark);
-  pointer-events: none;
-  transition: 0.3s;
-}
-
-.input-group input:focus + label,
-.input-group input:not(:placeholder-shown) + label {
-  top: 0;
-  font-size: 0.8rem;
-}
-
-.form-group p {
-  font-size: 0.85rem;
-  color: var(--text-light);
-}
-
-/* Bouton d’envoi */
-.btn {
-  grid-column: span 2;
-  padding: 1rem;
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: var(--white);
-  background-color: var(--primary-color);
-  border: none;
-  border-radius: 2rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background-color: var(--primary-color-dark);
-}
 
 /* === ÉTAPES (AVANT DE DÉCOLLER) === */
 .etapes-container {
@@ -240,4 +127,104 @@ body {
   width: calc(50% - 0.5rem);
   border-radius: 1rem;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* === SECTION CONTACT === */
+.contact-section {
+  background-color: var(--extra-light);
+  padding: 6rem 1rem;
+}
+
+.contact-section .contact-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-align: center;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+}
+
+.contact-section .contact-intro {
+  font-size: 1rem;
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* formulaire centré */
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* groupes de champs */
+.contact-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  color: var(--text-dark);
+}
+
+/* champs texte / email / tel */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #dce3ea;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-dark);
+  background-color: var(--extra-light);
+  transition: border-color 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+/* bouton */
+.contact-btn {
+  display: inline-block;
+  width: 100%;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-btn:hover {
+  background-color: var(--primary-color-dark);
+}
+
+/* responsive */
+@media (max-width: 768px) {
+  .contact-form {
+    padding: 1.5rem;
+  }
+  .contact-section .contact-title {
+    font-size: 2rem;
+  }
 }
