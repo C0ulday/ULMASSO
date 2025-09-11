@@ -19,13 +19,20 @@
 /* === Header : tous les textes et icônes en noir === */
 header,
 header * {
-  position: static  !important;
   color: #000 !important;
+}
+header {
+  position: absolute;
+  background-color: transparent; /* ou #000 */
 }
 
 
-header .navigation-items a {
-  background-color: #000 !important;
+header .navigation .navigation-items a {
+  color: black;
+}
+
+header .navigation .navigation-items a:before {
+  background-color: black;
 }
 
 
@@ -36,7 +43,7 @@ body {
 /* === SECTION HEADER === */
 .section-container.section-header {
   max-width: var(--max-width);
-  margin: auto;
+  margin: 10rem;
   padding: 5rem 1rem;
   text-align: center;
 }
