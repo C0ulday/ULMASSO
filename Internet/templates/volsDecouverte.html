@@ -7,15 +7,12 @@
 <link rel="stylesheet" href="{% static 'css/volsDecouverte.css' %}">
 {% endblock %}
 
-
 {% block content %}
 
 <section class="section-container section-header">
   <h1 class="section-header">Réservez<br />votre premier baptême aérien</h1>
   <img src="{% static 'res/images/header.png' %}" alt="Image d'en-tête" />
 </section>
-
-
 
 <section class="etapes-container">
   <h1 class="etapes-title">AVANT DE DÉCOLLER</h1>
@@ -52,31 +49,56 @@
     Une question, un renseignement ou une réservation&nbsp;?
   </p>
 
-  <form class="contact-form" method="post" action="#">
-    {% csrf_token %}
-    <div class="form-group">
-      <label for="name">Nom</label>
-      <input type="text" id="name" name="name" placeholder="Votre nom" required>
+  <div class="contact-wrapper">
+    <!-- Colonne formulaire -->
+    <form class="contact-form" method="post" action="#">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Nom</label>
+        <input type="text" id="name" name="name" placeholder="Votre nom" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Téléphone</label>
+        <input type="tel" id="phone" name="phone" placeholder="Votre numéro de téléphone" required>
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="Votre e-mail" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Votre message" required></textarea>
+      </div>
+      <button type="submit" class="contact-btn">Envoyer</button>
+    </form>
+
+    <!-- Colonne Google Maps -->
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2780.512413185603!2d4.95585631556744!3d44.91881387909816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f55b59fbe6c2b1%3A0x53c1d657ff5d3ec7!2sA%C3%A9roport%20de%20Valence-Chabeuil!5e0!3m2!1sfr!2sfr!4v1694267200000!5m2!1sfr!2sfr"
+        width="100%"
+        height="100%"
+        style="border:0; border-radius:1.5rem;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+
+      <!-- Bouton accès Google Maps -->
+      <a href="https://www.google.com/maps/search/?api=1&query=A%C3%A9ro-ULM-Valence+P%C3%B4le+Aviation+L%C3%A9g%C3%A8re,+730+Chem.+du+Vol+A+Voile,+26120+Chabeuil,+France"
+          target="_blank"
+          class="map-link"
+          title="Ouvrir dans Google Maps">
+          &#128205;
+      </a>
+
     </div>
-    <div class="form-group">
-      <label for="phone">Téléphone</label>
-      <input type="tel" id="phone" name="phone" placeholder="Votre numéro de téléphone" required>
-    </div>
-    <div class="form-group">
-      <label for="email">E-mail</label>
-      <input type="email" id="email" name="email" placeholder="Votre e-mail" required>
-    </div>
-    <div class="form-group">
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="5" placeholder="Votre message" required></textarea>
-    </div>
-    <button type="submit" class="contact-btn">Envoyer</button>
-  </form>
+  </div>
 </section>
 
 
-{% endblock %}
 
+{% endblock %}
 
 {% block extra_js %}
 <script>
