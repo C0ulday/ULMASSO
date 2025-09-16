@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Préparer votre vol ULM – Aéro ULM Valence{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+{% endblock %}
+
+{% block content %}
+  <!-- Section Préparation -->
+  <section class="etapes-container" id="services">
+    <h1 class="etapes-title">Préparez votre vol en toute sérénité</h1>
+    <p class="description">
+      Cette page rassemble des ressources indispensables pour organiser et planifier vos vols ULM ou tout autre type de vol.
+      Chaque carte ci-dessous vous guide vers des informations clés pour un départ réussi.
+    </p>
+    <div class="plan-grille">
+      <div class="plan-contenu">
+        <span class="numero">01</span>
+        <h2 class="plan-header">
+          <a href="#lien1">Météo et conditions de vol</a>
+        </h2>
+        <p>Consultez les prévisions météo, la visibilité et le vent afin d’adapter votre itinéraire et garantir la sécurité de votre vol.</p>
+      </div>
+      <div class="plan-contenu">
+        <span class="numero">02</span>
+        <h2 class="plan-header">
+          <a href="#lien2">Planification de la navigation</a>
+        </h2>
+        <p>Préparez votre plan de vol : itinéraire, altitudes, zones aériennes et points de repère pour une navigation fluide.</p>
+      </div>
+      <div class="plan-contenu">
+        <span class="numero">03</span>
+        <h2 class="plan-header">
+          <a href="#lien3">Check-list et sécurité</a>
+        </h2>
+        <p>Revoyez les listes de vérification avant décollage, l’équipement obligatoire et les procédures d’urgence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Météorologie -->
+  <section class="etapes-container" id="meteo">
+    <h1 class="etapes-title">Météorologie</h1>
+    <p class="description">
+      Consultez rapidement les services météo utiles à la préparation de votre vol ULM ou avion.
+    </p>
+    <div class="link-grid">
+      <a href="https://aeroweb.meteo.fr/" target="_blank" rel="noopener noreferrer" class="link-card">
+        <h2>Aéroweb</h2>
+        <p>MétéoFrance – nécessite une inscription</p>
+      </a>
+      <a href="https://olivia.aviation-civile.gouv.fr/" target="_blank" rel="noopener noreferrer" class="link-card">
+        <h2>Olivia</h2>
+        <p>DGAC – nécessite une inscription</p>
+      </a>
+      <a href="https://www.ventusky.com/" target="_blank" rel="noopener noreferrer" class="link-card">
+        <h2>Ventusky</h2>
+        <p>Prévisions des vents en direct</p>
+      </a>
+      <a href="https://www.meteociel.fr/" target="_blank" rel="noopener noreferrer" class="link-card">
+        <h2>MétéoCiel</h2>
+        <p>Conditions météo pour Valence</p>
+      </a>
+      <a href="https://aviationweather.gov/metar/data?ids=LFLU" target="_blank" rel="noopener noreferrer" class="link-card">
+        <h2>METAR / TAF Valence</h2>
+        <p>Observations et prévisions aéroport</p>
+      </a>
+      <a href="{% static 'docs/mementum_meteo.pdf' %}" target="_blank" rel="noopener noreferrer" class="link-card">
+        <h2>Mementum Interprétation Météo</h2>
+        <p>Guide PDF</p>
+      </a>
+    </div>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/navigation.js' %}"></script>
+{% endblock %}

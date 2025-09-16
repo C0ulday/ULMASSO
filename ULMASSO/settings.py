@@ -138,3 +138,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 #Indication où sont les templates
 TEMPLATES[0]['DIRS'] = [os.path.join(BASE_DIR,'ULMASSO/templates')]
+
+
+# Email SMTP : simple mail transfer protocol
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.ornage.fr'        
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'aero-ulm-valence@orange.fr'
+EMAIL_HOST_PASSWORD = 'motdepasse'  
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+CONTACT_EMAIL = 'aero-ulm-valence@orange.fr' 
