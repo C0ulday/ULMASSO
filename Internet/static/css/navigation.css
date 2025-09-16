@@ -1,0 +1,186 @@
+:root {
+  --primary-color: #3d5cb8;
+  --primary-color-dark: #334c99;
+  --text-dark: #0f172a;
+  --text-light: #64748b;
+  --extra-light: #f1f5f9;
+  --white: #ffffff;
+  --max-width: 1200px;
+}
+
+/* === Header : tous les textes et icônes en noir === */
+header,
+header * {
+  color: #000 !important;
+}
+header {
+  position: absolute;
+  background-color: transparent; /* ou #000 */
+}
+
+header .navigation .navigation-items a {
+  color: black;
+}
+
+header .navigation .navigation-items a:before {
+  background-color: black;
+}
+
+/* === Reset === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* ============================
+   SECTION ÉTAPES (PRÉPARER LE VOL)
+============================ */
+.etapes-container {
+  max-width: var(--max-width);
+  margin: 6rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.etapes-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  letter-spacing: 3px;
+}
+
+.description {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 3rem;
+}
+
+/* === Grille des cartes === */
+.plan-grille {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.plan-contenu {
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 1.5rem;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plan-contenu:hover {
+  transform: translateY(-5px);
+  box-shadow: 5px 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.plan-contenu .numero {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  background-color: var(--primary-color);
+  border-radius: 2rem;
+}
+
+.plan-contenu .plan-header a {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.plan-contenu .plan-header a:hover {
+  color: var(--primary-color);
+}
+
+.plan-contenu p {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  line-height: 1.5rem;
+}
+
+/* ============================
+   SECTION LIENS METEO
+============================ */
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+/* === Carte lien météo === */
+.link-card {
+  display: block;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 1.5rem;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.link-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(61,92,184,0.15), rgba(51,76,153,0.15));
+  transition: left 0.4s ease;
+}
+
+.link-card:hover::before {
+  left: 0;
+}
+
+.link-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.link-card h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.link-card p {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  line-height: 1.4rem;
+}
+
+/* ============================
+   Responsive
+============================ */
+@media (max-width: 992px) {
+  .plan-grille {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .plan-grille {
+    grid-template-columns: 1fr;
+  }
+  .etapes-title {
+    font-size: 2rem;
+  }
+}

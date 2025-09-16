@@ -2,7 +2,8 @@ from django.urls import path
 
 from Internet.views import internetAccueil,\
                             monEspace,\
-                            volsDecouverte
+                            volsDecouverte,\
+                            navigation
 
 urlpatterns = [
     path('', internetAccueil, name='internetAccueil'),
@@ -10,4 +11,5 @@ urlpatterns = [
     path('volsDecouverte', volsDecouverte, name='volsDecouverte'),
     #Internet/Intranet
     path('monEspace', monEspace, name ='mon_Espace'),
+    path('navigation', navigation, name ='navigation'),
     ]
