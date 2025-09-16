@@ -243,6 +243,86 @@ body {
   line-height: 1.4rem;
 }
 
+/* ============================
+   SECTION CHECKLIST
+============================ */
+#checklist {
+  max-width: var(--max-width);
+  margin: 10rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+#checklist .etapes-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  letter-spacing: 3px;
+}
+
+#checklist .description {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 3rem;
+}
+
+#checklist .link-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+#checklist .link-card {
+  display: block;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 1.5rem;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+#checklist .link-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(61,92,184,0.15), rgba(51,76,153,0.15));
+  transition: left 0.4s ease;
+}
+
+#checklist .link-card:hover::before {
+  left: 0;
+}
+
+#checklist .link-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+#checklist .link-card h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+#checklist .link-card p {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  line-height: 1.4rem;
+}
+
+
+
+
 
 
 /* ============================
@@ -277,6 +357,23 @@ body {
     grid-template-columns: 1fr;
   }
   #navigation .etapes-title {
+    font-size: 2rem;
+  }
+}
+/* ============================
+   Responsive Checklist
+============================ */
+@media (max-width: 992px) {
+  #checklist .link-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  #checklist .link-grid {
+    grid-template-columns: 1fr;
+  }
+  #checklist .etapes-title {
     font-size: 2rem;
   }
 }

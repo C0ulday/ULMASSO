@@ -19,21 +19,21 @@
       <div class="plan-contenu">
         <span class="numero">01</span>
         <h2 class="plan-header">
-          <a href="#lien1">Météo et conditions de vol</a>
+          <a href="#meteo">Météo et conditions de vol</a>
         </h2>
         <p>Consultez les prévisions météo, la visibilité et le vent afin d’adapter votre itinéraire et garantir la sécurité de votre vol.</p>
       </div>
       <div class="plan-contenu">
         <span class="numero">02</span>
         <h2 class="plan-header">
-          <a href="#lien2">Planification de la navigation</a>
+          <a href="#navigation">Planification de la navigation</a>
         </h2>
         <p>Préparez votre plan de vol : itinéraire, altitudes, zones aériennes et points de repère pour une navigation fluide.</p>
       </div>
       <div class="plan-contenu">
         <span class="numero">03</span>
         <h2 class="plan-header">
-          <a href="#lien3">Check-list et sécurité</a>
+          <a href="#checklist">Check-list et sécurité</a>
         </h2>
         <p>Revoyez les listes de vérification avant décollage, l’équipement obligatoire et les procédures d’urgence.</p>
       </div>
@@ -88,7 +88,7 @@
       <h2>SUP AIR (SIA)</h2>
       <p>Suppléments aux cartes aéronautiques officielles</p>
     </a>
-    <a href="https://www.mach7.ca/" target="_blank" rel="noopener noreferrer" class="link-card">
+    <a href="https://appli.mach7.com" target="_blank" rel="noopener noreferrer" class="link-card">
       <h2>Mach 7</h2>
       <p>Service cartographique – nécessite un abonnement</p>
     </a>
@@ -106,6 +106,33 @@
     </a>
   </div>
 </section>
+
+<!-- Section Check-list et Sécurité -->
+<section class="etapes-container" id="checklist">
+  <h1 class="etapes-title">Check-list et sécurité</h1>
+  <p class="description">
+    Accédez aux listes de vérification avant décollage, aux procédures de sécurité et aux guides indispensables pour vos vols.
+  </p>
+  <div class="link-grid">
+    <a href="{% static 'res/checklist_ulm.pdf' %}" target="_blank" rel="noopener noreferrer" class="link-card">
+      <h2>Check-list ULM</h2>
+      <p>Liste de vérification complète avant le vol</p>
+    </a>
+    <a href="{% static 'res/procedures_securite.pdf' %}" target="_blank" rel="noopener noreferrer" class="link-card">
+      <h2>Procédures de sécurité</h2>
+      <p>Guide PDF pour les situations d'urgence</p>
+    </a>
+    <a href="{% static 'res/equipement_obligatoire.pdf' %}" target="_blank" rel="noopener noreferrer" class="link-card">
+      <h2>Équipement obligatoire</h2>
+      <p>Checklist de l’équipement à embarquer</p>
+    </a>
+    <a href="{% static 'images/checklist.jpg' %}" target="_blank" rel="noopener noreferrer" class="link-card">
+      <h2>Illustration Check-list</h2>
+      <p>Image pour visualiser la préparation</p>
+    </a>
+  </div>
+</section>
+
 
 {% endblock %}
 
