@@ -21,6 +21,23 @@ header {
     transition: 0.5s ease;
 }
 
+/* Bouton menu */
+.menu-btn {
+    background: url('../res/icones/menu_b.png') no-repeat;
+    background-size: 30px;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.menu-btn.active {
+    z-index: 1;
+    background: url('../res/icones/close.png') no-repeat;
+    background-size: 25px;
+    background-position: center;
+}
 
 /* Logo */
 .logo-icone {

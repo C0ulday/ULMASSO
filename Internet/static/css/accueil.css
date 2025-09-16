@@ -92,20 +92,9 @@ section {
 /* Bouton menu */
 .menu-btn {
     background: url('../res/icones/menu.png') no-repeat;
-    background-size: 30px;
-    background-position: center;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    transition: 0.3s ease;
 }
 
-.menu-btn.active {
-    z-index: 1;
-    background: url('../res/icones/close.png') no-repeat;
-    background-size: 25px;
-    background-position: center;
-}
+
 
 /* Navigation du slider */
 .slider-navigation {
@@ -152,3 +141,74 @@ section {
     clip-path: circle(150% at 0 50%);
 }
 
+/* Responsive Design */
+@media (max-width: 1040px) {
+    header {
+        padding: 12px 20px;
+    }
+
+    section {
+        padding: 100px 20px;
+    }
+
+    .home .media-icons {
+        right: 15px;
+    }
+
+    header .navigation {
+        display: none; /* Masquer la navigation par défaut */
+    }
+
+    .menu-btn {
+        display: block; /* Afficher le bouton de menu */
+    }
+
+    header .navigation.active {
+        display: flex; /* Afficher la navigation lorsque active */
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+        background: rgba(1, 1, 1, 0.5);
+    }
+
+    header .navigation .navigation-items a {
+        color: #3F3F3F; /* Couleur de texte pour la version mobile */
+        font-size: 1.2em;
+        margin: 20px;
+    }
+
+    header .navigation .navigation-items a:before {
+        background: #3F3F3F;
+        height: 5px;
+    }
+
+    header .navigation.active .navigation-items { 
+        background-color: white;
+        width: 600px;
+        max-width: 600px;
+        margin: 20px;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 5px;
+        box-shadow: 0 5px 25px rgb(1 1 1 / 20%);
+    }
+    header .navigation-items .fa {
+        color: #3F3F3F;
+    }
+}
+
+@media (min-width: 1041px) {
+    header .navigation {
+        display: flex; /* Navigation toujours visible */
+    }
+
+    .menu-btn {
+        display: none; /* Masquer le bouton de menu sur grands écrans */
+    }
+}
