@@ -47,7 +47,7 @@
       Consultez rapidement les services météo utiles à la préparation de votre vol ULM ou avion.
     </p>
     <div class="link-grid">
-      <a href="https://aeroweb.meteo.fr/" target="_blank" rel="noopener noreferrer" class="link-card">
+      <a href="https://aviation.meteo.fr/login.php" target="_blank" rel="noopener noreferrer" class="link-card">
         <h2>Aéroweb</h2>
         <p>MétéoFrance – nécessite une inscription</p>
       </a>
@@ -63,16 +63,50 @@
         <h2>MétéoCiel</h2>
         <p>Conditions météo pour Valence</p>
       </a>
-      <a href="https://aviationweather.gov/metar/data?ids=LFLU" target="_blank" rel="noopener noreferrer" class="link-card">
+      <a href="https://fr.allmetsat.com/metar-taf/france.php?icao=LFLU" target="_blank" rel="noopener noreferrer" class="link-card">
         <h2>METAR / TAF Valence</h2>
         <p>Observations et prévisions aéroport</p>
       </a>
-      <a href="{% static 'docs/mementum_meteo.pdf' %}" target="_blank" rel="noopener noreferrer" class="link-card">
-        <h2>Mementum Interprétation Météo</h2>
+      <a href="{% static 'res/memo_meteo.pdf' %}" target="_blank" rel="noopener noreferrer" class="link-card">
+        <h2>Memo Interprétation Météo</h2>
         <p>Guide PDF</p>
       </a>
     </div>
   </section>
+  <!-- Section Navigation -->
+<section class="etapes-container" id="navigation">
+  <h1 class="etapes-title">Navigation</h1>
+  <p class="description">
+    Retrouvez ici les ressources essentielles pour préparer votre navigation aérienne en toute sécurité.
+  </p>
+  <div class="link-grid">
+    <a href="https://www.sia.aviation-civile.gouv.fr/" target="_blank" rel="noopener noreferrer" class="link-card">
+      <h2>NOTAM WEB (SIA)</h2>
+      <p>Informations aéronautiques importantes pour votre vol</p>
+    </a>
+    <a href="https://www.sia.aviation-civile.gouv.fr/" target="_blank" rel="noopener noreferrer" class="link-card">
+      <h2>SUP AIR (SIA)</h2>
+      <p>Suppléments aux cartes aéronautiques officielles</p>
+    </a>
+    <a href="https://www.mach7.ca/" target="_blank" rel="noopener noreferrer" class="link-card">
+      <h2>Mach 7</h2>
+      <p>Service cartographique – nécessite un abonnement</p>
+    </a>
+    <a href="https://www.geoportail.gouv.fr/donnees/carte-oaci-vfr" target="_blank" rel="noopener noreferrer" class="link-card">
+      <h2>Carte OACI VFR (Géoportail)</h2>
+      <p>Cartographie officielle pour la navigation VFR</p>
+    </a>
+    <a href="https://www.sia.aviation-civile.gouv.fr/" target="_blank" rel="noopener noreferrer" class="link-card">
+      <h2>Cartes SIA</h2>
+      <p>Téléchargement libre des cartes aéronautiques</p>
+    </a>
+    <a href="{% static 'res/livre_BA.pdf' %}" target="_blank" rel="noopener noreferrer" class="link-card">
+      <h2>B.A. BA du RTBA (PDF)</h2>
+      <p>Guide PDF de la Base Aérienne</p>
+    </a>
+  </div>
+</section>
+
 {% endblock %}
 
 {% block extra_js %}

@@ -42,7 +42,7 @@ body {
 ============================ */
 .etapes-container {
   max-width: var(--max-width);
-  margin: 6rem auto;
+  margin: 10rem auto;
   padding: 0 1rem;
   text-align: center;
 }
@@ -166,6 +166,84 @@ body {
   color: var(--text-light);
   line-height: 1.4rem;
 }
+/* ============================
+   SECTION NAVIGATION
+============================ */
+#navigation {
+  max-width: var(--max-width);
+  margin: 10rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+#navigation .etapes-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  letter-spacing: 3px;
+}
+
+#navigation .description {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 3rem;
+}
+
+#navigation .link-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+#navigation .link-card {
+  display: block;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 1.5rem;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+#navigation .link-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(61,92,184,0.15), rgba(51,76,153,0.15));
+  transition: left 0.4s ease;
+}
+
+#navigation .link-card:hover::before {
+  left: 0;
+}
+
+#navigation .link-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+#navigation .link-card h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+#navigation .link-card p {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  line-height: 1.4rem;
+}
+
+
 
 /* ============================
    Responsive
@@ -181,6 +259,24 @@ body {
     grid-template-columns: 1fr;
   }
   .etapes-title {
+    font-size: 2rem;
+  }
+}
+
+/* ============================
+   Responsive Navigation
+============================ */
+@media (max-width: 992px) {
+  #navigation .link-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  #navigation .link-grid {
+    grid-template-columns: 1fr;
+  }
+  #navigation .etapes-title {
     font-size: 2rem;
   }
 }
