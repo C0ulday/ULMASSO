@@ -1,5 +1,3 @@
-
-
 :root {
   --primary-color: #3d5cb8;
   --primary-color-dark: #334c99;
@@ -11,6 +9,7 @@
   --white: #ffffff;
   --max-width: 1200px;
 }
+
 
 * {
   margin: 0;

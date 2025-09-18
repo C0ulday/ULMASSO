@@ -4,6 +4,12 @@ from ULMASSO.views import dateTimeParis
 from django.core.mail import EmailMessage
 from datetime import datetime
 
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+from django.conf import settings
+from django.contrib import messages
+
+
 #imports internes
 from Internet.forms import loginForm
 from Intranet.models import Member,\
@@ -54,10 +60,9 @@ def monEspace(request):
 def volsDecouverte(request):
     return render(request,'volsdecouverte.html',context={})
 
-from django.core.mail import send_mail
-from django.shortcuts import render, redirect
-from django.conf import settings
-from django.contrib import messages
+def ecoleSport(request):
+    return render(request,'ecole.html',context={})
+
 
 def fomulaireDecouverte(request):
     

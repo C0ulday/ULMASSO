@@ -1,12 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Vols Découverte - Aero ULM Valence{% endblock %}
+{% block title %}Ecole de Sport - Aero ULM Valence{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/volsDecouverte.css' %}">
+<link rel="stylesheet" href="{% static 'css/ecole.css' %}">
 {% endblock %}
-
 
 {% block content %}
 
+<section class="ecole-sport">
+    <h1 class="ecole-title">École de Sport</h1>
+    <p class="ecole-intro">
+      L'École de sport de l'association Aéro ULM Valence est constituée de deux entités :
+      <br>(1) l'école Charles Bono qui gère la formation initiale et continue des pilotes
+      <br>(2) la formation BIA.
+      <br><br>
+      Cette page permet l'accès à l'ensemble des ressources des deux entités.
+    </p>
+  
+    <div class="ecole-container">
+      <!-- École Charles Bono -->
+      <div class="ecole-card">
+        <img src="{% static 'res/images/LogoCharlesBono.jpg' %}" alt="Logo École Charles Bono" class="ecole-logo">
+        <h2>École Charles Bono</h2>
+        <p class="ecole-description">
+          Formation initiale et continue des pilotes de AUV
+        </p>
+        <a href="#charles-bono" class="ecole-btn">Accéder aux ressources</a>
+      </div>
+  
+      <!-- Formation BIA -->
+      <div class="ecole-card">
+        <h2>Formation BIA</h2>
+        <p class="ecole-description">
+          Le Brevet d'Initiation Aéronautique : contenus et ressources
+        </p>
+        <a href="#formation-bia" class="ecole-btn">Accéder aux ressources</a>
+      </div>
+    </div>
+  </section>
+
+  {% endblock %}
