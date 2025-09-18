@@ -3,6 +3,8 @@
 :root {
   --primary-color: #3d5cb8;
   --primary-color-dark: #334c99;
+  --yellow : #ffd67c;
+  --yellow-dark : #F9AE5D;
   --text-dark: #0f172a;
   --text-light: #64748b;
   --extra-light: #f1f5f9;
@@ -106,7 +108,7 @@ body {
   margin-bottom: 1rem;
   font-weight: 600;
   color: var(--white);
-  background-color: var(--primary-color);
+  background-color: var(--yellow-dark);
   border-radius: 2rem;
 }
 
@@ -136,6 +138,85 @@ body {
   border-radius: 1rem;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
 }
+
+
+/* === SECTION TARIFS === */
+.tarifs-section {
+  max-width: var(--max-width);
+  margin: 6rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.tarifs-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  letter-spacing: 3px;
+}
+
+.tarifs-intro {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 3rem;
+}
+
+.tarifs-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+/* carte cliquable */
+.tarif-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
+  text-align: left;
+
+  /* suppression style par défaut des liens */
+  text-decoration: none;
+  color: inherit;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.tarif-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 5px 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.tarif-card h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-dark); /* couleur forcée */
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+
+.tarif-description {
+  font-size: 0.95rem;
+  color: var(--text-light); /* couleur forcée */
+  line-height: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+}
+
+.tarif-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--primary-color); /* couleur forcée */
+  margin-top: auto;
+  text-decoration: none;
+}
+
+
 
 /* === SECTION CONTACT === */
 .contact-section {
@@ -277,6 +358,19 @@ body {
 /* Responsive */
 @media (max-width: 992px) {
   .contact-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .tarifs-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .tarifs-container {
     grid-template-columns: 1fr;
   }
 }
