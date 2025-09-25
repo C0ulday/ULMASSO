@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Ecole de Sport - Aero ULM Valence{% endblock %}
+{% block title %}École de Sport – Aéro ULM Valence{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/ecole.css' %}">
@@ -10,35 +10,40 @@
 {% block content %}
 
 <section class="ecole-sport">
-    <h1 class="ecole-title">École de Sport</h1>
-    <p class="ecole-intro">
-      L'École de sport de l'association Aéro ULM Valence est constituée de deux entités :
-      <br>(1) l'école Charles Bono qui gère la formation initiale et continue des pilotes
-      <br>(2) la formation BIA.
-      <br><br>
-      Cette page permet l'accès à l'ensemble des ressources des deux entités.
-    </p>
-  
-    <div class="ecole-container">
-      <!-- École Charles Bono -->
-      <div class="ecole-card">
-        <img src="{% static 'res/images/LogoCharlesBono.jpg' %}" alt="Logo École Charles Bono" class="ecole-logo">
-        <h2>École Charles Bono</h2>
-        <p class="ecole-description">
-          Formation initiale et continue des pilotes de AUV
-        </p>
-        <a href="#charles-bono" class="ecole-btn">Accéder aux ressources</a>
-      </div>
-  
-      <!-- Formation BIA -->
-      <div class="ecole-card">
-        <h2>Formation BIA</h2>
-        <p class="ecole-description">
-          Le Brevet d'Initiation Aéronautique : contenus et ressources
-        </p>
-        <a href="#formation-bia" class="ecole-btn">Accéder aux ressources</a>
-      </div>
-    </div>
-  </section>
+  <h1 class="ecole-title">Notre École de Sport</h1>
+  <p class="ecole-intro">
+    L’Aéro ULM Valence propose un espace d’apprentissage et de perfectionnement
+    à travers <strong>2 pôles complémentaires</strong>
+  </p>
 
-  {% endblock %}
+  <div class="ecole-container">
+    <!-- École Charles Bono -->
+    <div class="ecole-card">
+      <i class="fa-solid fa-school fa-3x" aria-hidden="true"></i>
+      <h2>École Charles Bono</h2>
+      <p class="ecole-description">
+        Pôle historique dédié à la <strong>formation initiale et continue</strong> des pilotes.
+        Un accompagnement personnalisé pour progresser en toute sécurité.
+      </p>
+      <a href="#charles-bono" class="ecole-btn">
+        <i class="fa-solid fa-arrow-right"></i> Découvrir les ressources
+      </a>
+    </div>
+
+    <!-- Formation BIA -->
+    <div class="ecole-card">
+      <i class="fa-solid fa-plane-departure fa-3x" aria-hidden="true"></i>
+      <h2>Formation BIA</h2>
+      <p class="ecole-description">
+        Le <strong>Brevet d’Initiation Aéronautique</strong> (BIA) pour s’initier au monde
+        de l’aviation et découvrir les bases théoriques et pratiques du pilotage.
+      </p>
+      <a href="#formation-bia" class="ecole-btn">
+        <i class="fa-solid fa-arrow-right"></i> Accéder aux contenus
+      </a>
+    </div>
+  </div>
+
+</section>
+
+{% endblock %}
