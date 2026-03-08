@@ -1,4 +1,4 @@
-# Aeronautical Club Website 
+# Aeronautical Club Website (in process...)
 
 # Description des attentes éventuelles ( READ.me avec IA)
 
