@@ -1,79 +1,100 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Budget
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetBilanCompteEpargnePage
-{% endblock %}
+{% block title %}Bilan épargne{% endblock %}
+{% block bodyId %}intranetBilanCompteEpargnePage{% endblock %}
 
 {% block titrePage %}
-	<p>Bilan par compte épargne</p>
+    <i class="fa-solid fa-piggy-bank"></i> Bilan par compte épargne
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "intranet_Bilan_Compte_Epargne" %}" method = "post">
-		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
-		{% csrf_token %}
-		{{ form.as_p }}		
-	</form>
+    <h3><i class="fa-solid fa-filter"></i> Sélectionner un compte</h3>
+    <form action="{% url 'intranet_Bilan_Compte_Epargne' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="{{ actionBtnName }}" class="BtnSubmit"></p>
+    </form>
 {% endblock %}
 
 {% block mainContent %}
-	<div>
-		{% if bilanBudget %}
-			<table class="table">
-				<head>
-					<tr>
-						<th scope="col"></th>
-						<th scope="col">Résultat</th>
-					</tr>
-				</head>
-				<tbody>
-					<tr>
-						<td align = left><b>Compte courant {{currentYear}}</b></td>
-						<td align = right><b>{{bilanBudget.resultat}} €</b></td>
-					</tr>
-				</tbody>
-			</table>
-		{% endif %}
-		
-		{% if compteEpargne %}
-			<table class="table">
-  				<thead>
-    				<tr>
-      					<th scope="col"></th>
-      					<th scope="col">Date</th>
-      					<th scope="col">Charges</th>
-      					<th scope="col">Produits</th>
-      					<th scope="col">Résultats</th>
-    				</tr>
-  				</thead>
-  				<tbody>	
-					<tr bgcolor="lightyellow">
-						<td align = left><b>{{compteEpargne.name}}</b></td>
-						<td align = right><b></b></td>
-						<td align = right><b>{{compteEpargne.charge}} €</b></td>
-						<td align = right><b>{{compteEpargne.produit}} €</b></td>
-						<td align = right><b>{{compteEpargne.resultat}} €</b></td>
-					</tr>
-					{% for Op in allOp %}
-						{% if Op.compteEpargne == compteEpargne %}
-							<tr>
-								<td align = left>{{Op.code}} - {{Op.name}}</td>
-								<td align = left>{{Op.date|date:"d/m/Y"}}</td>
-								<td align = right>{{Op.charge}} €</td>
-								<td align = right>{{Op.produit}} €</td>
-								<td align = right>{{Op.resultat}} €</td>
-							</tr>
-						{% endif %}
-					{% endfor %}
-				</tbody>
-			</table>
-		{% endif %}
-	</div>
+
+{% if bilanBudget %}
+<div class="card-section">
+    <h3><i class="fa-solid fa-building-columns"></i> Compte courant {{ currentYear }}</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Libellé</th>
+                <th class="text-right">Résultat (€)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="budget-total-row">
+                <td><strong>Compte courant {{ currentYear }}</strong></td>
+                <td class="text-right num {% if bilanBudget.resultat >= 0 %}positive{% else %}negative{% endif %}">
+                    <strong>{{ bilanBudget.resultat }} €</strong>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% if compteEpargne %}
+<div class="card-section">
+    <h3><i class="fa-solid fa-piggy-bank"></i> {{ compteEpargne.name }}</h3>
+
+    <!-- Résumé -->
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px">
+        <div style="background:var(--danger-bg);border-radius:var(--radius);padding:10px 16px;min-width:120px">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--danger);margin-bottom:2px">Charges</div>
+            <div style="font-size:20px;font-weight:800;color:var(--danger)" class="num">{{ compteEpargne.charge }} €</div>
+        </div>
+        <div style="background:var(--success-bg);border-radius:var(--radius);padding:10px 16px;min-width:120px">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--success);margin-bottom:2px">Produits</div>
+            <div style="font-size:20px;font-weight:800;color:var(--success)" class="num">{{ compteEpargne.produit }} €</div>
+        </div>
+        <div style="background:var(--primary-bg);border-radius:var(--radius);padding:10px 16px;min-width:120px">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--primary);margin-bottom:2px">Résultat</div>
+            <div style="font-size:20px;font-weight:800;" class="num {% if compteEpargne.resultat >= 0 %}positive{% else %}negative{% endif %}">{{ compteEpargne.resultat }} €</div>
+        </div>
+    </div>
+
+    <!-- Opérations -->
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Libellé</th>
+                <th>Date</th>
+                <th class="text-right">Charges (€)</th>
+                <th class="text-right">Produits (€)</th>
+                <th class="text-right">Résultat (€)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Op in allOp %}
+                {% if Op.compteEpargne == compteEpargne %}
+                <tr>
+                    <td><span class="text-muted">{{ Op.code }}</span></td>
+                    <td>{{ Op.name }}</td>
+                    <td>{{ Op.date|date:"d/m/Y" }}</td>
+                    <td class="text-right num">{{ Op.charge }} €</td>
+                    <td class="text-right num">{{ Op.produit }} €</td>
+                    <td class="text-right num {% if Op.resultat >= 0 %}positive{% else %}negative{% endif %}">
+                        {{ Op.resultat }} €
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state" style="padding:60px 0">
+    <i class="fa-solid fa-piggy-bank"></i>
+    <p>Sélectionnez un compte épargne dans le panneau de gauche</p>
+</div>
+{% endif %}
+
 {% endblock %}

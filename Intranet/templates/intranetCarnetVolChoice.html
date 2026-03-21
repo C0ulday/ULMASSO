@@ -1,27 +1,24 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Compte pilote
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetCarnetVolChoicePage
-{% endblock %}
+{% block title %}Carnets de vol{% endblock %}
+{% block bodyId %}intranetCarnetVolChoicePage{% endblock %}
 
 {% block titrePage %}
-	<p>Carnets de vol des pilotes</p>
+    <i class="fa-solid fa-book-open"></i> Carnets de vol des pilotes
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "intranet_Carnet_Vol_Choice" %}" method = "post">
-		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
-		{% csrf_token %}
-		{{ form.as_p }}
-	</form>
+    <h3><i class="fa-solid fa-user-pilot"></i> Sélectionner un pilote</h3>
+    <form action="{% url 'intranet_Carnet_Vol_Choice' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="{{ actionBtnName }}" class="BtnSubmit"></p>
+    </form>
 {% endblock %}
 
 {% block mainContent %}
+<div class="empty-state" style="padding:60px 0">
+    <i class="fa-solid fa-book-open"></i>
+    <p>Sélectionnez un pilote dans le panneau de gauche</p>
+</div>
 {% endblock %}

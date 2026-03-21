@@ -1,113 +1,120 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Compte pilote
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetComptePilotePage
-{% endblock %}
+{% block title %}Compte pilote{% endblock %}
+{% block bodyId %}intranetComptePilotePage{% endblock %}
 
 {% block titrePage %}
-	<p>Compte pilote de {{activePilote}}</p>
-	
+    <i class="fa-solid fa-wallet"></i> Compte pilote · {{ activePilote }}
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "pdf_Compte_Pilote" activePilote.id %}" method = "post">	
-		{% csrf_token %}	
-		<p>
-			<input type="submit" value= "Générer PDF" class = "BtnPDF" />
-		</p>
-	</form>
+    <form action="{% url 'pdf_Compte_Pilote' activePilote.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="BtnPDF" style="width:100%;margin-bottom:16px">
+            <i class="fa-solid fa-file-pdf"></i> Générer PDF
+        </button>
+    </form>
 
-	<p><b>Virements instruction/location</b></p>
-	<br>
-	<div>
-		{% if paiementVolList %}
-			<table class="table">
-	  			<thead>
-	    			<tr>
-	      				<th scope="col">Date</th>
-	      				<th scope="col">Produits (€)</th>
-	      				<th scope="col">Charges (€)</th>
-	    			</tr>
-	  			</thead>
-	  			<tbody>	
-					{% for paiement in paiementVolList %}
-						<tr>
-							<td>{{paiement.date|date:"d/m/Y"}}</td>
-							<td align = right>{{paiement.produit}}</td>
-			      			<td align = right>{{paiement.charge}}</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		{% else %}
-			<p>{{activePilote}} n'a aucun vol enregistré</p>
-		{% endif %}
-	</div>
+    <h3><i class="fa-solid fa-arrow-right-arrow-left"></i> Virements</h3>
+    {% if paiementVolList %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th class="text-right">Prod. (€)</th>
+                <th class="text-right">Charges (€)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for paiement in paiementVolList %}
+            <tr>
+                <td>{{ paiement.date|date:"d/m/Y" }}</td>
+                <td class="text-right num">{{ paiement.produit }}</td>
+                <td class="text-right num">{{ paiement.charge }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state" style="padding:20px 0">
+        <i class="fa-solid fa-receipt"></i>
+        <p>Aucun virement</p>
+    </div>
+    {% endif %}
 {% endblock %}
 
 {% block mainContent %}
 
-<table id="table1">
-	<tr>
-		<td>
-			<p><b>Total des charges : </b>{{activePilote.chargeComptePilote}} €</p>
-			<p><b>Total des produits : </b>{{activePilote.produitComptePilote}} €</p>
-			<p><b>Bilan compte pilote : </b>{{activePilote.bilanComptePilote}} €</p>
-		</td>
-		<td>
-			{% if activePilote.bilanComptePilote >= 0 %}
-				<div id="moncerclevert"></div>
-			{% else %}
-				<div id="moncerclerouge"></div>
-			{% endif %}
-		</td>
-	</tr>
-</table>
-	
-	<p><b>Vols d'instruction/location</b></p>
-	<div>
-		{% if volPiloteList %}
-			<table class="table">
-	  			<thead>
-	    			<tr>
-	      				<th scope="col">Date</th>
-	      				<th scope="col">Aéronef</th>
-	      				<th scope="col">Horomètre début vol</th>
-	      				<th scope="col">Horomètre fin vol</th>
-	      				<th scope="col">durée vol (min)</th>
-	      				<th scope="col">Tarif vol (€)</th>
-	      				<th scope="col">Tarif instruction (€)</th>
-	      				<th scope="col">Remise (€)</th>
-	      				<th scope="col">Produits (€)</th>
-	      				<th scope="col">Charges (€)</th>
-	    			</tr>
-	  			</thead>
-	  			<tbody>	
-					{% for vol in volPiloteList %}
-						<tr>
-							<td>{{vol.date|date:"d/m/Y"}}</td>
-							<td>{{vol.aeronef}}</td>
-							<td align = right>{{vol.horoInit}}</td>
-							<td align = right>{{vol.horoFin}}</td>
-			      			<td align = right>{{vol.dureeVol}}</td>  
-			      			<td align = right>{{vol.prixVol}}</td>
-			      			<td align = right>{{vol.tarifInstruction}}</td>
-			      			<td align = right>{{vol.remise}}</td>
-			      			<td align = right>0.00</td>
-			      			<td align = right>{{vol.prixTotal}}</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		{% else %}
-			<p>{{activePilote}} n'a aucun vol enregistré</p>
-		{% endif %}
-	</div>
+<!-- Balance card -->
+<div class="balance-card {% if activePilote.bilanComptePilote >= 0 %}balance-positive{% else %}balance-negative{% endif %}">
+    <div class="balance-left">
+        <div class="balance-icon">
+            <i class="fa-solid fa-{% if activePilote.bilanComptePilote >= 0 %}circle-check{% else %}circle-exclamation{% endif %}"></i>
+        </div>
+        <div>
+            <div class="balance-label">Bilan compte pilote</div>
+            <div class="balance-value">{{ activePilote.bilanComptePilote|floatformat:2 }} €</div>
+            <div style="font-size:12px;color:var(--text-2);margin-top:3px">
+                {% if activePilote.bilanComptePilote >= 0 %}Solde créditeur ✓{% else %}Solde débiteur{% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="balance-details">
+        <div class="balance-row">
+            <span>Total charges</span>
+            <strong class="num">{{ activePilote.chargeComptePilote }} €</strong>
+        </div>
+        <div class="balance-row">
+            <span>Total produits</span>
+            <strong class="num">{{ activePilote.produitComptePilote }} €</strong>
+        </div>
+        <div class="balance-row balance-row-total">
+            <span>Solde net</span>
+            <strong class="num">{{ activePilote.bilanComptePilote|floatformat:2 }} €</strong>
+        </div>
+    </div>
+</div>
+
+<!-- Flights table -->
+<div class="card-section">
+    <h3><i class="fa-solid fa-plane"></i> Vols d'instruction / location</h3>
+    {% if volPiloteList %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Aéronef</th>
+                <th class="text-right">Horo déb.</th>
+                <th class="text-right">Horo fin</th>
+                <th class="text-right">Durée</th>
+                <th class="text-right">Tarif vol (€)</th>
+                <th class="text-right">Instruction (€)</th>
+                <th class="text-right">Remise (€)</th>
+                <th class="text-right">Total (€)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vol in volPiloteList %}
+            <tr>
+                <td>{{ vol.date|date:"d/m/Y" }}</td>
+                <td>{{ vol.aeronef }}</td>
+                <td class="text-right num">{{ vol.horoInit }}</td>
+                <td class="text-right num">{{ vol.horoFin }}</td>
+                <td class="text-right num">{{ vol.dureeVol }} min</td>
+                <td class="text-right num">{{ vol.prixVol }}</td>
+                <td class="text-right num">{{ vol.tarifInstruction }}</td>
+                <td class="text-right num">{{ vol.remise }}</td>
+                <td class="text-right num"><strong>{{ vol.prixTotal }}</strong></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <i class="fa-solid fa-plane-circle-xmark"></i>
+        <p>{{ activePilote }} n'a aucun vol enregistré</p>
+    </div>
+    {% endif %}
+</div>
+
 {% endblock %}

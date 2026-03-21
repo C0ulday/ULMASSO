@@ -1,33 +1,46 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Intranet
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetProfilmembresPage
-{% endblock %}
+{% block title %}Mon profil{% endblock %}
+{% block bodyId %}intranetProfilmembresPage{% endblock %}
 
 {% block titrePage %}
+    <i class="fa-solid fa-user-pen"></i> Mon profil
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "member_Profile" %}" method = "post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
-	</form>
+    <h3><i class="fa-solid fa-lock"></i> Changer le mot de passe</h3>
+    <form action="{% url 'member_Profile' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="{{ actionBtnName }}" class="BtnSubmit"></p>
+    </form>
 {% endblock %}
 
 {% block mainContent %}
-	<p><b>Nom :</b> {{loggedMember.name}}</p>
-	<p><b>Prénom :</b> {{loggedMember.vorname}}</p>
-	<p><b>Genre :</b> {{loggedMember.genre}}</p>
-	<p><b>Date de naissance :</b> {{loggedMember.birthday|date:"d/m/Y"}}</p>
-	<p><b>Téléphone :</b> {{loggedMember.phone}}</p>
-	<p><b>Courriel :</b> {{loggedMember.email}}</p>
-	<p><b>Adresse :</b> {{loggedMember.adress}}, {{loggedMember.zip}} {{loggedMember.city}}</p>
+<div class="member-profile-card">
+
+    <div class="member-profile-header">
+        <div class="member-profile-avatar">
+            {{ loggedMember.vorname|slice:":1" }}{{ loggedMember.name|slice:":1" }}
+        </div>
+        <div>
+            <h2 class="member-profile-name">{{ loggedMember.vorname }} {{ loggedMember.name }}</h2>
+            <span class="member-profile-role">{{ loggedMember.statut }}</span>
+        </div>
+    </div>
+
+    <div style="padding:20px">
+        <div class="card-section">
+            <h3><i class="fa-solid fa-user"></i> Informations personnelles</h3>
+            <dl class="info-list">
+                <dt>Genre</dt><dd>{{ loggedMember.genre }}</dd>
+                <dt>Date de naissance</dt><dd>{{ loggedMember.birthday|date:"d/m/Y" }}</dd>
+                <dt>Téléphone</dt><dd>{{ loggedMember.phone|default:"—" }}</dd>
+                <dt>Email</dt><dd>{{ loggedMember.email|default:"—" }}</dd>
+                <dt>Adresse</dt><dd>{{ loggedMember.adress|default:"—" }}, {{ loggedMember.zip }} {{ loggedMember.city }}</dd>
+            </dl>
+        </div>
+    </div>
+
+</div>
 {% endblock %}

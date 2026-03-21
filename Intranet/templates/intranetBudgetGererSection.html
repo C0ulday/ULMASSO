@@ -1,63 +1,59 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Budget
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetBudgetGererSectionPage
-{% endblock %}
+{% block title %}Gestion des sections{% endblock %}
+{% block bodyId %}intranetBudgetGererSectionPage{% endblock %}
 
 {% block titrePage %}
-	<p>Budget {{current_year}} - Gestion des sections</p>
+    <i class="fa-solid fa-folder-tree"></i> Budget {{ current_year }} · Sections
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "intranet_Budget_Section_Add_Show" %}" method = "post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<br>
-		<p style="text-align:center"><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit"/></p>
-	</form>
+    <h3><i class="fa-solid fa-plus"></i> Ajouter une section</h3>
+    <form action="{% url 'intranet_Budget_Section_Add_Show' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="{{ actionBtnName }}" class="BtnSubmit"></p>
+    </form>
 {% endblock %}
 
 {% block mainContent %}
-	<div>
-		{% if budgetSectionAll %}
-			<table class="table">
-  				<thead>
-    				<tr style="text-align:center">
-						<th scope="col">Code</th>
-      					<th scope="col">Section</th>
-      					<th scope="col" colspan = '2'></th>
-    				</tralign = "center">
-  				</thead>
-  				<tbody>
-					{% for budgetSection in budgetSectionAll %}
-					  	<tr>
-							<td>{{budgetSection.code}}</td>
-      						<td>{{budgetSection.name}}</td>
-      						<td style="text-align:center">
-								<form action ="{% url "intranet_Budget_Section_Modify" budgetSection.id %}" method="POST">
-										{% csrf_token %}
-										<input type = "submit" value="Modifier" class = "BtnModify"/>
-								</form>
-							</td>
-      						<td style="text-align:center">
-								<form action ="{% url "intranet_Budget_Section_Delete" budgetSection.id %}" method="POST">
-									{% csrf_token %}
-									<input type = "submit" value="Supprimer" class = "BtnDelete"/>
-								</form>
-							</td>	
-    					</tr>
-    				{% endfor %}
-  				</tbody>
-			</table>
-		{% else %}
-			<p>Aucune section n'est actuellement enregistrée</p>
-		{% endif %}
-	</div>
+<div class="card-section">
+    <h3><i class="fa-solid fa-list"></i> Sections budgétaires</h3>
+    {% if budgetSectionAll %}
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Section</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for budgetSection in budgetSectionAll %}
+            <tr>
+                <td><span class="badge badge-neutral">{{ budgetSection.code }}</span></td>
+                <td><strong>{{ budgetSection.name }}</strong></td>
+                <td>
+                    <div style="display:flex;gap:5px;justify-content:flex-end">
+                        <form action="{% url 'intranet_Budget_Section_Modify' budgetSection.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm BtnModify"><i class="fa-solid fa-pen"></i></button>
+                        </form>
+                        <form action="{% url 'intranet_Budget_Section_Delete' budgetSection.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm BtnDelete"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <i class="fa-solid fa-folder-open"></i>
+        <p>Aucune section enregistrée</p>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

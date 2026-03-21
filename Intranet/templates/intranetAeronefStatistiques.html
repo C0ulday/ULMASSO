@@ -1,75 +1,115 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Aéronef
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetAeronefStatistiquesPage
-{% endblock %}
+{% block title %}Statistiques aéronefs{% endblock %}
+{% block bodyId %}intranetAeronefStatistiquesPage{% endblock %}
 
 {% block titrePage %}
-	<p>Statistiques aéronefs {{current_year}}</p>
+    <i class="fa-solid fa-chart-bar"></i> Statistiques aéronefs · {{ current_year }}
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "intranet_Aeronef_Statistiques" %}" method = "post">
-		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
-		{% csrf_token %}
-		{{ form.as_p }}
-	</form>
-	<div id='graphc'>
-		<canvas id="myChart" width="120px" height="120px"></canvas>
-		<br>
-	</div>
-	
+    <h3><i class="fa-solid fa-helicopter"></i> Sélectionner</h3>
+    <form action="{% url 'intranet_Aeronef_Statistiques' %}" method="post">
+        <p><input type="submit" value="{{ actionBtnName }}" class="BtnSubmit" style="margin-bottom:12px"></p>
+        {% csrf_token %}
+        {{ form.as_p }}
+    </form>
+    {% if aeronef %}
+    <div style="margin-top:16px">
+        <canvas id="myChart" width="200" height="200"></canvas>
+    </div>
+    {% endif %}
 {% endblock %}
-	
+
 {% block mainContent %}
-	{% if aeronef %}
-		<p><b>Temps de vol total :</b> {{tpsVol.0}} heures {{tpsVol.1}} minutes</p>
-		<p><b>Temps de vol maintenance :</b> {{tpsTypeVol.0.0}} heures {{tpsTypeVol.0.1}} minutes</p>
-		<p><b>Temps de vol découverte :</b> {{tpsTypeVol.1.0}} heures {{tpsTypeVol.1.1}} minutes</p>
-		<p><b>Temps de vol instruction :</b> {{tpsTypeVol.2.0}} heures {{tpsTypeVol.2.1}} minutes</p>
-		<p><b>Temps de vol location :</b> {{tpsTypeVol.3.0}} heures {{tpsTypeVol.3.1}} minutes</p>
-		<p><b>Volume carburant :</b> {{volumeCarburant}} litres</p>
-		<p><b>Consommation :</b> {{consommation}} litres/heure</p>
-		
-	{% else %}
-		<p><i>Aucun aéronef n'est s'électionné</i></p>
-	{% endif %}
-	
+{% if aeronef %}
+
+<!-- Résumé KPI -->
+<div class="kpi-grid" style="margin-bottom:20px">
+    <div class="kpi-card">
+        <div class="kpi-icon kpi-icon-blue"><i class="fa-solid fa-clock"></i></div>
+        <div class="kpi-body">
+            <div class="kpi-label">Temps de vol total</div>
+            <div class="kpi-value">{{ tpsVol.0 }}h{{ tpsVol.1 }}m</div>
+            <div class="kpi-sub">Toutes activités confondues</div>
+        </div>
+        <div class="kpi-bar"><div class="kpi-bar-fill kpi-bar-blue" style="width:100%"></div></div>
+    </div>
+    <div class="kpi-card">
+        <div class="kpi-icon kpi-icon-green"><i class="fa-solid fa-gas-pump"></i></div>
+        <div class="kpi-body">
+            <div class="kpi-label">Carburant consommé</div>
+            <div class="kpi-value">{{ volumeCarburant }} L</div>
+            <div class="kpi-sub">{{ consommation }} L/heure en moyenne</div>
+        </div>
+        <div class="kpi-bar"><div class="kpi-bar-fill kpi-bar-green" style="width:100%"></div></div>
+    </div>
+</div>
+
+<!-- Détail par type de vol -->
+<div class="card-section">
+    <h3><i class="fa-solid fa-list"></i> Détail par type de vol</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Type de vol</th>
+                <th class="text-right">Durée</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><i class="fa-solid fa-wrench" style="color:var(--text-3);margin-right:8px"></i> Maintenance</td>
+                <td class="text-right num">{{ tpsTypeVol.0.0 }}h {{ tpsTypeVol.0.1 }}min</td>
+            </tr>
+            <tr>
+                <td><i class="fa-solid fa-star" style="color:var(--text-3);margin-right:8px"></i> Découverte</td>
+                <td class="text-right num">{{ tpsTypeVol.1.0 }}h {{ tpsTypeVol.1.1 }}min</td>
+            </tr>
+            <tr>
+                <td><i class="fa-solid fa-chalkboard-user" style="color:var(--text-3);margin-right:8px"></i> Instruction</td>
+                <td class="text-right num">{{ tpsTypeVol.2.0 }}h {{ tpsTypeVol.2.1 }}min</td>
+            </tr>
+            <tr>
+                <td><i class="fa-solid fa-plane" style="color:var(--text-3);margin-right:8px"></i> Location</td>
+                <td class="text-right num">{{ tpsTypeVol.3.0 }}h {{ tpsTypeVol.3.1 }}min</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% else %}
+<div class="empty-state" style="padding:60px 0">
+    <i class="fa-solid fa-helicopter"></i>
+    <p>Sélectionnez un aéronef dans le panneau de gauche</p>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block extra_js %}
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        
-	<script>
-		var barColors = {{ colors|safe }}
-		var xValues = {{ label|safe }};
-		var yValues = {{ tpsTypeVolPercent|safe }};
-		barColors = ["red", "green","blue","orange"];
-		ctx = document.getElementById("myChart"),
-		new Chart(ctx, {
-			type : "doughnut",
-			data: {
-    			labels : xValues,
-			    datasets : [{
-					backgroundColor: barColors,
-			    	data: yValues
-			    	}]
-		  		},
-		  	options: {
-				plugins :{
-				    title: {
-				      display: true,
-				      text: "Répartition des vols (%)"
-				    }
-				}
-		  	}
-		});
-	</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+{% if aeronef %}
+(function() {
+    const ctx = document.getElementById('myChart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: {{ label|safe }},
+            datasets: [{
+                backgroundColor: ['#ef4444','#22c55e','#3b82f6','#f59e0b'],
+                data: {{ tpsTypeVolPercent|safe }},
+                borderWidth: 0
+            }]
+        },
+        options: {
+            plugins: {
+                title: { display: true, text: 'Répartition des vols (%)', color: '#94a3b8', font: { size: 11 } },
+                legend: { labels: { color: '#94a3b8', font: { size: 10 } } }
+            }
+        }
+    });
+})();
+{% endif %}
+</script>
 {% endblock %}

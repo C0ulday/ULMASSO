@@ -4,7 +4,7 @@
 {% block bodyId %}intranetStatsMembresPage{% endblock %}
 
 {% block titrePage %}
-    <p><i class="fa-solid fa-chart-pie" style="color:var(--color-primary-light);margin-right:8px"></i>Statistiques membres {{ current_year }}</p>
+    <i class="fa-solid fa-chart-pie"></i> Statistiques membres · {{ current_year }}
 {% endblock %}
 
 {% block asideContent %}{% endblock %}
@@ -116,34 +116,34 @@
                 <td>{{ m.name }}</td>
                 <td>{{ m.vorname }}</td>
                 <td><span class="badge badge-info">{{ m.statut }}</span></td>
-                <td style="text-align:center">
+                <td class="text-center">
                     {% if m.licenceAUV.value == "OUI" %}
-                        <span id="monpetitcerclevert"></span>
+                        <span class="badge badge-success">✓</span>
                     {% else %}
-                        <span id="monpetitcerclerouge"></span>
+                        <span class="text-muted">—</span>
                     {% endif %}
                 </td>
-                <td style="text-align:center">
+                <td class="text-center">
                     {% if m.brevetInstructeur.value == "OUI" %}
-                        <span id="monpetitcerclevert"></span>
+                        <span class="badge badge-primary">✓</span>
                     {% else %}
-                        <span id="monpetitcerclerouge"></span>
+                        <span class="text-muted">—</span>
                     {% endif %}
                 </td>
-                <td style="text-align:center">
+                <td class="text-center">
                     {% if m.datePiloteC2 %}
                         <span class="badge badge-success" title="{{ m.datePiloteC2|date:'d/m/Y' }}">✓</span>
-                    {% else %}<span style="color:var(--color-text-light)">—</span>{% endif %}
+                    {% else %}<span class="text-muted">—</span>{% endif %}
                 </td>
-                <td style="text-align:center">
+                <td class="text-center">
                     {% if m.datePiloteC3 %}
                         <span class="badge badge-success" title="{{ m.datePiloteC3|date:'d/m/Y' }}">✓</span>
-                    {% else %}<span style="color:var(--color-text-light)">—</span>{% endif %}
+                    {% else %}<span class="text-muted">—</span>{% endif %}
                 </td>
-                <td style="text-align:center">
+                <td class="text-center">
                     {% if m.datePiloteC4 %}
                         <span class="badge badge-success" title="{{ m.datePiloteC4|date:'d/m/Y' }}">✓</span>
-                    {% else %}<span style="color:var(--color-text-light)">—</span>{% endif %}
+                    {% else %}<span class="text-muted">—</span>{% endif %}
                 </td>
                 <td style="text-align:right">
                     {% if m.birthday %}{{ m.age }} ans{% else %}—{% endif %}

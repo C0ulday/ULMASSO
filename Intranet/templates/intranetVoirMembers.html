@@ -1,50 +1,115 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Membres
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetVoirMembresPage
-{% endblock %}
+{% block title %}Fiche membre{% endblock %}
+{% block bodyId %}intranetVoirMembresPage{% endblock %}
 
 {% block titrePage %}
-	<p>Membres {{current_year}}</p>
+    <i class="fa-solid fa-id-card"></i> Visualiser fiche membre
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "intranet_Member_Show" %}" method = "post">
-		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
-		{% csrf_token %}
-		{{ form.as_p }}		
-	</form>
+    <h3><i class="fa-solid fa-magnifying-glass"></i> Rechercher</h3>
+    <form action="{% url 'intranet_Member_Show' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="{{ actionBtnName }}" class="BtnSubmit"></p>
+    </form>
 {% endblock %}
 
 {% block mainContent %}
-	{% if member %}
-		<p><b>Nom		:</b> {{member.name}}</p>
-		<p><b>Prénom	:</b> {{member.vorname}}</p>
-		<p><b>Fonction	:</b> {{member.statut}} d'AUV</p>
-		<p><b>Genre		:</b> {{member.genre}}</p>
-		<p><b>Date de naissance	:</b> {{member.birthday|date:"d/m/Y"}}</p>
-		<p><b>Age		:</b> {{member.age}} ans</p>
-		<p><b>Téléphone	:</b> {{member.phone}}</p>
-		<p><b>Courriel 	:</b> {{member.email}}</p>
-		<p><b>Adresse 	:</b> {{member.adress}}, {{member.zip}} {{member.city}}</p>
-		<p><b>N° licence 	:</b> {{member.licenceFFPLUM}}</p>
-		<p><b>Licencié AUV 	:</b> {{member.licenceAUV.value}}</p>
-		<p><b>Instructeur 	:</b> {{member.brevetInstructeur.value}}</p>
-		<p><b>Brevet pilote Classe 2 	:</b> {{member.datePiloteC2|date:"d/m/Y"}}</p>
-		<p><b>Brevet pilote Classe 3 	:</b> {{member.datePiloteC3|date:"d/m/Y"}}</p>
-		<p><b>Brevet pilote Classe 4 	:</b> {{member.datePiloteC4|date:"d/m/Y"}}</p>
-		<p><b>Brevet emport passager Classe 2 	:</b> {{member.dateEmportC2|date:"d/m/Y"}}</p>
-		<p><b>Brevet emport passager Classe 3 	:</b> {{member.dateEmportC3|date:"d/m/Y"}}</p>
-		<p><b>Brevet emport passager Classe 4 	:</b> {{member.dateEmportC4|date:"d/m/Y"}}</p>
-		<p><b>Vol découverte Classe 2 	:</b> {{member.dateBaptemeC2|date:"d/m/Y"}}</p>
-		<p><b>Vol découverte Classe 3 	:</b> {{member.dateBaptemeC3|date:"d/m/Y"}}</p>
-		<p><b>Vol découverte Classe 4 	:</b> {{member.dateBaptemeC4|date:"d/m/Y"}}</p>
-	{% endif %}
+{% if member %}
+<div class="member-profile-card">
+
+    <!-- Header dark banner -->
+    <div class="member-profile-header">
+        <div class="member-profile-avatar">
+            {{ member.vorname|slice:":1" }}{{ member.name|slice:":1" }}
+        </div>
+        <div>
+            <h2 class="member-profile-name">{{ member.vorname }} {{ member.name }}</h2>
+            <span class="member-profile-role">{{ member.statut }} d'AUV</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">
+                {% if member.licenceAUV.value == "OUI" %}
+                    <span class="badge badge-success"><i class="fa-solid fa-id-card"></i> Licencié AUV</span>
+                {% endif %}
+                {% if member.brevetInstructeur.value == "OUI" %}
+                    <span class="badge badge-primary"><i class="fa-solid fa-chalkboard-user"></i> Instructeur</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Body grid -->
+    <div class="member-profile-body">
+
+        <!-- Infos personnelles -->
+        <div class="card-section">
+            <h3><i class="fa-solid fa-user"></i> Informations personnelles</h3>
+            <dl class="info-list">
+                <dt>Genre</dt>
+                <dd>{{ member.genre }}</dd>
+                <dt>Date de naissance</dt>
+                <dd>{{ member.birthday|date:"d/m/Y" }} · {{ member.age }} ans</dd>
+                <dt>N° FFPLUM</dt>
+                <dd>{{ member.licenceFFPLUM|default:"—" }}</dd>
+            </dl>
+        </div>
+
+        <!-- Coordonnées -->
+        <div class="card-section">
+            <h3><i class="fa-solid fa-address-book"></i> Coordonnées</h3>
+            <dl class="info-list">
+                <dt>Téléphone</dt>
+                <dd>{{ member.phone|default:"—" }}</dd>
+                <dt>Email</dt>
+                <dd>{{ member.email|default:"—" }}</dd>
+                <dt>Adresse</dt>
+                <dd>{{ member.adress|default:"—" }}<br>{{ member.zip }} {{ member.city }}</dd>
+            </dl>
+        </div>
+
+        <!-- Qualifications -->
+        <div class="card-section">
+            <h3><i class="fa-solid fa-certificate"></i> Qualifications</h3>
+            <table style="font-size:12px">
+                <thead>
+                    <tr>
+                        <th>Brevet</th>
+                        <th class="text-center">Classe 2</th>
+                        <th class="text-center">Classe 3</th>
+                        <th class="text-center">Classe 4</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pilote</td>
+                        <td class="text-center">{% if member.datePiloteC2 %}<span class="badge badge-success" title="{{ member.datePiloteC2|date:'d/m/Y' }}">{{ member.datePiloteC2|date:"d/m/Y" }}</span>{% else %}—{% endif %}</td>
+                        <td class="text-center">{% if member.datePiloteC3 %}<span class="badge badge-success" title="{{ member.datePiloteC3|date:'d/m/Y' }}">{{ member.datePiloteC3|date:"d/m/Y" }}</span>{% else %}—{% endif %}</td>
+                        <td class="text-center">{% if member.datePiloteC4 %}<span class="badge badge-success" title="{{ member.datePiloteC4|date:'d/m/Y' }}">{{ member.datePiloteC4|date:"d/m/Y" }}</span>{% else %}—{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td>Emport passager</td>
+                        <td class="text-center">{% if member.dateEmportC2 %}<span class="badge badge-success">{{ member.dateEmportC2|date:"d/m/Y" }}</span>{% else %}—{% endif %}</td>
+                        <td class="text-center">{% if member.dateEmportC3 %}<span class="badge badge-success">{{ member.dateEmportC3|date:"d/m/Y" }}</span>{% else %}—{% endif %}</td>
+                        <td class="text-center">{% if member.dateEmportC4 %}<span class="badge badge-success">{{ member.dateEmportC4|date:"d/m/Y" }}</span>{% else %}—{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td>Vol découverte</td>
+                        <td class="text-center">{% if member.dateBaptemeC2 %}<span class="badge badge-info">{{ member.dateBaptemeC2|date:"d/m/Y" }}</span>{% else %}—{% endif %}</td>
+                        <td class="text-center">{% if member.dateBaptemeC3 %}<span class="badge badge-info">{{ member.dateBaptemeC3|date:"d/m/Y" }}</span>{% else %}—{% endif %}</td>
+                        <td class="text-center">{% if member.dateBaptemeC4 %}<span class="badge badge-info">{{ member.dateBaptemeC4|date:"d/m/Y" }}</span>{% else %}—{% endif %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% else %}
+<div class="empty-state" style="padding:60px 0">
+    <i class="fa-solid fa-id-card"></i>
+    <p>Sélectionnez un membre dans le panneau de gauche</p>
+</div>
+{% endif %}
 {% endblock %}

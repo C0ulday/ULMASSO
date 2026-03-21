@@ -1,60 +1,80 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Compte pilote
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetBilanComptePilotePage
-{% endblock %}
+{% block title %}Bilan comptes pilotes{% endblock %}
+{% block bodyId %}intranetBilanComptePilotePage{% endblock %}
 
 {% block titrePage %}
-	<p>Bilan Comptes pilotes</p>
-	
+    <i class="fa-solid fa-scale-balanced"></i> Bilan des comptes pilotes
 {% endblock %}
 
 {% block asideContent %}
-<p align = center>Bilan financier des comptes pilotes</p>
-<i>Bilan positif : AUV doit de l'argent</i>
-<br>
-<i>Bilan négatif : Les pilotes doivent de l'argent à AUV</i>
-<p>Produits : {{totalProduit}} €</p>
-<p>Charges  : {{totalCharge}} €</p>
-<p>Bilan    : {{totalBilan}} €</p>
+    <div class="card" style="margin-bottom:0">
+        <div class="card-label"><i class="fa-solid fa-circle-info"></i> Lecture du bilan</div>
+        <p style="font-size:12px;color:var(--text-2);margin-top:8px;line-height:1.6">
+            <strong style="color:var(--success)">Bilan positif</strong> : AUV doit de l'argent au pilote.<br>
+            <strong style="color:var(--danger)">Bilan négatif</strong> : Le pilote doit de l'argent à AUV.
+        </p>
+        <div style="border-top:1px solid var(--border);margin-top:14px;padding-top:14px">
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
+                <span class="text-muted">Total produits</span>
+                <strong class="num">{{ totalProduit }} €</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">
+                <span class="text-muted">Total charges</span>
+                <strong class="num">{{ totalCharge }} €</strong>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:14px;border-top:1px solid var(--border);padding-top:8px;margin-top:4px">
+                <span style="font-weight:700">Bilan global</span>
+                <strong class="num {% if totalBilan >= 0 %}positive{% else %}negative{% endif %}">{{ totalBilan }} €</strong>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block mainContent %}
-	<div>
-		{% if allMember %}
-			<table class="table">
-	  			<thead>
-	    			<tr>
-	      				<th scope="col">Pilote</th>
-	      				<th scope="col">Produits (€)</th>
-	      				<th scope="col">Charges (€)</th>
-	      				<th scope="col">Bilan (€)</th>	      				
-	    			</tr>
-	  			</thead>
-	  			<tbody>	
-					{% for member in allMember %}
-						<tr>
-							<td>{{member}}</td>
-							<td align = right>{{member.produitComptePilote}}</td>
-							<td align = right>{{member.chargeComptePilote}}</td>
-							<td align = right>{{member.bilanComptePilote}}</td>
-							<td>
-							{% if member.bilanComptePilote >= 0 %}
-								<div id="monpetitcerclevert"></div>
-							{% else %}
-								<div id="monpetitcerclerouge"></div>
-							{% endif %}
-							</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-	{% endif %}
+<div class="card-section">
+    <h3><i class="fa-solid fa-users"></i> Comptes par pilote</h3>
+    {% if allMember %}
+    <table>
+        <thead>
+            <tr>
+                <th>Pilote</th>
+                <th class="text-right">Produits (€)</th>
+                <th class="text-right">Charges (€)</th>
+                <th class="text-right">Bilan (€)</th>
+                <th class="text-center">État</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in allMember %}
+            <tr>
+                <td>
+                    <div style="display:flex;align-items:center;gap:8px">
+                        <div class="member-avatar-sm">{{ member.vorname|slice:":1" }}{{ member.name|slice:":1" }}</div>
+                        {{ member }}
+                    </div>
+                </td>
+                <td class="text-right num">{{ member.produitComptePilote }}</td>
+                <td class="text-right num">{{ member.chargeComptePilote }}</td>
+                <td class="text-right num {% if member.bilanComptePilote >= 0 %}positive{% else %}negative{% endif %}">
+                    <strong>{{ member.bilanComptePilote }}</strong>
+                </td>
+                <td class="text-center">
+                    {% if member.bilanComptePilote >= 0 %}
+                        <span class="badge badge-success">Créditeur</span>
+                    {% else %}
+                        <span class="badge badge-danger">Débiteur</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <i class="fa-solid fa-users-slash"></i>
+        <p>Aucun membre enregistré</p>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

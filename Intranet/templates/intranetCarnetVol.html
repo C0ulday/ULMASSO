@@ -1,115 +1,112 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Compte pilote
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetCarnetVolPage
-{% endblock %}
+{% block title %}Carnet de vol{% endblock %}
+{% block bodyId %}intranetCarnetVolPage{% endblock %}
 
 {% block titrePage %}
-	<p>Carnet de vol AUV {{current_year}} de {{activePilote}}</p>
+    <i class="fa-solid fa-book-open"></i> Carnet de vol · {{ activePilote }} · {{ current_year }}
 {% endblock %}
 
-{% block asideContent %}
-{% endblock %}
+{% block asideContent %}{% endblock %}
 
 {% block mainContent %}
-	<div>
-		{% if volAllPilote %}
-			<p><b>Vols en tant que pilote en {{current_year}} sur les aéronefs AUV - durée totale : {{dureeVolAllPilote}}</b></p>
-			<table class="table">
-  				<thead>
-    				<tr>
-      					<th scope="col">Date</th>
-      					<th scope="col">Aéronef</th>
-      					<th scope="col">durée vol (min)</th>
-      					<th scope="col">Vent</th>
-      					<th scope="col">Altitude</th>
-      					<th scope="col">Stress</th>
-      					<th scope="col">Décollage</th>
-      					<th scope="col">Vol</th>
-      					<th scope="col">Navigation</th>
-      					<th scope="col">Radio</th>
-      					<th scope="col">Atterrissage</th>
-      					<th scope="col">Tour de piste</th>
-      					<th scope="col">Aérodromes et bases visités</th>
-      					<th scope="col">Commentaires</th>
-    				</tr>
-  				</thead>
-  				<tbody>	
-					{% for vol in volAllPilote%}
-						<tr>
-							<td>{{vol.date|date:"d/m/Y"}}</td>
-							<td>{{vol.aeronef}}</td>
-		      				<td align = right>{{vol.dureeVol}}</td>  
-		      				<td>{{vol.textVVent}}</td>
-		      				<td>{{vol.textAltitude}}</td>
-		      				<td>{{vol.textStress}}</td>
-		      				<td>{{vol.textDecollage}}</td>
-		      				<td>{{vol.textVol}}</td>
-		      				<td>{{vol.textNav}}</td>
-		      				<td>{{vol.textRadio}}</td>
-		      				<td>{{vol.textAtterrissage}}</td>
-		      				<td>{{vol.textTdp}}</td>
-		      				<td>{{vol.textBaseULM}}</td>
-		      				<td>{{vol.textCommentaire}}</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>	
-		{% else %}
-			<p>Aucun vol en tant que pilote n'est actuellement enregistré</p>
-		{% endif %}
-		<br>
-		{% if volAllEleve %}
-			<p><b>Vols en tant qu'élève pilote en {{current_year}} sur les aéronefs AUV - durée totale : {{dureeVolAllEleve}}</b></p>
-			<table class="table">
-  				<thead>
-    				<tr>
-      					<th scope="col">Date</th>
-      					<th scope="col">Aéronef</th>
-      					<th scope="col">durée vol (min)</th>
-      					<th scope="col">Vent</th>
-      					<th scope="col">Altitude</th>
-      					<th scope="col">Stress</th>
-      					<th scope="col">Décollage</th>
-      					<th scope="col">Vol</th>
-      					<th scope="col">Navigation</th>
-      					<th scope="col">Radio</th>
-      					<th scope="col">Atterrissage</th>
-      					<th scope="col">Tour de piste</th>
-      					<th scope="col">Aérodromes et bases visités</th>
-      					<th scope="col">Commentaires</th>
-    				</tr>
-  				</thead>
-  				<tbody>	
-					{% for vol in volAllEleve%}
-						<tr>
-							<td>{{vol.date|date:"d/m/Y"}}</td>
-							<td>{{vol.aeronef}}</td>
-		      				<td align = right>{{vol.dureeVol}}</td>  
-		      				<td>{{vol.textVVent}}</td>
-		      				<td>{{vol.textAltitude}}</td>
-		      				<td>{{vol.textStress}}</td>
-		      				<td>{{vol.textDecollage}}</td>
-		      				<td>{{vol.textVol}}</td>
-		      				<td>{{vol.textNav}}</td>
-		      				<td>{{vol.textRadio}}</td>
-		      				<td>{{vol.textAtterrissage}}</td>
-		      				<td>{{vol.textTdp}}</td>
-		      				<td>{{vol.textBaseULM}}</td>
-		      				<td>{{vol.textCommentaire}}</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>	
-		{% else %}
-			<p>Aucun vol en tant qu'élève pilote n'est actuellement enregistré</p>
-		{% endif %}
-	</div>
-{% endblock %}			
+
+<!-- Vols en tant que pilote -->
+<div class="card-section">
+    <h3><i class="fa-solid fa-circle-user"></i> Vols en tant que pilote · {{ current_year }}</h3>
+    {% if volAllPilote %}
+    <div style="display:inline-flex;align-items:center;gap:8px;background:var(--primary-bg);border-left:3px solid var(--primary);border-radius:0 var(--radius) var(--radius) 0;padding:8px 14px;margin-bottom:14px;font-size:13px">
+        <i class="fa-solid fa-clock" style="color:var(--primary)"></i>
+        <strong>{{ volAllPilote|length }}</strong> vol{{ volAllPilote|length|pluralize }} — durée totale&nbsp;: <strong>{{ dureeVolAllPilote }}</strong>
+    </div>
+    <div style="overflow-x:auto">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th><th>Aéronef</th>
+                <th class="text-right">Durée</th>
+                <th>Vent</th><th>Altitude</th><th>Stress</th>
+                <th>Décollage</th><th>Vol</th><th>Nav.</th><th>Radio</th>
+                <th>Atterr.</th><th>TDP</th><th>Bases</th><th>Commentaires</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vol in volAllPilote %}
+            <tr>
+                <td>{{ vol.date|date:"d/m/Y" }}</td>
+                <td>{{ vol.aeronef }}</td>
+                <td class="text-right num">{{ vol.dureeVol }} min</td>
+                <td>{{ vol.textVVent|default:"—" }}</td>
+                <td>{{ vol.textAltitude|default:"—" }}</td>
+                <td>{{ vol.textStress|default:"—" }}</td>
+                <td>{{ vol.textDecollage|default:"—" }}</td>
+                <td>{{ vol.textVol|default:"—" }}</td>
+                <td>{{ vol.textNav|default:"—" }}</td>
+                <td>{{ vol.textRadio|default:"—" }}</td>
+                <td>{{ vol.textAtterrissage|default:"—" }}</td>
+                <td>{{ vol.textTdp|default:"—" }}</td>
+                <td>{{ vol.textBaseULM|default:"—" }}</td>
+                <td>{{ vol.textCommentaire|default:"—" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fa-solid fa-plane-circle-xmark"></i>
+        <p>Aucun vol en tant que pilote enregistré</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Vols en tant qu'élève -->
+<div class="card-section">
+    <h3><i class="fa-solid fa-graduation-cap"></i> Vols en tant qu'élève pilote · {{ current_year }}</h3>
+    {% if volAllEleve %}
+    <div style="display:inline-flex;align-items:center;gap:8px;background:var(--primary-bg);border-left:3px solid var(--primary);border-radius:0 var(--radius) var(--radius) 0;padding:8px 14px;margin-bottom:14px;font-size:13px">
+        <i class="fa-solid fa-clock" style="color:var(--primary)"></i>
+        <strong>{{ volAllEleve|length }}</strong> vol{{ volAllEleve|length|pluralize }} — durée totale&nbsp;: <strong>{{ dureeVolAllEleve }}</strong>
+    </div>
+    <div style="overflow-x:auto">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th><th>Aéronef</th>
+                <th class="text-right">Durée</th>
+                <th>Vent</th><th>Altitude</th><th>Stress</th>
+                <th>Décollage</th><th>Vol</th><th>Nav.</th><th>Radio</th>
+                <th>Atterr.</th><th>TDP</th><th>Bases</th><th>Commentaires</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vol in volAllEleve %}
+            <tr>
+                <td>{{ vol.date|date:"d/m/Y" }}</td>
+                <td>{{ vol.aeronef }}</td>
+                <td class="text-right num">{{ vol.dureeVol }} min</td>
+                <td>{{ vol.textVVent|default:"—" }}</td>
+                <td>{{ vol.textAltitude|default:"—" }}</td>
+                <td>{{ vol.textStress|default:"—" }}</td>
+                <td>{{ vol.textDecollage|default:"—" }}</td>
+                <td>{{ vol.textVol|default:"—" }}</td>
+                <td>{{ vol.textNav|default:"—" }}</td>
+                <td>{{ vol.textRadio|default:"—" }}</td>
+                <td>{{ vol.textAtterrissage|default:"—" }}</td>
+                <td>{{ vol.textTdp|default:"—" }}</td>
+                <td>{{ vol.textBaseULM|default:"—" }}</td>
+                <td>{{ vol.textCommentaire|default:"—" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fa-solid fa-user-graduate"></i>
+        <p>Aucun vol en tant qu'élève enregistré</p>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

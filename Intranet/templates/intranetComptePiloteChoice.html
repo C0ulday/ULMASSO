@@ -1,27 +1,24 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Compte pilote
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetComptePiloteChoicePage
-{% endblock %}
+{% block title %}Comptes pilotes{% endblock %}
+{% block bodyId %}intranetComptePiloteChoicePage{% endblock %}
 
 {% block titrePage %}
-	<p>Gestion des comptes pilotes</p>
+    <i class="fa-solid fa-wallet"></i> Gestion des comptes pilotes
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "intranet_Compte_Pilote_Choice" %}" method = "post">
-		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
-		{% csrf_token %}
-		{{ form.as_p }}
-	</form>
+    <h3><i class="fa-solid fa-user-pilot"></i> Sélectionner un pilote</h3>
+    <form action="{% url 'intranet_Compte_Pilote_Choice' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="{{ actionBtnName }}" class="BtnSubmit"></p>
+    </form>
 {% endblock %}
 
 {% block mainContent %}
+<div class="empty-state" style="padding:60px 0">
+    <i class="fa-solid fa-wallet"></i>
+    <p>Sélectionnez un pilote dans le panneau de gauche</p>
+</div>
 {% endblock %}

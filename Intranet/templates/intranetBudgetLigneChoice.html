@@ -1,28 +1,24 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Budget
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetBudgetLigneChoicePage
-{% endblock %}
+{% block title %}Opérations{% endblock %}
+{% block bodyId %}intranetBudgetLigneChoicePage{% endblock %}
 
 {% block titrePage %}
-	<p>Budget {{current_year}} - Gestion des opérations</p>
+    <i class="fa-solid fa-receipt"></i> Budget {{ current_year }} · Opérations
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "intranet_Budget_Ligne_Choice" %}" method = "post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<br>
-		<p style="text-align:center"><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit"/></p>
-	</form>
+    <h3><i class="fa-solid fa-filter"></i> Sélectionner une ligne</h3>
+    <form action="{% url 'intranet_Budget_Ligne_Choice' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="{{ actionBtnName }}" class="BtnSubmit"></p>
+    </form>
 {% endblock %}
 
 {% block mainContent %}
+<div class="empty-state" style="padding:60px 0">
+    <i class="fa-solid fa-receipt"></i>
+    <p>Sélectionnez une ligne budgétaire dans le panneau de gauche</p>
+</div>
 {% endblock %}

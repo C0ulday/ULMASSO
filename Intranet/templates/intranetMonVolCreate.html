@@ -1,76 +1,76 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Compte pilote
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetMonVolCreatePage
-{% endblock %}
+{% block title %}Mes vols{% endblock %}
+{% block bodyId %}intranetMonVolCreatePage{% endblock %}
 
 {% block titrePage %}
-	<p>Gestion de mes vols</p>
+    <i class="fa-solid fa-plane"></i> Mes vols
 {% endblock %}
 
 {% block asideContent %}
-	<p><b>Pilote : {{loggedMember}}</b></p>
-	<form action = "{% url "intranet_Mon_Vol_Create" %}" method = "post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
-	</form>
+    <h3><i class="fa-solid fa-user-pilot"></i> Ajouter un vol</h3>
+    <p style="font-size:12px;color:var(--text-2);margin-bottom:10px">
+        Pilote&nbsp;: <strong>{{ loggedMember }}</strong>
+    </p>
+    <form action="{% url 'intranet_Mon_Vol_Create' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="{{ actionBtnName }}" class="BtnSubmit"></p>
+    </form>
 {% endblock %}
 
 {% block mainContent %}
-	<div>
-		{% if volAll %}
-			<table class="table">
-  				<thead>
-    				<tr>
-      					<th scope="col">Date</th>
-      					<th scope="col">Aéronef</th>
-      					<th scope="col">durée vol (min)</th>
-      					<th scope="col">Prix vol (€)</th>
-      					<th scope="col">Prix instruction (€)</th>
-      					<th scope="col">Remise (€)</th>
-      					<th scope="col">Prix total (€)</th>
-      					<th scope="col" colspan = '2'>Actions</th>
-    				</tr>
-  				</thead>
-  				<tbody>	
-					{% for vol in volAll%}
-						<tr>
-							<td>{{vol.date|date:"d/m/Y"}}</td>
-							<td>{{vol.aeronef}}</td>
-		      				<td align = right>{{vol.dureeVol}}</td>  
-		      				<td align = right>{{vol.prixVol}}</td>
-		      				<td align = right>{{vol.tarifInstruction}}</td>
-		      				<td align = right>{{vol.remise}}</td>
-		      				<td align = right>{{vol.prixTotal}}</td>
-		      				<td>
-								<form action ="{% url "intranet_Mon_Vol_Modify" vol.id %}" method="POST">
-									{% csrf_token %}
-									<input type = "submit" value="Modifier" class = "BtnModify"/>
-								</form>
-							</td>
-      						<td>
-								<form action ="{% url "intranet_Mon_Vol_Delete" vol.id %}" method="POST">
-									{% csrf_token %}
-									<input type = "submit" value="Supprimer" class = "BtnDelete"/>
-								</form>
-							</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>	
-		{% else %}
-			<p>Aucun vol n'est actuellement enregistrée pour le pilote <i>{{loggedMember}}</i></p>
-		{% endif %}
-	</div>
+<div class="card-section">
+    <h3><i class="fa-solid fa-list"></i> Historique de mes vols</h3>
+    {% if volAll %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Aéronef</th>
+                <th class="text-right">Durée</th>
+                <th class="text-right">Vol (€)</th>
+                <th class="text-right">Instruction (€)</th>
+                <th class="text-right">Remise (€)</th>
+                <th class="text-right">Total (€)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vol in volAll %}
+            <tr>
+                <td>{{ vol.date|date:"d/m/Y" }}</td>
+                <td>{{ vol.aeronef }}</td>
+                <td class="text-right num">{{ vol.dureeVol }} min</td>
+                <td class="text-right num">{{ vol.prixVol }}</td>
+                <td class="text-right num">{{ vol.tarifInstruction }}</td>
+                <td class="text-right num">{{ vol.remise }}</td>
+                <td class="text-right num"><strong>{{ vol.prixTotal }}</strong></td>
+                <td>
+                    <div style="display:flex;gap:5px;justify-content:flex-end">
+                        <form action="{% url 'intranet_Mon_Vol_Modify' vol.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm BtnModify">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </form>
+                        <form action="{% url 'intranet_Mon_Vol_Delete' vol.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm BtnDelete">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <i class="fa-solid fa-plane-circle-xmark"></i>
+        <p>Aucun vol enregistré pour {{ loggedMember }}</p>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
-
-<p>{{vol.aeronef}} - {{vol.date|date:"d/m/Y"}} : {{vol.dureeVol}} min : {{vol.prixVol}} € (Vol) + {{vol.tarifInstruction}} € (Instruction) = {{vol.prixTotal}} €</p>
-			

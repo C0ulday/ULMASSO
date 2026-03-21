@@ -1,65 +1,78 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Budget
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetBudgetCurrentYearLignePage
-{% endblock %}
+{% block title %}Budget par ligne{% endblock %}
+{% block bodyId %}intranetBudgetCurrentYearLignePage{% endblock %}
 
 {% block titrePage %}
-	<p>Budget {{current_year}} - Bilan par ligne</p>
+    <i class="fa-solid fa-list-check"></i> Budget {{ current_year }} · Par ligne
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "intranet_Budget_Current_Year_Ligne" %}" method = "post">
-		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
-		{% csrf_token %}
-		{{ form.as_p }}		
-	</form>
+    <h3><i class="fa-solid fa-filter"></i> Sélectionner une ligne</h3>
+    <form action="{% url 'intranet_Budget_Current_Year_Ligne' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="{{ actionBtnName }}" class="BtnSubmit"></p>
+    </form>
 {% endblock %}
 
 {% block mainContent %}
-	<div>
-		{% if ligne %}
-			<table class="table">
-  				<thead>
-    				<tr>
-      					<th scope="col"></th>
-      					<th scope="col">Date</th>
-      					<th scope="col">Aéronef</th>
-      					<th scope="col">Charges</th>
-      					<th scope="col">Produits</th>
-      					<th scope="col">Résultats</th>
-    				</tr>
-  				</thead>
-  				<tbody>	
-					<tr bgcolor="lightyellow">
-						<td align = left><b>{{ligne.code}} - {{ligne.name}}</b></td>
-						<td align = right><b></b></td>
-						<td align = right><b></b></td>
-						<td align = right><b>{{ligne.charge}} €</b></td>
-						<td align = right><b>{{ligne.produit}} €</b></td>
-						<td align = right><b>{{ligne.resultat}} €</b></td>
-					</tr>
-					{% for Op in allOp %}
-						{% if Op.ligne == ligne %}
-							<tr>
-								<td align = left>{{Op.code}} - {{Op.name}}</td>
-								<td align = left>{{Op.date|date:"d/m/Y"}}</td>
-								<td align = left>{{Op.aeronef}}</td>
-								<td align = right>{{Op.charge}} €</td>
-								<td align = right>{{Op.produit}} €</td>
-								<td align = right>{{Op.resultat}} €</td>
-							</tr>
-						{% endif %}
-					{% endfor %}
-				</tbody>
-			</table>
-		{% endif %}
-	</div>
+{% if ligne %}
+<div class="card-section">
+    <h3><i class="fa-solid fa-layer-group"></i> {{ ligne.code }} — {{ ligne.name }}</h3>
+
+    <!-- Résumé ligne -->
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px">
+        <div style="background:var(--danger-bg);border-radius:var(--radius);padding:10px 16px;min-width:120px">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--danger);margin-bottom:2px">Charges</div>
+            <div style="font-size:20px;font-weight:800;color:var(--danger)" class="num">{{ ligne.charge }} €</div>
+        </div>
+        <div style="background:var(--success-bg);border-radius:var(--radius);padding:10px 16px;min-width:120px">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--success);margin-bottom:2px">Produits</div>
+            <div style="font-size:20px;font-weight:800;color:var(--success)" class="num">{{ ligne.produit }} €</div>
+        </div>
+        <div style="background:var(--primary-bg);border-radius:var(--radius);padding:10px 16px;min-width:120px">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--primary);margin-bottom:2px">Résultat</div>
+            <div style="font-size:20px;font-weight:800;" class="num {% if ligne.resultat >= 0 %}positive{% else %}negative{% endif %}">{{ ligne.resultat }} €</div>
+        </div>
+    </div>
+
+    <!-- Opérations -->
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Libellé</th>
+                <th>Date</th>
+                <th>Aéronef</th>
+                <th class="text-right">Charges (€)</th>
+                <th class="text-right">Produits (€)</th>
+                <th class="text-right">Résultat (€)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Op in allOp %}
+                {% if Op.ligne == ligne %}
+                <tr>
+                    <td><span class="text-muted">{{ Op.code }}</span></td>
+                    <td>{{ Op.name }}</td>
+                    <td>{{ Op.date|date:"d/m/Y" }}</td>
+                    <td>{{ Op.aeronef|default:"—" }}</td>
+                    <td class="text-right num">{{ Op.charge }} €</td>
+                    <td class="text-right num">{{ Op.produit }} €</td>
+                    <td class="text-right num {% if Op.resultat >= 0 %}positive{% else %}negative{% endif %}">
+                        {{ Op.resultat }} €
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state" style="padding:60px 0">
+    <i class="fa-solid fa-list-check"></i>
+    <p>Sélectionnez une ligne budgétaire dans le panneau de gauche</p>
+</div>
+{% endif %}
 {% endblock %}

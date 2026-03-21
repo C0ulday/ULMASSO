@@ -1,67 +1,73 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Membres
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetGererMembresPage
-{% endblock %}
+{% block title %}Membres{% endblock %}
+{% block bodyId %}intranetGererMembresPage{% endblock %}
 
 {% block titrePage %}
-	<p>Membres {{current_year}}</p>
+    <i class="fa-solid fa-users"></i> Membres · {{ current_year }}
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "intranet_Member_Add_Show" %}" method = "post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<p><input type="submit" value= "{{ actionBtnName }}" class = "BtnSubmit" /></p>
-	</form>
+    <h3><i class="fa-solid fa-user-plus"></i> Ajouter un membre</h3>
+    <form action="{% url 'intranet_Member_Add_Show' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="{{ actionBtnName }}" class="BtnSubmit"></p>
+    </form>
 {% endblock %}
 
 {% block mainContent %}
-	<div>
-		{% if memberAll %}
-			<table class="table">
-  				<thead>
-    				<tr>
-						<th scope="col">Nom</th>
-      					<th scope="col">Prénom</th>
-      					<th scope="col">Téléphone</th>
-      					<th scope="col">email</th>
-      					<th scope="col"></th>
-    				</tr>
-  				</thead>
-  				<tbody>
-					{% for member in memberAll %}
-					  	<tr>
-							<td>{{member.name}}</td>
-      						<td>{{member.vorname}}</td>
-      						<td>{{member.phone}}</td>
-      						<td>{{member.email}}</td>
-      						<td>
-								<form action ="{% url "intranet_Member_Modify" member.id %}" method="POST">
-									{% csrf_token %}
-									<input type = "submit" value="Modifier" class = "BtnModify"/>
-								</form>
-							</td>
-      						<td>
-								<form action ="{% url "intranet_Member_Delete" member.id %}" method="POST">
-									{% csrf_token %}
-									<input type = "submit" value="Supprimer" class = "BtnDelete"/>
-								</form>
-							</td>	
-    					</tr>
-    				{% endfor %}
-  				</tbody>
-			</table>
-		{% else %}
-			<p>Aucun membre n'est actuellement enregistré</p>
-		{% endif %}
-	</div>
-	
+<div class="card-section">
+    <h3><i class="fa-solid fa-list"></i> Liste des membres</h3>
+    {% if memberAll %}
+    <table>
+        <thead>
+            <tr>
+                <th>Membre</th>
+                <th>Téléphone</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in memberAll %}
+            <tr>
+                <td>
+                    <div style="display:flex;align-items:center;gap:10px">
+                        <div class="member-avatar-sm">{{ member.vorname|slice:":1" }}{{ member.name|slice:":1" }}</div>
+                        <div>
+                            <strong>{{ member.vorname }} {{ member.name }}</strong>
+                            <span class="table-sub">{{ member.statut }}</span>
+                        </div>
+                    </div>
+                </td>
+                <td>{{ member.phone|default:"—" }}</td>
+                <td>{{ member.email|default:"—" }}</td>
+                <td>
+                    <div style="display:flex;gap:5px;justify-content:flex-end">
+                        <form action="{% url 'intranet_Member_Modify' member.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm BtnModify">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </form>
+                        <form action="{% url 'intranet_Member_Delete' member.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm BtnDelete">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+        <i class="fa-solid fa-users-slash"></i>
+        <p>Aucun membre enregistré</p>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

@@ -1,96 +1,110 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Budget
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetBudgetCurrentYearPage
-{% endblock %}
+{% block title %}Budget {{ current_year }}{% endblock %}
+{% block bodyId %}intranetBudgetCurrentYearPage{% endblock %}
 
 {% block titrePage %}
-	<p>Budget {{current_year}} - Bilan</p>
+    <i class="fa-solid fa-chart-pie"></i> Budget {{ current_year }} · Bilan
 {% endblock %}
 
 {% block asideContent %}
-	<form action = "{% url "pdf_Budget" %}" method = "post">	
-		{% csrf_token %}	
-		<p>
-			<input type="submit" value= "Générer PDF" class = "BtnPDF" />
-		</p>
-	</form>	
+    <form action="{% url 'pdf_Budget' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="BtnPDF" style="width:100%">
+            <i class="fa-solid fa-file-pdf"></i> Générer PDF
+        </button>
+    </form>
 {% endblock %}
 
 {% block mainContent %}
-	<div>
-		{% if allCompteEpargne %}
-			<table class='table'>
-				<thead>
-					<tr>
-						<th scope="col">Compte Épargne</th>
-						<th scope="col">Bilan</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for activeCompteEpargne in allCompteEpargne %}
-						<tr>
-							<td align = left><b>{{activeCompteEpargne}}</b></td>
-							<td align = right><b>{{activeCompteEpargne.resultat}} €</b></td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		{% endif %}
-		{% if allSection %}
-			<table class="table">
-  				<thead>
-    				<tr>
-      					<th scope="col"></th>
-      					<th scope="col">Charges</th>
-      					<th scope="col">Produits</th>
-      					<th scope="col">Résultats</th>
-    				</tr>
-  				</thead>
-  				<tbody>	
-					<tr>
-						<td align = left><b>Bilan {{activeBudget}}</b></td>
-						<td align = right><b>{{activeBudget.charge}} €</b></td>
-						<td align = right><b>{{activeBudget.produit}} €</b></td>
-						<td align = right><b>{{activeBudget.resultat}} €</b></td>
-					</tr>
-					{% for section in allSection %}
-						<tr bgcolor="gold">
-							<td align = left>{{section.code}} - {{section.name}}</td>
-							<td align = right>{{section.charge}} €</td>
-		      				<td align = right>{{section.produit}} €</td>  
-		      				<td align = right>{{section.resultat}} €</td>
-						</tr>
-						{% for projet in allProjet %}
-							{% if projet.section == section %}
-								<tr bgcolor = "lightgreen">
-									<td align = left>{{projet.code}} - {{projet.name}}</td>
-									<td align = right>{{projet.charge}} €</td>
-				      				<td align = right>{{projet.produit}} €</td>  
-				      				<td align = right>{{projet.resultat}} €</td>
-								</tr>
-								{% for ligne in allLigne %}
-									{% if ligne.projet == projet %}
-										<tr>
-											<td align = left>{{ligne.code}} - {{ligne.name}}</td>
-											<td align = right>{{ligne.charge}} €</td>
-						      				<td align = right>{{ligne.produit}} €</td>  
-						      				<td align = right>{{ligne.resultat}} €</td>
-										</tr>
-									{% endif %}
-								{% endfor %}
-							{% endif %}
-						{% endfor %}
-					{% endfor %}
-				</tbody>
-			</table>
-		{% endif %}
-	</div>
+
+{% if allCompteEpargne %}
+<div class="card-section">
+    <h3><i class="fa-solid fa-piggy-bank"></i> Comptes épargne</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Compte</th>
+                <th class="text-right">Bilan (€)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ce in allCompteEpargne %}
+            <tr>
+                <td><strong>{{ ce }}</strong></td>
+                <td class="text-right num {% if ce.resultat >= 0 %}positive{% else %}negative{% endif %}">
+                    <strong>{{ ce.resultat }} €</strong>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% if allSection %}
+<div class="card-section">
+    <h3><i class="fa-solid fa-table"></i> Bilan par section</h3>
+    <table class="budget-table">
+        <thead>
+            <tr>
+                <th>Libellé</th>
+                <th class="text-right">Charges (€)</th>
+                <th class="text-right">Produits (€)</th>
+                <th class="text-right">Résultat (€)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Bilan global -->
+            <tr class="budget-total-row">
+                <td><strong>Bilan {{ activeBudget }}</strong></td>
+                <td class="text-right num"><strong>{{ activeBudget.charge }} €</strong></td>
+                <td class="text-right num"><strong>{{ activeBudget.produit }} €</strong></td>
+                <td class="text-right num"><strong>{{ activeBudget.resultat }} €</strong></td>
+            </tr>
+
+            {% for section in allSection %}
+            <!-- Section -->
+            <tr class="budget-section-row">
+                <td><strong>{{ section.code }} — {{ section.name }}</strong></td>
+                <td class="text-right num">{{ section.charge }} €</td>
+                <td class="text-right num">{{ section.produit }} €</td>
+                <td class="text-right num {% if section.resultat >= 0 %}positive{% else %}negative{% endif %}">
+                    {{ section.resultat }} €
+                </td>
+            </tr>
+
+            {% for projet in allProjet %}
+                {% if projet.section == section %}
+                <!-- Projet -->
+                <tr class="budget-projet-row">
+                    <td><span class="budget-indent-1"></span>{{ projet.code }} — {{ projet.name }}</td>
+                    <td class="text-right num">{{ projet.charge }} €</td>
+                    <td class="text-right num">{{ projet.produit }} €</td>
+                    <td class="text-right num {% if projet.resultat >= 0 %}positive{% else %}negative{% endif %}">
+                        {{ projet.resultat }} €
+                    </td>
+                </tr>
+
+                {% for ligne in allLigne %}
+                    {% if ligne.projet == projet %}
+                    <!-- Ligne -->
+                    <tr class="budget-ligne-row">
+                        <td><span class="budget-indent-2"></span>{{ ligne.code }} — {{ ligne.name }}</td>
+                        <td class="text-right num">{{ ligne.charge }} €</td>
+                        <td class="text-right num">{{ ligne.produit }} €</td>
+                        <td class="text-right num {% if ligne.resultat >= 0 %}positive{% else %}negative{% endif %}">
+                            {{ ligne.resultat }} €
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+            {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
 {% endblock %}
