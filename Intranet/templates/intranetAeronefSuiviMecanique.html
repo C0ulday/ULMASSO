@@ -1,0 +1,167 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}Suivi mécanique{% endblock %}
+{% block bodyId %}intranetSuiviMecaniquePage{% endblock %}
+
+{% block titrePage %}
+    <p><i class="fa-solid fa-wrench" style="color:var(--color-primary-light);margin-right:8px"></i>Suivi mécanique des aéronefs</p>
+{% endblock %}
+
+{% block asideContent %}
+    <h3><i class="fa-solid fa-circle-info"></i> Légende</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;font-size:12px">
+        <div><span class="badge badge-success">Nj</span> &nbsp; Plus de 90 jours</div>
+        <div><span class="badge badge-warning">Nj</span> &nbsp; Entre 30 et 90 jours</div>
+        <div><span class="badge badge-danger">Nj</span> &nbsp; Moins de 30 jours</div>
+        <div><span class="badge badge-danger">Expiré</span> &nbsp; Date dépassée</div>
+        <div><span class="badge badge-neutral">—</span> &nbsp; Non renseigné</div>
+    </div>
+
+    <hr style="border:none;border-top:1px solid var(--color-border);margin:16px 0">
+
+    <h3><i class="fa-solid fa-triangle-exclamation"></i> Alertes</h3>
+    {% if alertes %}
+        {% for a in alertes %}
+        <div class="alert alert-{{ a.niveau }}" style="font-size:12px;margin-bottom:6px">
+            <i class="fa-solid fa-{% if a.niveau == 'danger' %}circle-exclamation{% else %}clock{% endif %}"></i>
+            <span>{{ a.message }}</span>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="font-size:12px;color:var(--color-text-light);margin-top:6px">
+            <i class="fa-solid fa-check" style="color:var(--color-success)"></i> Tous les aéronefs sont en ordre.
+        </p>
+    {% endif %}
+{% endblock %}
+
+{% block mainContent %}
+
+<!-- ── Tableau de suivi ───────────────────────────────────────── -->
+{% if aeronefs_suivi %}
+<div class="card-section">
+    <h3><i class="fa-solid fa-clipboard-list"></i> Échéances réglementaires</h3>
+    <table class="maintenance-table">
+        <thead>
+            <tr>
+                <th>Aéronef</th>
+                <th>Classe</th>
+                <th>Immat.</th>
+                <th>Indicatif radio</th>
+                <th>Aptitude au vol <br><small style="font-weight:normal;opacity:.8">Visite périodique</small></th>
+                <th>Limites LSA <br><small style="font-weight:normal;opacity:.8">Navigabilité</small></th>
+                <th>Parachute <br><small style="font-weight:normal;opacity:.8">Révision</small></th>
+                <th>Mise en service</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in aeronefs_suivi %}
+            <tr>
+                <td><strong>{{ a.aeronef.type }}</strong></td>
+                <td>Classe {{ a.aeronef.classeULM.number }} — {{ a.aeronef.classeULM.name }}</td>
+                <td>{{ a.aeronef.immatriculation }}</td>
+                <td>{{ a.aeronef.indicatifRadio }}</td>
+
+                <!-- Aptitude au vol -->
+                <td class="{{ a.classe_aptitude }} expiry">
+                    {% if a.aeronef.limiteAptitudeVol %}
+                        <span class="badge badge-{{ a.badge_aptitude }}">
+                            {% if a.jours_aptitude < 0 %}
+                                Expiré ({{ a.jours_aptitude|stringformat:"d" }}j)
+                            {% elif a.jours_aptitude == 0 %}
+                                Aujourd'hui
+                            {% else %}
+                                {{ a.jours_aptitude }}j
+                            {% endif %}
+                        </span><br>
+                        <span style="font-size:12px">{{ a.aeronef.limiteAptitudeVol|date:"d/m/Y" }}</span>
+                    {% else %}
+                        <span class="badge badge-neutral">—</span>
+                    {% endif %}
+                </td>
+
+                <!-- LSA -->
+                <td class="{{ a.classe_lsa }} expiry">
+                    {% if a.aeronef.limiteLSA %}
+                        <span class="badge badge-{{ a.badge_lsa }}">
+                            {% if a.jours_lsa < 0 %}
+                                Expiré ({{ a.jours_lsa|stringformat:"d" }}j)
+                            {% elif a.jours_lsa == 0 %}
+                                Aujourd'hui
+                            {% else %}
+                                {{ a.jours_lsa }}j
+                            {% endif %}
+                        </span><br>
+                        <span style="font-size:12px">{{ a.aeronef.limiteLSA|date:"d/m/Y" }}</span>
+                    {% else %}
+                        <span class="badge badge-neutral">—</span>
+                    {% endif %}
+                </td>
+
+                <!-- Parachute -->
+                <td class="{{ a.classe_parachute }} expiry">
+                    {% if a.aeronef.limiteParachute %}
+                        <span class="badge badge-{{ a.badge_parachute }}">
+                            {% if a.jours_parachute < 0 %}
+                                Expiré ({{ a.jours_parachute|stringformat:"d" }}j)
+                            {% elif a.jours_parachute == 0 %}
+                                Aujourd'hui
+                            {% else %}
+                                {{ a.jours_parachute }}j
+                            {% endif %}
+                        </span><br>
+                        <span style="font-size:12px">{{ a.aeronef.limiteParachute|date:"d/m/Y" }}</span>
+                    {% else %}
+                        <span class="badge badge-neutral">—</span>
+                    {% endif %}
+                </td>
+
+                <!-- Mise en service -->
+                <td>
+                    {% if a.aeronef.date %}
+                        {{ a.aeronef.date|date:"d/m/Y" }}
+                        <br><span style="font-size:11px;color:var(--color-text-light)">{{ a.age_aeronef }} ans</span>
+                    {% else %}
+                        <span style="color:var(--color-text-light)">—</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- ── Statistiques vols par aéronef (année en cours) ───────── -->
+<div class="card-section">
+    <h3><i class="fa-solid fa-chart-bar"></i> Activité {{ current_year }}</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Aéronef</th>
+                <th style="text-align:right">Nb vols</th>
+                <th style="text-align:right">Heures de vol</th>
+                <th style="text-align:right">Horamètre (dernier vol)</th>
+                <th>Dernier vol</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in aeronefs_suivi %}
+            <tr>
+                <td><strong>{{ a.aeronef.type }}</strong></td>
+                <td style="text-align:right">{{ a.nb_vols }}</td>
+                <td style="text-align:right">{{ a.tps_vol_h }}h{{ a.tps_vol_min }}min</td>
+                <td style="text-align:right">{{ a.dernier_horo|default:"—" }}</td>
+                <td>{{ a.dernier_vol|date:"d/m/Y"|default:"—" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% else %}
+    <div class="alert alert-info">
+        <i class="fa-solid fa-info-circle"></i>
+        Aucun aéronef enregistré. <a href="intranetAeronefCreate">Créer un aéronef →</a>
+    </div>
+{% endif %}
+
+{% endblock %}

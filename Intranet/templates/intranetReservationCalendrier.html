@@ -1,67 +1,334 @@
 {% extends "baseIntranet.html" %}
 
-{% block title %}
-	Réservation
-{% endblock %}
-
-{% block headerContent %}
-{% endblock %}
-
-{% block bodyId %}
-	intranetReservationCalendrierPage
-{% endblock %}
+{% block title %}Calendrier — {{ myAeronef }}{% endblock %}
+{% block bodyId %}calPage{% endblock %}
 
 {% block titrePage %}
-	<p>Réservation {{myAeronef}}</p>
+    <i class="fa-solid fa-calendar-days"></i> {{ myAeronef }}
 {% endblock %}
 
 {% block asideContent %}
-	<p align = center><b>Mes réservations</b></p>
-	<div class = "toolbar">
-		<form action ="{% url 'intranet_Reservation_Create' myAeronef %}" method="POST">
-			{% csrf_token %}
-			<input type = "submit" value="Créer" class = "BtnPDF"/>
-		</form>
-		<form action ="{% url 'intranet_Reservation_Modify' myAeronef %}" method="POST">
-			{% csrf_token %}
-			<input type = "submit" value="Modifier" class = "BtnModify"/>
-		</form>
-		<form action ="{% url 'intranet_Reservation_Delete' myAeronef %}" method="POST">
-			{% csrf_token %}
-			<input type = "submit" value="Supprimer" class = "BtnDelete"/>
-		</form>
-	</div>
-	</br>
+    <h3><i class="fa-solid fa-sliders"></i> Actions</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+        <a href="{% url 'intranet_Reservation_Create' myAeronef %}" class="BtnPDF" style="width:100%">
+            <i class="fa-solid fa-plus"></i> Créer une réservation
+        </a>
+        <a href="{% url 'intranet_Reservation_Modify' myAeronef %}" class="BtnModify" style="width:100%">
+            <i class="fa-solid fa-pen"></i> Modifier
+        </a>
+        <a href="{% url 'intranet_Reservation_Delete' myAeronef %}" class="BtnDelete" style="width:100%">
+            <i class="fa-solid fa-trash"></i> Supprimer
+        </a>
+    </div>
+
+    <h3><i class="fa-solid fa-circle-info"></i> Légende</h3>
+    <div id="legend" style="display:flex;flex-direction:column;gap:5px;font-size:12px"></div>
+
+    <hr style="border:none;border-top:1px solid #e2e8f0;margin:16px 0">
+
+    <h3><i class="fa-solid fa-clock"></i> Cette semaine</h3>
+    <div id="week-summary" style="font-size:12px;color:#64748b">—</div>
 {% endblock %}
 
 {% block mainContent %}
-	<div class="toolbar">
-		<input type="button" onclick="reculer()" value = &#9204; class = "BtnAction" />
-		<input type="button" onclick="aujourdhui()" value = "Aujourd'hui" class = "BtnAction" />
-		<input type="button" onclick="avancer()" value = &#9205; class = "BtnAction" />
-	</div>
-	<canvas id="canv" width="1200" height="550"></canvas>
+
+<div class="cal-container">
+
+    <!-- Toolbar -->
+    <div class="cal-toolbar">
+        <div class="cal-nav">
+            <button class="cal-nav-btn" onclick="calNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="cal-nav-btn" onclick="calNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+        <h2 id="cal-title"></h2>
+        <button class="cal-btn" onclick="calToday()"><i class="fa-regular fa-circle-dot"></i> Aujourd'hui</button>
+        <div style="margin-left:auto;display:flex;gap:8px">
+            <button class="cal-btn {% if view == 'week' %}cal-btn-primary{% endif %}" onclick="setView('week')">Semaine</button>
+            <button class="cal-btn {% if view == 'month' %}cal-btn-primary{% endif %}" onclick="setView('month')">Mois</button>
+        </div>
+    </div>
+
+    <!-- Calendar body -->
+    <div class="cal-grid" id="calGrid">
+        <!-- Time column -->
+        <div class="cal-times" id="calTimes"></div>
+        <!-- Days column -->
+        <div class="cal-days" id="calDaysWrap">
+            <div class="cal-days-inner" id="calDaysInner">
+                <div class="cal-day-headers" id="calDayHeaders"></div>
+                <div class="cal-body" id="calBody"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Tooltip -->
+<div id="ev-tooltip" style="
+    position:fixed;display:none;z-index:600;
+    background:#1e293b;color:white;
+    padding:10px 14px;border-radius:8px;
+    font-size:12.5px;line-height:1.6;
+    box-shadow:0 8px 24px rgba(0,0,0,.25);
+    max-width:240px;pointer-events:none">
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
-	<script src = "static/js/reservation.js"></script>
-	<script src = "static/js/calendar.js"></script>  
-	<script src = "static/js/btnCalendar.js"></script>
-	
-	<script>
-		const allMyReservation = []
-		mainCalendar()
-	</script>
-	{% for reservation in allReservation %}
-		<script>			
-			hInit = "{{reservation.hInit|safe}}"
-			hEnd = "{{reservation.hEnd|safe}}"
-			date =  "{{reservation.date|safe}}"
-			pilot = "{{reservation.pilote|safe}}"
-			typeVol = "{{reservation.typeVol|safe}}"
-			myReservation = [hInit, hEnd, date, pilot, typeVol]
-			allMyReservation.push(myReservation)
-			mainReservation(hInit, hEnd, date, pilot, typeVol)
-		</script>
-	{% endfor %}		
+<script>
+// ── Data ──────────────────────────────────────────────────────────
+const RESERVATIONS = [
+    {% for r in allReservation %}
+    {
+        date:    "{{ r.date|date:'Y-m-d' }}",
+        hInit:   "{{ r.hInit }}",
+        hEnd:    "{{ r.hEnd }}",
+        pilot:   "{{ r.pilote|escapejs }}",
+        typeVol: "{{ r.typeVol|default:''|escapejs }}",
+        mine:    {{ r.pilote.id }}=={{ loggedMember.id|default:0 }} ? true : false
+    },
+    {% endfor %}
+];
+
+const ME = "{{ loggedMember|escapejs }}";
+const HOUR_START = 7;
+const HOUR_END   = 21;
+const SLOT_H     = 56; // px per hour
+
+// ── State ─────────────────────────────────────────────────────────
+let currentDate = new Date();
+currentDate.setHours(0,0,0,0);
+
+// ── Pilot colour map ──────────────────────────────────────────────
+const pilotColors = {};
+let colorIdx = 0;
+function pilotColor(name) {
+    if (!pilotColors[name]) pilotColors[name] = colorIdx++ % 8;
+    return pilotColors[name];
+}
+
+// ── Helpers ───────────────────────────────────────────────────────
+const DAYS_FR = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+const MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin',
+                   'Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+function weekStart(d) {
+    const dt = new Date(d);
+    const day = dt.getDay(); // 0=Sun
+    const diff = (day === 0) ? -6 : 1 - day; // Mon
+    dt.setDate(dt.getDate() + diff);
+    return dt;
+}
+
+function addDays(d, n) {
+    const dt = new Date(d); dt.setDate(dt.getDate() + n); return dt;
+}
+
+function fmt(d) { return d.toISOString().slice(0,10); }
+
+function timeToMin(t) {
+    const [h, m] = t.split(':').map(Number);
+    return h * 60 + m;
+}
+
+function minToY(min) {
+    return ((min - HOUR_START * 60) / 60) * SLOT_H;
+}
+
+// ── Render ────────────────────────────────────────────────────────
+function render() {
+    const ws = weekStart(currentDate);
+
+    // Title
+    const we = addDays(ws, 6);
+    document.getElementById('cal-title').textContent =
+        ws.getDate() + ' ' + MONTHS_FR[ws.getMonth()] +
+        (ws.getMonth() !== we.getMonth() ? ' – ' + MONTHS_FR[we.getMonth()] : ' – ' + we.getDate()) +
+        ' ' + ws.getFullYear();
+
+    // Time column
+    const times = document.getElementById('calTimes');
+    times.innerHTML = '<div class="cal-time-spacer"></div>';
+    for (let h = HOUR_START; h <= HOUR_END; h++) {
+        times.innerHTML += `<div class="cal-time-slot">${h}:00</div>`;
+    }
+
+    // Day headers
+    const headers = document.getElementById('calDayHeaders');
+    headers.innerHTML = '';
+    const today = fmt(new Date());
+    for (let i = 0; i < 7; i++) {
+        const day = addDays(ws, i);
+        const isToday = fmt(day) === today;
+        headers.innerHTML += `
+            <div class="cal-day-header ${isToday ? 'today' : ''}">
+                <div class="cal-day-name">${DAYS_FR[day.getDay()]}</div>
+                <div class="cal-day-num">${day.getDate()}</div>
+            </div>`;
+    }
+
+    // Grid rows
+    const body = document.getElementById('calBody');
+    body.innerHTML = '';
+    body.style.position = 'relative';
+    body.style.height = ((HOUR_END - HOUR_START + 1) * SLOT_H) + 'px';
+
+    // Background grid
+    const gridDiv = document.createElement('div');
+    gridDiv.style.cssText = 'position:absolute;inset:0;display:grid;grid-template-columns:repeat(7,1fr)';
+    for (let i = 0; i < 7; i++) {
+        const day = addDays(ws, i);
+        const col = document.createElement('div');
+        col.className = 'cal-cell' + (fmt(day) === today ? ' today-col' : '');
+        col.dataset.date = fmt(day);
+        col.addEventListener('click', function() {
+            window.location.href = "{% url 'intranet_Reservation_Create' myAeronef %}";
+        });
+
+        // Hour lines
+        for (let h = HOUR_START; h <= HOUR_END; h++) {
+            const line = document.createElement('div');
+            line.style.cssText = `position:absolute;left:0;right:0;top:${(h-HOUR_START)*SLOT_H}px;
+                border-top:1px solid #e2e8f0;pointer-events:none`;
+            col.appendChild(line);
+            // Half-hour line
+            const half = document.createElement('div');
+            half.style.cssText = `position:absolute;left:0;right:0;top:${(h-HOUR_START)*SLOT_H+SLOT_H/2}px;
+                border-top:1px dashed #f1f5f9;pointer-events:none`;
+            col.appendChild(half);
+        }
+        gridDiv.appendChild(col);
+    }
+    body.appendChild(gridDiv);
+
+    // Current time line
+    const now = new Date();
+    const todayFmt = fmt(now);
+    const weekDates = Array.from({length:7}, (_,i) => fmt(addDays(ws,i)));
+    const todayColIdx = weekDates.indexOf(todayFmt);
+    if (todayColIdx >= 0) {
+        const nowMin = now.getHours()*60 + now.getMinutes();
+        if (nowMin >= HOUR_START*60 && nowMin <= HOUR_END*60) {
+            const y = minToY(nowMin);
+            const line = document.createElement('div');
+            const colW = 100/7;
+            line.style.cssText = `position:absolute;
+                left:${todayColIdx*colW}%;width:${colW}%;
+                top:${y}px;height:2px;background:#ef4444;z-index:10;pointer-events:none`;
+            line.innerHTML = '<div style="width:8px;height:8px;border-radius:50%;background:#ef4444;margin-top:-3px;margin-left:-4px"></div>';
+            body.appendChild(line);
+        }
+    }
+
+    // Events
+    RESERVATIONS.forEach(r => {
+        const colIdx = weekDates.indexOf(r.date);
+        if (colIdx < 0) return;
+
+        const startMin = timeToMin(r.hInit);
+        const endMin   = timeToMin(r.hEnd);
+        if (endMin <= HOUR_START*60 || startMin >= HOUR_END*60) return;
+
+        const y = Math.max(0, minToY(startMin));
+        const h = Math.max(20, minToY(endMin) - y);
+        const colW = 100/7;
+
+        const ev = document.createElement('div');
+        ev.className = `cal-event ev-color-${pilotColor(r.pilot)}${r.mine ? ' mine' : ''}`;
+        ev.style.cssText = `
+            top:${y + 1}px;height:${h - 2}px;
+            left:calc(${colIdx*colW}% + 3px);
+            width:calc(${colW}% - 6px)`;
+        ev.innerHTML = `
+            <div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+                ${r.hInit}–${r.hEnd}
+            </div>
+            <div style="opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:10.5px">
+                ${r.pilot}${r.typeVol ? ' · '+r.typeVol : ''}
+            </div>`;
+
+        // Tooltip
+        ev.addEventListener('mouseenter', function(e) {
+            const tip = document.getElementById('ev-tooltip');
+            tip.innerHTML = `
+                <div style="font-weight:700;margin-bottom:4px">${r.pilot}</div>
+                <div><i class="fa-regular fa-clock" style="opacity:.6"></i> ${r.hInit} → ${r.hEnd}</div>
+                <div><i class="fa-solid fa-plane" style="opacity:.6"></i> ${r.typeVol || 'Vol libre'}</div>
+                ${r.mine ? '<div style="margin-top:6px;color:#86efac;font-size:11px">✓ Votre réservation</div>' : ''}`;
+            tip.style.display = 'block';
+            positionTip(e);
+        });
+        ev.addEventListener('mousemove', positionTip);
+        ev.addEventListener('mouseleave', () => {
+            document.getElementById('ev-tooltip').style.display = 'none';
+        });
+        ev.addEventListener('click', e => {
+            e.stopPropagation();
+            if (r.mine) window.location.href = "{% url 'intranet_Reservation_Modify' myAeronef %}";
+        });
+
+        body.appendChild(ev);
+    });
+
+    renderLegend();
+    renderWeekSummary(ws);
+}
+
+function positionTip(e) {
+    const tip = document.getElementById('ev-tooltip');
+    tip.style.left = (e.clientX + 14) + 'px';
+    tip.style.top  = (e.clientY - 10) + 'px';
+}
+
+function renderLegend() {
+    const leg = document.getElementById('legend');
+    if (!leg) return;
+    leg.innerHTML = '';
+    Object.entries(pilotColors).forEach(([name, idx]) => {
+        const colors = ['#1e40af','#166534','#9d174d','#92400e','#5b21b6','#9a3412','#164e63','#334155'];
+        leg.innerHTML += `
+            <div style="display:flex;align-items:center;gap:6px">
+                <div style="width:12px;height:12px;border-radius:2px;background:${colors[idx % 8]};flex-shrink:0"></div>
+                <span>${name}${name === ME ? ' (moi)' : ''}</span>
+            </div>`;
+    });
+}
+
+function renderWeekSummary(ws) {
+    const el = document.getElementById('week-summary');
+    if (!el) return;
+    const weekDates = Array.from({length:7}, (_,i) => fmt(addDays(ws,i)));
+    const thisWeek = RESERVATIONS.filter(r => weekDates.includes(r.date));
+    if (!thisWeek.length) { el.textContent = 'Aucune réservation'; return; }
+    el.innerHTML = `${thisWeek.length} réservation${thisWeek.length > 1 ? 's' : ''}<br>` +
+        thisWeek.map(r => `<span style="color:#1e293b">${r.pilot.split(' ')[0]}</span> ${r.hInit}–${r.hEnd}`).join('<br>');
+}
+
+// ── Navigation ───────────────────────────────────────────────────
+function calNav(dir) {
+    currentDate = addDays(currentDate, dir * 7);
+    render();
+    // scroll to 8h
+    setTimeout(() => {
+        const wrap = document.getElementById('calDaysWrap');
+        if (wrap) wrap.scrollTop = SLOT_H; // 8h
+    }, 50);
+}
+
+function calToday() {
+    currentDate = new Date();
+    currentDate.setHours(0,0,0,0);
+    render();
+}
+
+function setView(v) { /* future: month view */ }
+
+// ── Init ─────────────────────────────────────────────────────────
+render();
+setTimeout(() => {
+    const wrap = document.getElementById('calDaysWrap');
+    if (wrap) wrap.scrollTop = SLOT_H; // scroll to 8h by default
+}, 100);
+</script>
 {% endblock %}

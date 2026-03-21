@@ -1,186 +1,274 @@
 <!DOCTYPE html>
-<link rel="stylesheet" type="text/css" href="static/css/styleIntranet.css" />
-<link rel="stylesheet" type="text/css" href="static/css/styleMenuPrincipal.css" />
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>
-			AUV | 
-            {% block title%}
-            {% endblock %}
-        </title>
-    </head>
-    
-    <body id = "{% block bodyId %}genericPage{% endblock %}">	
-		<header>
-			{% block headerContent %}
-			{% endblock %}
-		</header>
-		<section id = "msgAccueil">
-			<form action = "intranetDeconnect">			
-				<p>
-					<input type="submit" value= "Déconnexion" class = "BtnSubmit" />
-				</p>
-			</form>
-			<form action = "memberProfile" >			
-				<p>
-					<input type="submit" value= "Modifier mot de passe" class = "BtnSubmit" />
-				</p>
-			</form>
-			<p><b>Connection : </b>{{current_date_time}}</p>
-			<p><b>Membre AUV : </b>{{loggedMember}}</p>
-			<p><b>Statut : </b>{{loggedMember.statut}} d'AUV</p>
-		</section>
-		<section id="titrePage">
-			{% block titrePage %}
-			{% endblock %}
-		</section>
-		<section id = "menuPrincipal">
-			{% if loggedMember.statut.id == 1 or loggedMember.statut.id == 2 or loggedMember.statut.id == 3 %}
-				<nav>
-					<ul>
-						<li><a href = "#" style="color:lightgrey">École Charles Bono</a></li>
-						<li><a href = "#" style="color:lightgrey">BIA</a></li>	
-						<li><a href = "#" style="color:lightgrey">Fond documentaire</a></li>
-						<li><a href = "#">Membres</a>
-							<ul>
-								<li><a href = "intranetGererMembers">Gérer Membres</a></li>
-								<li><a href = "intranetVoirMembers">Visualiser Membres</a></li>
-								<li><a href = "#" style="color:lightgrey">Statistiques</a></li>
-							</ul>
-						</li>
-						<li><a href = "#">Budget</a>
-							<ul>
-								<li><a href = "intranetBudgetGererSection">Gérer sections</a></li>
-								<li><a href = "intranetBudgetGererProjet">Gérer Projets</a></li>
-								<li><a href = "intranetBudgetGererLigne">Gérer lignes</a></li>
-								<li><a href = "intranetBudgetLigneChoice">Gérer opérations</a></li>
-								<hr/>
-								<li><a href = "intranetBudgetCurrentYear">Budget {{current_year}}</a></li>
-								<li><a href = "intranetBudgetCurrentYearLigne">Budget {{current_year}} par ligne</a></li>
-								<li><a href = "intranetBudgetCurrentYearAeronef">Budget {{current_year}} par aeronef</a></li>
-								<hr/>
-								<li><a href = "intranetGererCompteEpargne">Gérer comptes épargne</a></li>
-								<li><a href = "intranetCompteEpargneChoice">Opérations comptes épargne</a></li>
-								<li><a href = "intranetBilanCompteEpargne">Bilan comptes épargne</a></li>
-								<hr/>
-								<li><a href = "intranetBudgetGenFacture">Générateur de factures</a></li>
-							</ul>
-						</li>
-						<li><a href = "#">Comptes pilotes</a>
-							<ul>
-								<li><a href = "intranetMonVolCreate">Gérer mes vols</a></li>
-								<li><a href = "intranetMonCarnetVol">Mon Carnet de vols AUV</a></li>
-								<li><a href = "intranetMonComptePilote">Mon Compte pilote</a></li>
-								<hr/>
-								<li><a href = "intranetVolCreate">Gérer les vols</a></li>
-								<li><a href = "intranetCarnetVolChoice">Carnets de vol</a></li>
-								<li><a href = "intranetComptePiloteChoice">Comptes pilotes</a></li>
-								<li><a href = "intranetBilanComptePilote">Bilan comptes pilotes</a></li>
-							</ul>
-						</li>
-						<li><a href = "#">Aéronefs</a>
-							<ul>
-								<li><a href = "intranetAeronefCreate">Paramètres</a></li>
-								<li><a href = "#" style="color:lightgrey">Suivi mécanique</a></li>
-								<li><a href = "intranetAeronefStatistiques">Statistiques</a></li>
-							</ul>
-						</li>
-						<li><a href = "#">Réservations</a>
-							<ul>
-								<li><a href = "intranetWeather">Météo</a></li>
-								<li><a href = "#" style="color:lightgrey">NOTAM</a></li> 
-								{% for aeronef in allAeronef %}
-									<li><a href = "{% url 'intranet_Reservation_Calendrier' aeronef%}">Classe{{aeronef.classeULM.number}} - {{aeronef}}</a></li>
-								{% endfor %}
-							</ul>
-						</li>
-					</ul>
-				</nav>
-			{% elif loggedMember.statut.id == 4 %}
-				<nav>
-					<ul>
-						<li><a href = "#" style="color:lightgrey">École Charles Bono</a></li>
-						<li><a href = "#" style="color:lightgrey">BIA</a></li>	
-						<li><a href = "#" style="color:lightgrey">Fond documentaire</a></li>
-						<li><a href = "#">Membres</a>
-							<ul>
-								<li><a href = "intranetVoirMembers">Visualiser Membres</a></li>
-								<li><a href = "#" style="color:lightgrey">Statistiques</a></li>
-							</ul>
-						</li>
-						<li><a href = "#">Budget</a>
-							<ul>
-								<li><a href = "intranetBudgetCurrentYear">Budget {{current_year}}</a></li>
-								<li><a href = "intranetBudgetCurrentYearLigne">Budget {{current_year}} par ligne</a></li>
-								<li><a href = "intranetBudgetCurrentYearAeronef">Budget {{current_year}} par aeronef</a></li>
-								<hr/>
-								<li><a href = "intranetBilanCompteEpargne">Bilan comptes épargne</a></li>
-							</ul>
-						</li>
-						<li><a href = "#">Comptes pilotes</a>
-							<ul>
-								<li><a href = "intranetMonVolCreate">Gérer mes vols</a></li>
-								<li><a href = "intranetMonCarnetVol">Mon Carnet de vols AUV</a></li>
-								<li><a href = "intranetMonComptePilote">Mon Compte pilote</a></li>
-								<hr/>
-								<li><a href = "intranetCarnetVolChoice">Carnets de vol</a></li>
-								<li><a href = "intranetComptePiloteChoice">Comptes pilotes</a></li>
-								<li><a href = "intranetBilanComptePilote">Bilan comptes pilotes</a></li>
-							</ul>
-						</li>
-						<li><a href = "#">Aéronefs</a>
-							<ul>
-								<li><a href = "#" style="color:lightgrey">Suivi mécanique</a></li>
-								<li><a href = "intranetAeronefStatistiques">Statistiques</a></li>
-							</ul>
-						</li>
-						<li><a href = "#">Réservations</a>
-							<ul>
-								<li><a href = "intranetWeather">Météo</a></li>
-								<li><a href = "#" style="color:lightgrey">NOTAM</a></li> 
-								{% for aeronef in allAeronef %}
-									<li><a href = "{% url 'intranet_Reservation_Calendrier' aeronef%}">Classe{{aeronef.classeULM.number}} - {{aeronef}}</a></li>
-								{% endfor %}
-							</ul>
-						</li>
-					</ul>
-				</nav>
-			{% elif loggedMember.statut.id == 5 %}
-				<nav>
-					<ul>
-						<li><a href = "#" style="color:lightgrey">École Charles Bono</a></li>
-						<li><a href = "#" style="color:lightgrey">BIA</a></li>	
-						<li><a href = "#" style="color:lightgrey">Fond documentaire</a></li>
-						<li><a href = "#">Comptes pilotes</a>
-							<ul>
-								<li><a href = "intranetMonVolCreate">Gérer mes vols</a></li>
-								<li><a href = "intranetMonCarnetVol">Mon Carnet de vols AUV</a></li>
-								<li><a href = "intranetMonComptePilote">Mon Compte pilote</a></li>
-							</ul>
-						</li>
-						<li><a href = "#">Réservations</a>
-							<ul>
-								<li><a href = "intranetWeather">Météo</a></li>
-								<li><a href = "#" style="color:lightgrey">NOTAM</a></li> 
-								{% for aeronef in allAeronef %}
-									<li><a href = "{% url 'intranet_Reservation_Calendrier' aeronef%}">Classe{{aeronef.classeULM.number}} - {{aeronef}}</a></li>
-								{% endfor %}
-							</ul>
-						</li>
-					</ul>
-				</nav>
-			{% endif %}
-		</section>	
-		<aside id = "asideContent">
-			{% block asideContent %}
-				
-			{% endblock %}	
-		</aside >	
-		<section id = "mainContent">
-			{% block mainContent %}
-			{% endblock %}
-		</section>	
-		{% block extra_js %}{% endblock %}		
-    </body>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUV | {% block title %}Intranet{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/styleIntranet.css">
+    <link rel="stylesheet" type="text/css" href="static/css/styleMenuPrincipal.css">
+</head>
+
+<body id="{% block bodyId %}page{% endblock %}">
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  SIDEBAR                                                     ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<nav id="sidebar">
+
+    <!-- Logo -->
+    <div class="sb-logo">
+        <img src="static/res/icones/logo.png" alt="AUV">
+        <div>
+            <div class="sb-logo-text">AUV</div>
+            <div class="sb-logo-sub">Espace membres</div>
+        </div>
+    </div>
+
+    <!-- Navigation (rôle-based) -->
+    <div class="sb-nav">
+
+        <!-- Accueil (tous) -->
+        <a href="intranetAccueil" class="sb-item">
+            <i class="fa-solid fa-gauge-high"></i>
+            Tableau de bord
+        </a>
+
+        {% if loggedMember.statut.id == 1 or loggedMember.statut.id == 2 or loggedMember.statut.id == 3 or loggedMember.statut.id == 4 %}
+        <!-- ── MEMBRES ── -->
+        <div class="sb-section-label">Membres</div>
+        <details class="sb-group">
+            <summary class="sb-item">
+                <i class="fa-solid fa-users"></i>
+                Membres
+                <i class="fa-solid fa-chevron-right sb-chevron"></i>
+            </summary>
+            <div class="sb-sub">
+                {% if loggedMember.statut.id <= 3 %}
+                <a href="intranetGererMembers" class="sb-sub-item">Gérer membres</a>
+                {% endif %}
+                <a href="intranetVoirMembers" class="sb-sub-item">Visualiser fiche</a>
+                <a href="intranetStatsMembres" class="sb-sub-item">Statistiques</a>
+            </div>
+        </details>
+
+        <!-- ── BUDGET ── -->
+        <div class="sb-section-label">Finance</div>
+        <details class="sb-group">
+            <summary class="sb-item">
+                <i class="fa-solid fa-euro-sign"></i>
+                Budget
+                <i class="fa-solid fa-chevron-right sb-chevron"></i>
+            </summary>
+            <div class="sb-sub">
+                {% if loggedMember.statut.id <= 3 %}
+                <a href="intranetBudgetGererSection" class="sb-sub-item">Gérer sections</a>
+                <a href="intranetBudgetGererProjet" class="sb-sub-item">Gérer projets</a>
+                <a href="intranetBudgetGererLigne" class="sb-sub-item">Gérer lignes</a>
+                <a href="intranetBudgetLigneChoice" class="sb-sub-item">Gérer opérations</a>
+                {% endif %}
+                <a href="intranetBudgetCurrentYear" class="sb-sub-item">Budget {{ current_year }}</a>
+                <a href="intranetBudgetCurrentYearLigne" class="sb-sub-item">Par ligne</a>
+                <a href="intranetBudgetCurrentYearAeronef" class="sb-sub-item">Par aéronef</a>
+                <a href="intranetGererCompteEpargne" class="sb-sub-item">Comptes épargne</a>
+                <a href="intranetBilanCompteEpargne" class="sb-sub-item">Bilan épargne</a>
+                {% if loggedMember.statut.id <= 3 %}
+                <a href="intranetBudgetGenFacture" class="sb-sub-item">Factures</a>
+                {% endif %}
+            </div>
+        </details>
+        {% endif %}
+
+        <!-- ── COMPTES PILOTES (tous) ── -->
+        <div class="sb-section-label">Pilotage</div>
+        <details class="sb-group">
+            <summary class="sb-item">
+                <i class="fa-solid fa-book-open"></i>
+                Comptes pilotes
+                <i class="fa-solid fa-chevron-right sb-chevron"></i>
+            </summary>
+            <div class="sb-sub">
+                <a href="intranetMonVolCreate" class="sb-sub-item">Mes vols</a>
+                <a href="intranetMonCarnetVol" class="sb-sub-item">Mon carnet de vol</a>
+                <a href="intranetMonComptePilote" class="sb-sub-item">Mon compte pilote</a>
+                {% if loggedMember.statut.id <= 4 %}
+                <a href="intranetVolCreate" class="sb-sub-item">Gérer les vols</a>
+                <a href="intranetCarnetVolChoice" class="sb-sub-item">Carnets de vol</a>
+                <a href="intranetComptePiloteChoice" class="sb-sub-item">Comptes pilotes</a>
+                <a href="intranetBilanComptePilote" class="sb-sub-item">Bilan comptes</a>
+                {% endif %}
+            </div>
+        </details>
+
+        <!-- ── AÉRONEFS ── -->
+        <details class="sb-group">
+            <summary class="sb-item">
+                <i class="fa-solid fa-helicopter"></i>
+                Aéronefs
+                <i class="fa-solid fa-chevron-right sb-chevron"></i>
+            </summary>
+            <div class="sb-sub">
+                {% if loggedMember.statut.id <= 3 %}
+                <a href="intranetAeronefCreate" class="sb-sub-item">Paramètres</a>
+                {% endif %}
+                <a href="intranetAeronefSuiviMecanique" class="sb-sub-item">Suivi mécanique</a>
+                {% for aeronef in allAeronef %}
+                <a href="intranetAeronefInteractif{{ aeronef.id }}" class="sb-sub-item">{{ aeronef.type }} — SVG</a>
+                {% endfor %}
+                <a href="intranetAeronefStatistiques" class="sb-sub-item">Statistiques</a>
+            </div>
+        </details>
+
+        <!-- ── RÉSERVATIONS ── -->
+        <div class="sb-section-label">Réservations</div>
+        <a href="intranetWeather" class="sb-item">
+            <i class="fa-solid fa-cloud-sun"></i>
+            Météo
+        </a>
+        <a href="https://www.sia.aviation-civile.gouv.fr/documents/supaip/notam.php" target="_blank" class="sb-item">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            NOTAMs SIA
+            <i class="fa-solid fa-external-link" style="font-size:9px;margin-left:auto;opacity:.5"></i>
+        </a>
+        {% for aeronef in allAeronef %}
+        <a href="{% url 'intranet_Reservation_Calendrier' aeronef %}" class="sb-item" style="padding-left:28px;font-size:13px">
+            <i class="fa-solid fa-calendar-days" style="font-size:12px"></i>
+            {{ aeronef.type }}
+        </a>
+        {% endfor %}
+
+    </div><!-- /sb-nav -->
+
+    <!-- User section (bottom) -->
+    <div class="sb-user">
+        <div class="sb-user-info">
+            <div class="sb-avatar">{{ loggedMember.vorname|slice:":1" }}{{ loggedMember.name|slice:":1" }}</div>
+            <div>
+                <div class="sb-user-name">{{ loggedMember.vorname }} {{ loggedMember.name }}</div>
+                <div class="sb-user-role">{{ loggedMember.statut }}</div>
+            </div>
+        </div>
+        <div class="sb-user-actions">
+            <a href="intranetMonProfil" class="sb-user-btn">
+                <i class="fa-solid fa-user-pen"></i> Profil
+            </a>
+            <form action="intranetDeconnect" style="flex:1">
+                <button type="submit" class="sb-user-btn" style="width:100%">
+                    <i class="fa-solid fa-right-from-bracket"></i> Déco.
+                </button>
+            </form>
+        </div>
+    </div>
+
+</nav><!-- /sidebar -->
+
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║  MAIN AREA                                                   ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<div id="appMain">
+
+    <!-- Top bar -->
+    <header id="topBar">
+        <div class="tb-title">
+            {% block titrePage %}{% endblock %}
+        </div>
+
+        <div class="tb-right">
+            <!-- Météo rapide -->
+            <span style="font-size:12px;color:#64748b" id="tb-date">
+                <i class="fa-regular fa-calendar"></i>
+                {{ current_date_time|slice:":10" }}
+            </span>
+
+            <!-- Notifications -->
+            <div style="position:relative">
+                <button class="notif-btn" id="notifBtn" onclick="toggleNotif()">
+                    <i class="fa-solid fa-bell"></i>
+                    {% if notif_count > 0 %}
+                    <span class="notif-count">{{ notif_count }}</span>
+                    {% endif %}
+                </button>
+
+                <!-- Panel notifications -->
+                <div class="notif-panel" id="notifPanel">
+                    <div class="notif-panel-header">
+                        <h4><i class="fa-solid fa-bell"></i> Notifications</h4>
+                        <a href="intranetNotificationsRead">Tout lire</a>
+                    </div>
+                    {% for notif in notifications %}
+                    <a class="notif-item {% if not notif.is_read %}unread{% endif %}"
+                       href="{% if notif.link %}{{ notif.link }}{% else %}intranetNotificationsRead{% endif %}">
+                        <div class="notif-item-icon notif-icon-{{ notif.notif_type }}">
+                            <i class="fa-solid fa-{% if notif.notif_type == 'success' %}check{% elif notif.notif_type == 'warning' %}exclamation{% elif notif.notif_type == 'danger' %}triangle-exclamation{% else %}info{% endif %}"></i>
+                        </div>
+                        <div class="notif-item-body">
+                            <div class="notif-item-msg">{{ notif.message }}</div>
+                            <div class="notif-item-time">
+                                {% if notif.sender %}{{ notif.sender.vorname }} · {% endif %}
+                                {{ notif.created_at|date:"d/m H:i" }}
+                            </div>
+                        </div>
+                    </a>
+                    {% empty %}
+                    <div style="padding:24px;text-align:center;color:#94a3b8;font-size:13px">
+                        <i class="fa-solid fa-check-circle" style="font-size:24px;display:block;margin-bottom:8px;color:#22c55e"></i>
+                        Aucune notification
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content area -->
+    <div id="contentArea">
+
+        <!-- Aside (page-specific) -->
+        <aside id="asideContent">
+            {% block asideContent %}{% endblock %}
+        </aside>
+
+        <!-- Main content -->
+        <main id="mainContent">
+            {% block mainContent %}{% endblock %}
+        </main>
+
+    </div>
+</div><!-- /appMain -->
+
+
+<!-- ── JS Global ─────────────────────────────────────────────── -->
+<script>
+// Toggle notification panel
+function toggleNotif() {
+    document.getElementById('notifPanel').classList.toggle('open');
+}
+// Close on outside click
+document.addEventListener('click', e => {
+    const btn = document.getElementById('notifBtn');
+    const panel = document.getElementById('notifPanel');
+    if (btn && !btn.contains(e.target) && panel && !panel.contains(e.target)) {
+        panel.classList.remove('open');
+    }
+});
+
+// Active sidebar link
+(function() {
+    const path = window.location.pathname.replace(/^\//, '').split('/')[0];
+    document.querySelectorAll('.sb-item, .sb-sub-item').forEach(el => {
+        const href = (el.getAttribute('href') || '').split('/')[0];
+        if (href && path && href === path) {
+            el.classList.add('active');
+            // Open parent details
+            const d = el.closest('details');
+            if (d) d.open = true;
+        }
+    });
+})();
+</script>
+
+{% block extra_js %}{% endblock %}
+
+</body>
 </html>

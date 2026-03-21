@@ -3,12 +3,13 @@ from django.shortcuts import render,\
                                 HttpResponseRedirect,\
                                 redirect
 from datetime import datetime
+from math import floor
 
 #Imports internes
 from Intranet.MenuMembres.forms import loggedMemberPasswordModifyForm,\
                                         memberForm,\
-                                        memberListForm 
-from Intranet.models import Member
+                                        memberListForm
+from Intranet.models import Member, Statut
 
 from ULMASSO.views import dateTimeParis
 from Intranet.views import getLoggedMemberFromRequest
@@ -129,6 +130,62 @@ def intranetMemberModify(request, id):
         return render(request, templateName, context)
     else:
         return redirect('/internetAccueil')
+
+#************************************************************************************************************
+#Membres/Statistiques
+def intranetStatsMembres(request):
+    loggedMember = getLoggedMemberFromRequest(request)
+    if not loggedMember:
+        return redirect('/internetAccueil')
+
+    membres = Member.objects.select_related('statut', 'licenceAUV', 'brevetInstructeur').all()
+    nb_total = membres.count()
+
+    # Comptages simples
+    nb_licencies    = membres.filter(licenceAUV__value='OUI').count()
+    nb_instructeurs = membres.filter(brevetInstructeur__value='OUI').count()
+
+    # Brevets par classe
+    nb_pilote_c2 = membres.exclude(datePiloteC2=None).count()
+    nb_pilote_c3 = membres.exclude(datePiloteC3=None).count()
+    nb_pilote_c4 = membres.exclude(datePiloteC4=None).count()
+    nb_emport_c2 = membres.exclude(dateEmportC2=None).count()
+    nb_emport_c3 = membres.exclude(dateEmportC3=None).count()
+    nb_emport_c4 = membres.exclude(dateEmportC4=None).count()
+    nb_bapteme_c2 = membres.exclude(dateBaptemeC2=None).count()
+    nb_bapteme_c3 = membres.exclude(dateBaptemeC3=None).count()
+    nb_bapteme_c4 = membres.exclude(dateBaptemeC4=None).count()
+
+    # Répartition par statut
+    par_statut = []
+    for statut in Statut.objects.all():
+        nb = membres.filter(statut=statut).count()
+        pct = floor(nb * 100 / nb_total) if nb_total > 0 else 0
+        par_statut.append({'statut': statut, 'nb': nb, 'pct': pct})
+
+    context = {
+        'loggedMember':     loggedMember,
+        'current_date_time': dateTimeParis(),
+        'current_year':     datetime.now().year,
+        'allAeronef':       Aeronef.objects.all(),
+        'membres':          membres,
+        'nb_total':         nb_total,
+        'nb_licencies':     nb_licencies,
+        'nb_instructeurs':  nb_instructeurs,
+        'nb_pilotes_c3':    nb_pilote_c3,
+        'nb_pilote_c2':     nb_pilote_c2,
+        'nb_pilote_c3':     nb_pilote_c3,
+        'nb_pilote_c4':     nb_pilote_c4,
+        'nb_emport_c2':     nb_emport_c2,
+        'nb_emport_c3':     nb_emport_c3,
+        'nb_emport_c4':     nb_emport_c4,
+        'nb_bapteme_c2':    nb_bapteme_c2,
+        'nb_bapteme_c3':    nb_bapteme_c3,
+        'nb_bapteme_c4':    nb_bapteme_c4,
+        'par_statut':       par_statut,
+    }
+    return render(request, 'intranetStatsMembres.html', context)
+
 
 #************************************************************************************************************
 #Membres/Afficher Membre

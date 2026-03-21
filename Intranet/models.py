@@ -503,6 +503,63 @@ class Reservation(models.Model):
     class Meta:
         ordering = ['-date','hInit']
 
+#*****************************************************************************************
+# Notifications
+class Notification(models.Model):
+    recipient   = models.ForeignKey('Member', on_delete=models.CASCADE, related_name='notifications')
+    sender      = models.ForeignKey('Member', on_delete=models.CASCADE, null=True, blank=True, related_name='sent_notifications')
+    message     = models.CharField(max_length=500)
+    link        = models.CharField(max_length=200, blank=True, default='')
+    is_read     = models.BooleanField(default=False)
+    created_at  = models.DateTimeField(auto_now_add=True)
+    notif_type  = models.CharField(max_length=20, default='info', choices=[
+        ('info',    'Information'),
+        ('success', 'Succès'),
+        ('warning', 'Avertissement'),
+        ('danger',  'Alerte'),
+    ])
+    class Meta:
+        ordering = ['-created_at']
+    def __str__(self):
+        return f"→ {self.recipient} : {self.message[:50]}"
+
+#*****************************************************************************************
+# Journal de maintenance aéronef
+class MaintenanceLog(models.Model):
+    ZONES = [
+        ('fuselage',    'Fuselage'),
+        ('aile_gauche', 'Aile gauche'),
+        ('aile_droite', 'Aile droite'),
+        ('moteur',      'Moteur'),
+        ('helice',      'Hélice'),
+        ('train',       'Train d\'atterrissage'),
+        ('empennage',   'Empennage / Queue'),
+        ('cockpit',     'Cockpit / Instruments'),
+        ('parachute',   'Parachute'),
+        ('electrique',  'Système électrique'),
+        ('general',     'Général'),
+    ]
+    STATUTS = [
+        ('done',      'Terminé'),
+        ('scheduled', 'Planifié'),
+        ('issue',     'Anomalie détectée'),
+    ]
+    aeronef     = models.ForeignKey('Aeronef', on_delete=models.CASCADE, related_name='maintenance_logs')
+    zone        = models.CharField(max_length=20, choices=ZONES, default='general')
+    titre       = models.CharField(max_length=200)
+    description = models.TextField(blank=True, default='')
+    date        = models.DateField()
+    intervenant = models.CharField(max_length=200)
+    membre      = models.ForeignKey('Member', on_delete=models.SET_NULL, null=True, blank=True)
+    next_due    = models.DateField(null=True, blank=True)
+    statut      = models.CharField(max_length=20, choices=STATUTS, default='done')
+
+    class Meta:
+        ordering = ['-date']
+    def __str__(self):
+        return f"{self.aeronef} — {self.get_zone_display()} — {self.titre}"
+
+#*****************************************************************************************
 class City(models.Model):
     def __str__(self):
         return self.name

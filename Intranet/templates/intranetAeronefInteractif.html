@@ -1,0 +1,239 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}{{ aeronef.type }} — Historique maintenance{% endblock %}
+{% block bodyId %}aeronefMaintPage{% endblock %}
+
+{% block titrePage %}
+    <i class="fa-solid fa-helicopter"></i> {{ aeronef.type }}
+    <span class="badge badge-neutral" style="margin-left:8px;font-size:12px">{{ aeronef.immatriculation }}</span>
+    <span class="badge badge-neutral" style="margin-left:4px;font-size:12px">{{ aeronef.indicatifRadio }}</span>
+{% endblock %}
+
+{% block asideContent %}
+    <h3><i class="fa-solid fa-layer-group"></i> Filtrer par zone</h3>
+    <div style="display:flex;flex-direction:column;gap:4px" id="zone-list">
+        <button class="zone-btn active" onclick="filterZone('all')" data-zone="all">
+            <i class="fa-solid fa-border-all"></i> Tout afficher
+        </button>
+        {% for zone_key, zone_label in zones %}
+        <button class="zone-btn" onclick="filterZone('{{ zone_key }}')" data-zone="{{ zone_key }}">
+            {{ zone_label }}
+        </button>
+        {% endfor %}
+    </div>
+
+    <hr style="border:none;border-top:1px solid #e2e8f0;margin:16px 0">
+
+    <h3><i class="fa-solid fa-chart-simple"></i> Résumé</h3>
+    <div style="font-size:12.5px;color:#64748b;line-height:2">
+        <div><i class="fa-solid fa-wrench" style="width:16px;color:#94a3b8"></i> {{ nb_interventions }} intervention{{ nb_interventions|pluralize }}</div>
+        <div><i class="fa-solid fa-triangle-exclamation" style="width:16px;color:#f59e0b"></i> {{ nb_anomalies }} anomalie{{ nb_anomalies|pluralize }}</div>
+        <div><i class="fa-solid fa-calendar-check" style="width:16px;color:#10b981"></i> {{ nb_planifies }} planifié{{ nb_planifies|pluralize }}</div>
+    </div>
+
+    <hr style="border:none;border-top:1px solid #e2e8f0;margin:16px 0">
+
+    <h3><i class="fa-solid fa-shield-halved"></i> Navigabilité</h3>
+    <div style="font-size:12px;display:flex;flex-direction:column;gap:6px">
+        <div>
+            <div style="color:#64748b;margin-bottom:2px">Aptitude au vol</div>
+            {% if aeronef.limiteAptitudeVol %}
+                <span class="badge badge-{{ badge_aptitude }}">{{ aeronef.limiteAptitudeVol|date:"d/m/Y" }}</span>
+            {% else %}<span class="badge badge-neutral">—</span>{% endif %}
+        </div>
+        <div>
+            <div style="color:#64748b;margin-bottom:2px">Limites LSA</div>
+            {% if aeronef.limiteLSA %}
+                <span class="badge badge-{{ badge_lsa }}">{{ aeronef.limiteLSA|date:"d/m/Y" }}</span>
+            {% else %}<span class="badge badge-neutral">—</span>{% endif %}
+        </div>
+        <div>
+            <div style="color:#64748b;margin-bottom:2px">Parachute</div>
+            {% if aeronef.limiteParachute %}
+                <span class="badge badge-{{ badge_parachute }}">{{ aeronef.limiteParachute|date:"d/m/Y" }}</span>
+            {% else %}<span class="badge badge-neutral">—</span>{% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block mainContent %}
+
+<!-- Barre d'actions -->
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+    <div>
+        <span id="maint-count-label" style="font-size:13px;color:#64748b">
+            {{ nb_interventions }} intervention{{ nb_interventions|pluralize }} au total
+        </span>
+    </div>
+    <button class="BtnPDF" onclick="openAddModal()" style="width:auto;padding:9px 20px">
+        <i class="fa-solid fa-plus"></i> Ajouter une intervention
+    </button>
+</div>
+
+<!-- Timeline -->
+<div id="maint-timeline">
+    {% if all_logs %}
+        {% for log in all_logs|dictsortreversed:"date" %}
+        <div class="maint-entry" data-zone="{{ log.zone }}">
+            <div class="maint-entry-header">
+                <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+                    <div class="maint-entry-title">{{ log.titre }}</div>
+                    <span class="badge badge-neutral" style="font-size:10px;white-space:nowrap">
+                        {{ log.get_zone_display }}
+                    </span>
+                </div>
+                <span class="badge badge-{% if log.statut == 'done' %}success{% elif log.statut == 'issue' %}danger{% else %}warning{% endif %}" style="white-space:nowrap">
+                    {% if log.statut == 'done' %}<i class="fa-solid fa-check"></i>{% elif log.statut == 'issue' %}<i class="fa-solid fa-triangle-exclamation"></i>{% else %}<i class="fa-solid fa-calendar"></i>{% endif %}
+                    {{ log.get_statut_display }}
+                </span>
+            </div>
+            <div class="maint-entry-meta">
+                <span><i class="fa-regular fa-calendar"></i> {{ log.date|date:"d/m/Y" }}</span>
+                <span><i class="fa-solid fa-user-wrench"></i> {{ log.intervenant }}</span>
+                {% if log.next_due %}
+                <span><i class="fa-solid fa-clock-rotate-left"></i> Prochain : {{ log.next_due|date:"d/m/Y" }}</span>
+                {% endif %}
+            </div>
+            {% if log.description %}
+            <div class="maint-entry-desc">{{ log.description }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-state" id="maint-empty-all">
+            <i class="fa-solid fa-clipboard-list" style="font-size:36px;color:#cbd5e1"></i>
+            <p style="margin-top:12px">Aucune intervention enregistrée pour cet aéronef.</p>
+            <button class="btn btn-primary btn-sm" onclick="openAddModal()" style="margin-top:12px">
+                <i class="fa-solid fa-plus"></i> Ajouter la première
+            </button>
+        </div>
+    {% endif %}
+
+    <!-- Empty state filtré (masqué par défaut) -->
+    <div class="empty-state" id="maint-empty-zone" style="display:none">
+        <i class="fa-solid fa-magnifying-glass" style="font-size:32px;color:#cbd5e1"></i>
+        <p style="margin-top:12px">Aucune intervention pour cette zone.</p>
+    </div>
+</div>
+
+<!-- ── Modal ajout intervention ──────────────────────────────── -->
+<div class="modal-overlay" id="addModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-wrench" style="color:#3b82f6"></i> Nouvelle intervention</h3>
+            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form method="POST" action="intranetMaintenanceAdd">
+            {% csrf_token %}
+            <input type="hidden" name="aeronef_id" value="{{ aeronef.id }}">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Zone concernée</label>
+                    <select name="zone" id="modal-zone-select">
+                        {% for zone_key, zone_label in zones %}
+                        <option value="{{ zone_key }}">{{ zone_label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Titre *</label>
+                    <input type="text" name="titre" required placeholder="Ex : Révision moteur 200h">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" rows="3" style="resize:vertical"
+                              placeholder="Détails de l'intervention..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date *</label>
+                        <input type="date" name="date" required value="{{ today|date:'Y-m-d' }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Statut</label>
+                        <select name="statut">
+                            <option value="done">✓ Terminé</option>
+                            <option value="scheduled">📅 Planifié</option>
+                            <option value="issue">⚠ Anomalie</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Intervenant</label>
+                    <input type="text" name="intervenant"
+                           value="{{ loggedMember.vorname }} {{ loggedMember.name }}"
+                           placeholder="Nom de l'intervenant">
+                </div>
+                <div class="form-group">
+                    <label>Prochaine échéance</label>
+                    <input type="date" name="next_due">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ghost btn-sm" onclick="closeModal()">Annuler</button>
+                <button type="submit" class="btn btn-primary btn-sm">
+                    <i class="fa-solid fa-floppy-disk"></i> Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const ZONE_LABELS = {
+    {% for zone_key, zone_label in zones %}
+    "{{ zone_key }}": "{{ zone_label|escapejs }}",
+    {% endfor %}
+};
+
+// ── Zone filter ────────────────────────────────────────────────────
+function filterZone(zone) {
+    // Sidebar buttons
+    document.querySelectorAll('#zone-list .zone-btn').forEach(el => {
+        el.classList.toggle('active', el.dataset.zone === zone);
+    });
+
+    const entries = document.querySelectorAll('#maint-timeline .maint-entry');
+    const emptyZone = document.getElementById('maint-empty-zone');
+    const emptyAll  = document.getElementById('maint-empty-all');
+    let visible = 0;
+
+    entries.forEach(el => {
+        const show = zone === 'all' || el.dataset.zone === zone;
+        el.style.display = show ? '' : 'none';
+        if (show) visible++;
+    });
+
+    emptyZone.style.display = (visible === 0 && entries.length > 0) ? '' : 'none';
+    if (emptyAll) emptyAll.style.display = (entries.length === 0) ? '' : 'none';
+
+    // Update count label
+    const total = entries.length;
+    const label = zone === 'all'
+        ? `${total} intervention${total !== 1 ? 's' : ''} au total`
+        : `${visible} intervention${visible !== 1 ? 's' : ''} — ${ZONE_LABELS[zone] || zone}`;
+    document.getElementById('maint-count-label').textContent = label;
+}
+
+// ── Modal ─────────────────────────────────────────────────────────
+function openAddModal() {
+    // Pre-select active zone if any
+    const activeBtn = document.querySelector('#zone-list .zone-btn.active');
+    if (activeBtn && activeBtn.dataset.zone !== 'all') {
+        document.getElementById('modal-zone-select').value = activeBtn.dataset.zone;
+    }
+    document.getElementById('addModal').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('addModal').classList.remove('open');
+}
+
+document.getElementById('addModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+</script>
+{% endblock %}

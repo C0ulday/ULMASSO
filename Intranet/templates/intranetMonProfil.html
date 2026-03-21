@@ -1,0 +1,215 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}Mon profil{% endblock %}
+{% block bodyId %}profilPage{% endblock %}
+
+{% block titrePage %}
+    <i class="fa-solid fa-user-pen"></i> Mon profil
+{% endblock %}
+
+{% block asideContent %}{% endblock %}
+
+{% block mainContent %}
+
+{% if success %}
+<div class="alert alert-success">
+    <i class="fa-solid fa-check-circle"></i>
+    <div>
+        <strong>Profil mis à jour.</strong> Les administrateurs ont été notifiés de vos modifications.
+    </div>
+</div>
+{% endif %}
+
+<div class="profile-grid">
+
+    <!-- Carte gauche : avatar + stats -->
+    <div>
+        <div class="card" style="text-align:center;margin-bottom:16px">
+            <div class="profile-avatar" style="font-size:32px">
+                {{ loggedMember.vorname|slice:":1" }}{{ loggedMember.name|slice:":1" }}
+            </div>
+            <div class="profile-name">{{ loggedMember.vorname }} {{ loggedMember.name }}</div>
+            <div class="profile-role">{{ loggedMember.statut }}</div>
+            <div style="margin-top:6px">
+                {% if loggedMember.licenceAUV.value == "OUI" %}
+                    <span class="badge badge-success"><i class="fa-solid fa-id-card"></i> Licencié AUV</span>
+                {% endif %}
+                {% if loggedMember.brevetInstructeur.value == "OUI" %}
+                    <span class="badge badge-primary" style="margin-left:4px"><i class="fa-solid fa-chalkboard-user"></i> Instructeur</span>
+                {% endif %}
+            </div>
+
+            <div class="profile-stats">
+                <div class="profile-stat">
+                    <div class="profile-stat-val">{{ nb_vols }}</div>
+                    <div class="profile-stat-lbl">Vols {{ current_year }}</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-val {% if bilan >= 0 %}positive{% else %}negative{% endif %}" style="font-size:16px">
+                        {{ bilan|floatformat:0 }}€
+                    </div>
+                    <div class="profile-stat-lbl">Compte pilote</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-val">{{ duree_h }}h</div>
+                    <div class="profile-stat-lbl">Heures vol</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-val">{{ loggedMember.age }}</div>
+                    <div class="profile-stat-lbl">Ans</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Qualifications -->
+        <div class="card">
+            <div class="card-label" style="margin-bottom:12px"><i class="fa-solid fa-certificate"></i> Qualifications</div>
+            <table style="font-size:12px">
+                <thead><tr><th>Brevet</th><th>Cl.2</th><th>Cl.3</th><th>Cl.4</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td>Pilote</td>
+                        <td>{% if loggedMember.datePiloteC2 %}<span class="badge badge-success">✓</span>{% else %}—{% endif %}</td>
+                        <td>{% if loggedMember.datePiloteC3 %}<span class="badge badge-success">✓</span>{% else %}—{% endif %}</td>
+                        <td>{% if loggedMember.datePiloteC4 %}<span class="badge badge-success">✓</span>{% else %}—{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td>Emport pax</td>
+                        <td>{% if loggedMember.dateEmportC2 %}<span class="badge badge-success">✓</span>{% else %}—{% endif %}</td>
+                        <td>{% if loggedMember.dateEmportC3 %}<span class="badge badge-success">✓</span>{% else %}—{% endif %}</td>
+                        <td>{% if loggedMember.dateEmportC4 %}<span class="badge badge-success">✓</span>{% else %}—{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <td>Vol découverte</td>
+                        <td>{% if loggedMember.dateBaptemeC2 %}<span class="badge badge-info">✓</span>{% else %}—{% endif %}</td>
+                        <td>{% if loggedMember.dateBaptemeC3 %}<span class="badge badge-info">✓</span>{% else %}—{% endif %}</td>
+                        <td>{% if loggedMember.dateBaptemeC4 %}<span class="badge badge-info">✓</span>{% else %}—{% endif %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Formulaire droite -->
+    <div>
+        <form method="POST" action="intranetMonProfil">
+            {% csrf_token %}
+
+            <!-- Infos personnelles -->
+            <div class="card-section">
+                <h3><i class="fa-solid fa-user"></i> Informations personnelles</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" name="name" value="{{ loggedMember.name }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Prénom</label>
+                        <input type="text" name="vorname" value="{{ loggedMember.vorname }}" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date de naissance</label>
+                        <input type="date" name="birthday"
+                               value="{{ loggedMember.birthday|date:'Y-m-d' }}">
+                    </div>
+                    <div class="form-group">
+                        <label>N° licence FFPLUM</label>
+                        <input type="text" name="licenceFFPLUM"
+                               value="{{ loggedMember.licenceFFPLUM|default:'' }}" maxlength="6">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div class="card-section">
+                <h3><i class="fa-solid fa-address-book"></i> Coordonnées</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Téléphone</label>
+                        <input type="tel" name="phone"
+                               value="{{ loggedMember.phone|default:'' }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Courriel</label>
+                        <input type="email" name="email"
+                               value="{{ loggedMember.email|default:'' }}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Adresse</label>
+                    <input type="text" name="adress"
+                           value="{{ loggedMember.adress|default:'' }}">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Code postal</label>
+                        <input type="text" name="zip"
+                               value="{{ loggedMember.zip|default:'' }}" maxlength="5">
+                    </div>
+                    <div class="form-group">
+                        <label>Ville</label>
+                        <input type="text" name="city"
+                               value="{{ loggedMember.city|default:'' }}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mot de passe -->
+            <div class="card-section">
+                <h3><i class="fa-solid fa-lock"></i> Changer le mot de passe</h3>
+                <p style="font-size:12px;color:#64748b;margin-bottom:12px">
+                    Laissez vide pour conserver le mot de passe actuel.
+                </p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nouveau mot de passe</label>
+                        <input type="password" name="new_password" id="pwd1"
+                               placeholder="••••••••" autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmer</label>
+                        <input type="password" name="new_password2" id="pwd2"
+                               placeholder="••••••••" autocomplete="new-password">
+                    </div>
+                </div>
+                <p id="pwd-error" style="color:#ef4444;font-size:12px;display:none">
+                    <i class="fa-solid fa-circle-exclamation"></i> Les mots de passe ne correspondent pas.
+                </p>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:10px">
+                <a href="intranetAccueil" class="btn btn-ghost" style="padding:9px 20px">Annuler</a>
+                <button type="submit" class="BtnSubmit" style="width:auto;padding:9px 24px">
+                    <i class="fa-solid fa-floppy-disk"></i> Enregistrer les modifications
+                </button>
+            </div>
+        </form>
+    </div>
+
+</div><!-- /profile-grid -->
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Validation mdp côté client
+document.querySelector('form').addEventListener('submit', function(e) {
+    const p1 = document.getElementById('pwd1').value;
+    const p2 = document.getElementById('pwd2').value;
+    const err = document.getElementById('pwd-error');
+    if (p1 && p1 !== p2) {
+        e.preventDefault();
+        err.style.display = 'block';
+    } else {
+        err.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}

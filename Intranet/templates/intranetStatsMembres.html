@@ -1,0 +1,168 @@
+{% extends "baseIntranet.html" %}
+
+{% block title %}Statistiques membres{% endblock %}
+{% block bodyId %}intranetStatsMembresPage{% endblock %}
+
+{% block titrePage %}
+    <p><i class="fa-solid fa-chart-pie" style="color:var(--color-primary-light);margin-right:8px"></i>Statistiques membres {{ current_year }}</p>
+{% endblock %}
+
+{% block asideContent %}{% endblock %}
+
+{% block mainContent %}
+
+<!-- ── Cartes résumé ─────────────────────────────────────────── -->
+<div class="dashboard-grid">
+    <div class="card">
+        <div class="card-label"><i class="fa-solid fa-users"></i> Total membres</div>
+        <div class="card-value">{{ nb_total }}</div>
+        <div class="card-sub">inscrits</div>
+    </div>
+    <div class="card">
+        <div class="card-label"><i class="fa-solid fa-id-card"></i> Licenciés AUV</div>
+        <div class="card-value">{{ nb_licencies }}</div>
+        <div class="card-sub">licence AUV en cours</div>
+    </div>
+    <div class="card">
+        <div class="card-label"><i class="fa-solid fa-chalkboard-user"></i> Instructeurs</div>
+        <div class="card-value">{{ nb_instructeurs }}</div>
+        <div class="card-sub">brevet instructeur</div>
+    </div>
+    <div class="card">
+        <div class="card-label"><i class="fa-solid fa-plane"></i> Pilotes</div>
+        <div class="card-value">{{ nb_pilotes_c3 }}</div>
+        <div class="card-sub">brevet pilote Cl.3</div>
+    </div>
+</div>
+
+<!-- ── Répartition par statut ────────────────────────────────── -->
+<div class="card-section">
+    <h3><i class="fa-solid fa-sitemap"></i> Répartition par statut</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Statut</th>
+                <th style="text-align:right">Nb membres</th>
+                <th style="text-align:right">% du club</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in par_statut %}
+            <tr>
+                <td>{{ s.statut }}</td>
+                <td style="text-align:right">{{ s.nb }}</td>
+                <td style="text-align:right">{{ s.pct }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- ── Qualifications par classe ─────────────────────────────── -->
+<div class="card-section">
+    <h3><i class="fa-solid fa-certificate"></i> Qualifications par classe ULM</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Qualification</th>
+                <th style="text-align:right">Classe 2</th>
+                <th style="text-align:right">Classe 3</th>
+                <th style="text-align:right">Classe 4</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Brevet pilote</td>
+                <td style="text-align:right">{{ nb_pilote_c2 }}</td>
+                <td style="text-align:right">{{ nb_pilote_c3 }}</td>
+                <td style="text-align:right">{{ nb_pilote_c4 }}</td>
+            </tr>
+            <tr>
+                <td>Brevet emport passager</td>
+                <td style="text-align:right">{{ nb_emport_c2 }}</td>
+                <td style="text-align:right">{{ nb_emport_c3 }}</td>
+                <td style="text-align:right">{{ nb_emport_c4 }}</td>
+            </tr>
+            <tr>
+                <td>Vol découverte</td>
+                <td style="text-align:right">{{ nb_bapteme_c2 }}</td>
+                <td style="text-align:right">{{ nb_bapteme_c3 }}</td>
+                <td style="text-align:right">{{ nb_bapteme_c4 }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ── Liste complète des membres ────────────────────────────── -->
+<div class="card-section">
+    <h3><i class="fa-solid fa-list"></i> Tous les membres</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Statut</th>
+                <th style="text-align:center">Lic. AUV</th>
+                <th style="text-align:center">Instructeur</th>
+                <th style="text-align:center">Pilote Cl.2</th>
+                <th style="text-align:center">Pilote Cl.3</th>
+                <th style="text-align:center">Pilote Cl.4</th>
+                <th style="text-align:right">Âge</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in membres %}
+            <tr>
+                <td>{{ m.name }}</td>
+                <td>{{ m.vorname }}</td>
+                <td><span class="badge badge-info">{{ m.statut }}</span></td>
+                <td style="text-align:center">
+                    {% if m.licenceAUV.value == "OUI" %}
+                        <span id="monpetitcerclevert"></span>
+                    {% else %}
+                        <span id="monpetitcerclerouge"></span>
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if m.brevetInstructeur.value == "OUI" %}
+                        <span id="monpetitcerclevert"></span>
+                    {% else %}
+                        <span id="monpetitcerclerouge"></span>
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if m.datePiloteC2 %}
+                        <span class="badge badge-success" title="{{ m.datePiloteC2|date:'d/m/Y' }}">✓</span>
+                    {% else %}<span style="color:var(--color-text-light)">—</span>{% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if m.datePiloteC3 %}
+                        <span class="badge badge-success" title="{{ m.datePiloteC3|date:'d/m/Y' }}">✓</span>
+                    {% else %}<span style="color:var(--color-text-light)">—</span>{% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if m.datePiloteC4 %}
+                        <span class="badge badge-success" title="{{ m.datePiloteC4|date:'d/m/Y' }}">✓</span>
+                    {% else %}<span style="color:var(--color-text-light)">—</span>{% endif %}
+                </td>
+                <td style="text-align:right">
+                    {% if m.birthday %}{{ m.age }} ans{% else %}—{% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Graphique répartition par statut
+    const ctx = document.createElement('canvas');
+    ctx.style.maxWidth = '260px';
+    ctx.style.margin = '0 auto';
+    // Inséré si besoin — données disponibles via template
+</script>
+{% endblock %}

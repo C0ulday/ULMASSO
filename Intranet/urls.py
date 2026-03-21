@@ -3,12 +3,17 @@ from django.urls import path
 
 #Imports internes
 from Intranet.views import intranetDeconnect,\
-                            intranetAccueil
+                            intranetAccueil,\
+                            intranetMonProfil,\
+                            intranetAeronefInteractif,\
+                            intranetMaintenanceAdd,\
+                            intranetNotificationsRead
 from Intranet.MenuMembres.views import memberPassword,\
                                 intranetMemberAddShow,\
                                 intranetMemberDelete,\
                                 intranetMemberModify,\
-                                intranetMemberShow
+                                intranetMemberShow,\
+                                intranetStatsMembres
 from Intranet.MenuBudget.views import intranetBudgetSectionAddShow,\
                                     intranetBudgetSectionDelete,\
                                     intranetBudgetSectionModify,\
@@ -58,7 +63,8 @@ from Intranet.MenuComptesPilotes.views import intranetMonVolCreate,\
 from Intranet.MenuAeronef.views import intranetAeronefCreate,\
                                         intranetAeronefDelete,\
                                         intranetAeronefModify,\
-                                        intranetAeronefStatistiques  
+                                        intranetAeronefStatistiques,\
+                                        intranetAeronefSuiviMecanique
 
 from Intranet.MenuReservation.views import intranetReservationCalendrier,\
                                             intranetReservationCreate,\
@@ -74,7 +80,15 @@ urlpatterns = [
     path('memberProfile',memberPassword, name="member_Profile"),
     
 #Accueil
-    path('intranetAccueil',intranetAccueil, name="intranet_Accueil"),
+    path('intranetAccueil', intranetAccueil, name="intranet_Accueil"),
+    #Mon profil
+    path('intranetMonProfil', intranetMonProfil, name="intranet_Mon_Profil"),
+    #Notifications
+    path('intranetNotificationsRead', intranetNotificationsRead, name="intranet_Notif_Read"),
+    #Aéronef interactif SVG
+    path('intranetAeronefInteractif<int:aeronef_id>', intranetAeronefInteractif, name="intranet_Aeronef_Interactif"),
+    #Maintenance log add
+    path('intranetMaintenanceAdd', intranetMaintenanceAdd, name="intranet_Maintenance_Add"),
     
 #Membres    
     #Membres/Gérer Members
@@ -83,6 +97,8 @@ urlpatterns = [
     path('modifyMember<int:id>', intranetMemberModify, name = 'intranet_Member_Modify'), 
     #Membres/Visualiser Membres
     path('intranetVoirMembers', intranetMemberShow, name="intranet_Member_Show"),
+    #Membres/Statistiques
+    path('intranetStatsMembres', intranetStatsMembres, name="intranet_Stats_Membres"),
     
 #Budget
     #Budget/Gérer Sections
@@ -174,6 +190,8 @@ urlpatterns = [
     path('intranetAeronefDelete<int:id>', intranetAeronefDelete, name = 'intranet_Aeronef_Delete'),
             #Modifier
     path('intranetAeronefModify<int:id>', intranetAeronefModify, name = 'intranet_Aeronef_Modify'),
+    #Aeronef/Suivi mécanique
+    path('intranetAeronefSuiviMecanique', intranetAeronefSuiviMecanique, name = 'intranet_Aeronef_Suivi_Mecanique'),
     #Aeronef/Statistiques
     path('intranetAeronefStatistiques', intranetAeronefStatistiques, name = 'intranet_Aeronef_Statistiques'),
     
