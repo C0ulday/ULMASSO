@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AUV | {% block title %}Intranet{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="static/css/styleIntranet.css">
     <link rel="stylesheet" type="text/css" href="static/css/styleMenuPrincipal.css">
 </head>
@@ -113,7 +114,7 @@
                 {% endif %}
                 <a href="intranetAeronefSuiviMecanique" class="sb-sub-item">Suivi mécanique</a>
                 {% for aeronef in allAeronef %}
-                <a href="intranetAeronefInteractif{{ aeronef.id }}" class="sb-sub-item">{{ aeronef.type }} — SVG</a>
+                <a href="intranetAeronefInteractif{{ aeronef.id }}" class="sb-sub-item">{{ aeronef.type }}</a>
                 {% endfor %}
                 <a href="intranetAeronefStatistiques" class="sb-sub-item">Statistiques</a>
             </div>

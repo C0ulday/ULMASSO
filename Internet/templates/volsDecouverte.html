@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Vols Découverte - Aero ULM Valence{% endblock %}
+{% block title %}Vols Découverte · Baptême de l'air ULM · Aéro ULM Valence{% endblock %}
+{% block bodyClass %}light-header{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/volsDecouverte.css' %}">
@@ -9,149 +10,223 @@
 
 {% block content %}
 
-<section class="section-container section-header">
-  <h1 class="section-header">Réservez<br />votre premier baptême aérien</h1>
-  <img src="{% static 'res/images/header.png' %}" alt="Image d'en-tête" />
+<!-- ── Hero ──────────────────────────────────────────────────── -->
+<section class="vd-hero">
+    <div class="vd-hero-bg" style="background-image:url('{% static "res/images/3axes.jpg" %}')"></div>
+    <div class="vd-hero-overlay"></div>
+    <div class="vd-hero-content">
+        <span class="vd-eyebrow">
+            <i class="fa-solid fa-paper-plane"></i> Baptême de l'air
+        </span>
+        <h1>Votre premier vol<br>en ULM</h1>
+        <p>Partez à la découverte du ciel depuis l'aéroport de Valence‑Chabeuil,<br>
+           accompagné d'un instructeur passionné. À partir de 45&nbsp;€.</p>
+        <a href="#tarifs" class="vd-cta-btn">
+            <i class="fa-solid fa-ticket"></i> Voir les formules
+        </a>
+    </div>
+    <a href="#avant-decoller" class="vd-scroll-arrow" aria-label="Défiler">
+        <i class="fa-solid fa-chevron-down"></i>
+    </a>
 </section>
 
-<section class="etapes-container">
-  <h1 class="etapes-title">AVANT DE DÉCOLLER</h1>
-  <p class="description">
-    Avant de réserver votre baptême de l'air en ULM, assurez-vous de remplir ces quelques conditions essentielles !
-  </p>
-  <div class="plan-grille">
-    <div class="plan-contenu">
-      <span class="numero">01</span>
-      <h2 class="plan-header">Pièce d'identité valide</h2>
-      <p>Munissez-vous d'une pièce d'identité en cours de validité pour confirmer votre inscription sur place.</p>
-    </div>
-    <div class="plan-contenu">
-      <span class="numero">02</span>
-      <h2 class="plan-header">Condition physique adaptée</h2>
-      <p>Assurez-vous d’être en bonne forme physique et de ne présenter aucune contre-indication médicale à ce type d'activité.</p>
-    </div>
-    <div class="plan-contenu">
-      <span class="numero">03</span>
-      <h2 class="plan-header">Tenue confortable</h2>
-      <p>Portez des vêtements adaptés à la météo et évitez les objets encombrants. Des lunettes de soleil peuvent être utiles.</p>
-    </div>
-  </div>
-
-  <section class="tarifs-section">
-    <h1 class="tarifs-title">Nos Tarifs</h1>
-    <p class="tarifs-intro">Choisissez la formule qui vous convient pour découvrir le ciel&nbsp;!</p>
-  
-    <div class="tarifs-container">
-      <!-- Carte 20 min -->
-      <a href="#contact" class="tarif-card">
-        <h2>20 minutes</h2>
-        <p class="tarif-description">
-          Le tout premier vol, celui pour appréhender le vol des oiseaux, les trois dimensions du ciel.
-          Roulage, décollage, une verticale terrain, un circuit d'intégration standard et l'atterrissage.
+<!-- ── Avant de décoller ─────────────────────────────────────── -->
+<section class="vd-section" id="avant-decoller">
+    <div class="vd-inner vd-center">
+        <span class="section-badge">Avant de décoller</span>
+        <h2 class="section-title">Quelques points à connaître</h2>
+        <p class="section-sub">
+            Pour que votre baptême se déroule dans les meilleures conditions, pensez à vérifier ces quelques points avant de venir.
         </p>
-        <p class="tarif-price"><strong>45 €</strong></p>
-      </a>
-  
-      <!-- Carte 45 min -->
-      <a href="#contact" class="tarif-card">
-        <h2>45 minutes</h2>
-        <p class="tarif-description">
-          Si vous désirez découvrir la plaine de Valence vue du ciel, entre Ardèche et Vercors,
-          ce vol découverte est fait pour vous !
-        </p>
-        <p class="tarif-price"><strong>95 €</strong></p>
-      </a>
-  
-      <!-- Carte 60 min -->
-      <a href="#contact" class="tarif-card">
-        <h2>60 minutes</h2>
-        <p class="tarif-description">
-          Si vous souhaitez vous évader, cette formule vous permet de naviguer entre plaine et montagne
-          et de découvrir la variété des paysages de notre belle région.
-        </p>
-        <p class="tarif-price"><strong>135 €</strong></p>
-      </a>
+        <div class="plan-grille">
+            <div class="plan-contenu">
+                <span class="numero">01</span>
+                <h2 class="plan-header">Pièce d'identité valide</h2>
+                <p>Munissez-vous d'une pièce d'identité en cours de validité pour confirmer votre inscription sur place.</p>
+            </div>
+            <div class="plan-contenu">
+                <span class="numero">02</span>
+                <h2 class="plan-header">Bonne forme physique</h2>
+                <p>Assurez-vous de ne présenter aucune contre-indication médicale. En cas de doute, consultez votre médecin au préalable.</p>
+            </div>
+            <div class="plan-contenu">
+                <span class="numero">03</span>
+                <h2 class="plan-header">Tenue confortable</h2>
+                <p>Portez des vêtements adaptés à la météo du jour. Évitez les objets encombrants, prévoyez des lunettes de soleil.</p>
+            </div>
+        </div>
     </div>
-  </section>
-  
-  
-  <div class="plan-images">
-    <img class="pendulaire" src="{% static 'res/images/pendulaire.jpg' %}" alt="ULM pendulaire" />
-    <img class="3axes" src="{% static 'res/images/3axes.jpg' %}" alt="ULM 3 axes" />
-  </div>
 </section>
 
-<section class="contact-section" id= "contact">
-  <h1 class="contact-title">Contactez-nous</h1>
-  <p class="contact-intro">
-    Une question, un renseignement ou une réservation&nbsp;?
-  </p>
-
-  <div class="contact-wrapper">
-    <!-- Colonne formulaire -->
-    <form class="contact-form" method="post" action="{% url 'volsDecouverte' %}#contact">
-      {% csrf_token %}
-
-      {% if form_success %}
-      <div style="background:#d1fae5;border:1px solid #6ee7b7;color:#065f46;padding:14px 18px;border-radius:0.75rem;margin-bottom:1.5rem;font-size:0.9rem;display:flex;align-items:center;gap:10px">
-        <i class="fa-solid fa-circle-check"></i>
-        <span>Votre message a bien été envoyé ! Nous vous répondrons très prochainement.</span>
-      </div>
-      {% endif %}
-
-      {% if form_error %}
-      <div style="background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;padding:14px 18px;border-radius:0.75rem;margin-bottom:1.5rem;font-size:0.9rem;display:flex;align-items:center;gap:10px">
-        <i class="fa-solid fa-circle-exclamation"></i>
-        <span>{{ form_error }}</span>
-      </div>
-      {% endif %}
-
-      <div class="form-group">
-        <label for="name">Nom *</label>
-        <input type="text" id="name" name="name" placeholder="Votre nom" required>
-      </div>
-      <div class="form-group">
-        <label for="phone">Téléphone</label>
-        <input type="tel" id="phone" name="phone" placeholder="Votre numéro de téléphone">
-      </div>
-      <div class="form-group">
-        <label for="email">E-mail *</label>
-        <input type="email" id="email" name="email" placeholder="Votre e-mail" required>
-      </div>
-      <div class="form-group">
-        <label for="message">Message *</label>
-        <textarea id="message" name="message" rows="5" placeholder="Votre message" required></textarea>
-      </div>
-      <button type="submit" class="contact-btn">
-        <i class="fa-solid fa-paper-plane" style="margin-right:8px"></i>Envoyer
-      </button>
-    </form>
-
-    <!-- Colonne Google Maps -->
-    <div class="map-container">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2780.512413185603!2d4.95585631556744!3d44.91881387909816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f55b59fbe6c2b1%3A0x53c1d657ff5d3ec7!2sA%C3%A9roport%20de%20Valence-Chabeuil!5e0!3m2!1sfr!2sfr!4v1694267200000!5m2!1sfr!2sfr"
-        width="100%"
-        height="100%"
-        style="border:0; border-radius:1.5rem;"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
-
-      <!-- Bouton accès Google Maps -->
-      <a href="https://www.google.com/maps/search/?api=1&query=A%C3%A9ro-ULM-Valence+P%C3%B4le+Aviation+L%C3%A9g%C3%A8re,+730+Chem.+du+Vol+A+Voile,+26120+Chabeuil,+France"
-          target="_blank"
-          class="map-link"
-          title="Ouvrir dans Google Maps">
-          &#128205;
-      </a>
-
+<!-- ── Galerie images ─────────────────────────────────────────── -->
+<section class="vd-gallery">
+    <div class="vd-gallery-inner">
+        <img src="{% static 'res/images/pendulaire.jpg' %}" alt="ULM pendulaire" loading="lazy">
+        <img src="{% static 'res/images/3axes.jpg' %}" alt="ULM 3 axes" loading="lazy">
     </div>
-  </div>
 </section>
 
+<!-- ── Tarifs ─────────────────────────────────────────────────── -->
+<section class="vd-section vd-alt" id="tarifs">
+    <div class="vd-inner vd-center">
+        <span class="section-badge">Nos Formules</span>
+        <h2 class="section-title">Choisissez votre vol</h2>
+        <p class="section-sub">Trois formules pour découvrir nos appareils et les paysages de la Drôme, selon votre envie.</p>
 
+        <div class="tarifs-container">
+
+            <a href="#contact" class="tarif-card">
+                <div class="tarif-icon"><i class="fa-solid fa-clock"></i></div>
+                <div class="tarif-duration">20 minutes</div>
+                <h3>Découverte</h3>
+                <p class="tarif-description">
+                    Le tout premier vol. Roulage, décollage, une verticale terrain, un circuit d'intégration et l'atterrissage. La sensation du ciel, simplement.
+                </p>
+                <div class="tarif-price">45 €</div>
+                <span class="tarif-cta">Réserver <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a href="#contact" class="tarif-card tarif-featured">
+                <div class="tarif-badge-pop">Populaire</div>
+                <div class="tarif-icon"><i class="fa-solid fa-map"></i></div>
+                <div class="tarif-duration">45 minutes</div>
+                <h3>Évasion</h3>
+                <p class="tarif-description">
+                    Découvrez la plaine de Valence vue du ciel, entre Ardèche et Vercors. Le vol idéal pour apprécier les paysages de notre belle région.
+                </p>
+                <div class="tarif-price">95 €</div>
+                <span class="tarif-cta">Réserver <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <a href="#contact" class="tarif-card">
+                <div class="tarif-icon"><i class="fa-solid fa-mountain-sun"></i></div>
+                <div class="tarif-duration">60 minutes</div>
+                <h3>Grand Tour</h3>
+                <p class="tarif-description">
+                    Plaine et montagne, une heure pour s'évader. Vous naviguerez entre les reliefs du Vercors et la plaine drômoise, un spectacle inoubliable.
+                </p>
+                <div class="tarif-price">135 €</div>
+                <span class="tarif-cta">Réserver <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- ── Pourquoi nous ──────────────────────────────────────────── -->
+<section class="vd-section" id="pourquoi">
+    <div class="vd-inner vd-center">
+        <span class="section-badge">Pourquoi nous choisir</span>
+        <h2 class="section-title">Le vol ULM avec l'AUV</h2>
+        <p class="section-sub">Des instructeurs bénévoles passionnés, du matériel entretenu avec soin, et un cadre exceptionnel.</p>
+        <div class="why-grid">
+            <div class="why-card">
+                <div class="why-icon" style="background:rgba(61,92,184,0.1);color:#3d5cb8">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3>Sécurité absolue</h3>
+                <p>Chaque vol est préparé avec rigueur. Nos aéronefs sont régulièrement contrôlés et nos instructeurs qualifiés.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon" style="background:rgba(249,174,93,0.15);color:#d97706">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <h3>Passion et bienveillance</h3>
+                <p>Vous volez avec des passionnés qui adorent partager leur amour du ciel. Aucun jugement, juste du plaisir.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon" style="background:rgba(16,185,129,0.12);color:#10b981">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <h3>Cadre exceptionnel</h3>
+                <p>L'aéroport de Valence-Chabeuil, entre plaine drômoise et massif du Vercors. Des panoramas à couper le souffle.</p>
+            </div>
+            <div class="why-card">
+                <div class="why-icon" style="background:rgba(139,92,246,0.12);color:#7c3aed">
+                    <i class="fa-solid fa-child-reaching"></i>
+                </div>
+                <h3>Pour tout le monde</h3>
+                <p>Dès 8 ans, accompagné d'un adulte. Aucune expérience requise. Juste l'envie de voler.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Contact ────────────────────────────────────────────────── -->
+<section class="vd-contact" id="contact">
+    <div class="vd-inner vd-center" style="margin-bottom:48px">
+        <span class="section-badge">Réservation</span>
+        <h2 class="section-title">Réservez votre vol</h2>
+        <p class="section-sub">Une question ou une envie de réserver ? Écrivez-nous, nous vous répondons rapidement.</p>
+    </div>
+    <div class="contact-wrapper">
+
+        <!-- Formulaire -->
+        <form class="contact-form" method="post" action="{% url 'volsDecouverte' %}#contact">
+            {% csrf_token %}
+
+            {% if form_success %}
+            <div class="form-alert form-alert-success">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Message envoyé ! Nous vous répondrons très prochainement.</span>
+            </div>
+            {% endif %}
+
+            {% if form_error %}
+            <div class="form-alert form-alert-error">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span>{{ form_error }}</span>
+            </div>
+            {% endif %}
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Nom complet <span class="req">*</span></label>
+                    <input type="text" id="name" name="name" placeholder="Jean Dupont" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" name="phone" placeholder="06 12 34 56 78">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail <span class="req">*</span></label>
+                <input type="email" id="email" name="email" placeholder="jean@exemple.fr" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message <span class="req">*</span></label>
+                <textarea id="message" name="message" rows="5"
+                    placeholder="Dites-nous quelle formule vous intéresse, votre disponibilité..." required></textarea>
+            </div>
+            <button type="submit" class="contact-btn">
+                <i class="fa-solid fa-paper-plane"></i> Envoyer ma demande
+            </button>
+        </form>
+
+        <!-- Google Maps -->
+        <div class="map-container">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2780.512413185603!2d4.95585631556744!3d44.91881387909816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f55b59fbe6c2b1%3A0x53c1d657ff5d3ec7!2sA%C3%A9roport%20de%20Valence-Chabeuil!5e0!3m2!1sfr!2sfr!4v1694267200000!5m2!1sfr!2sfr"
+                width="100%" height="100%"
+                style="border:0; border-radius:1.5rem;"
+                allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            <a href="https://www.google.com/maps/search/?api=1&query=A%C3%A9ro-ULM-Valence+P%C3%B4le+Aviation+L%C3%A9g%C3%A8re,+730+Chem.+du+Vol+A+Voile,+26120+Chabeuil,+France"
+               target="_blank" rel="noopener" class="map-open-btn" title="Ouvrir dans Google Maps">
+                <i class="fa-solid fa-up-right-from-square"></i> Ouvrir dans Maps
+            </a>
+            <div class="map-info">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                    <strong>Pôle Aviation légère</strong>
+                    <span>Aéroport de Valence-Chabeuil · 26120 Chabeuil</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
 
 {% endblock %}
 
@@ -159,9 +234,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const icon = document.querySelector('.navigation-items a i.fa-user');
-    if (icon) {
-        icon.style.color = "#3F3F3F";
-    }
+    if (icon) { icon.style.color = "#3F3F3F"; }
 });
 </script>
 {% endblock %}
