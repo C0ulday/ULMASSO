@@ -132,8 +132,8 @@
             <i class="fa-solid fa-external-link" style="font-size:9px;margin-left:auto;opacity:.5"></i>
         </a>
         {% for aeronef in allAeronef %}
-        <a href="{% url 'intranet_Reservation_Calendrier' aeronef %}" class="sb-item" style="padding-left:28px;font-size:13px">
-            <i class="fa-solid fa-calendar-days" style="font-size:12px"></i>
+        <a href="{% url 'intranet_Reservation_Calendrier' aeronef %}" class="sb-item sb-item-cal">
+            <i class="fa-solid fa-calendar-days"></i>
             {{ aeronef.type }}
         </a>
         {% endfor %}
