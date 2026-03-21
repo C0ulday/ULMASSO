@@ -11,59 +11,92 @@
 
 {% block mainContent %}
 
-<!-- ── Bienvenue ──────────────────────────────────────────────── -->
-<div style="margin-bottom:20px">
-    <h2 style="font-size:22px;font-weight:800;color:#1e293b;letter-spacing:-.02em">
-        Bonjour, {{ loggedMember.vorname }} 👋
-    </h2>
-    <p style="color:#64748b;font-size:13px;margin-top:4px">
-        <i class="fa-regular fa-calendar"></i> {{ current_date_time|slice:":10" }} &nbsp;·&nbsp;
-        {{ loggedMember.statut }} d'AUV
-    </p>
+<!-- ── Bannière de bienvenue ──────────────────────────────────── -->
+<div class="welcome-banner">
+    <div class="welcome-bg-shape"></div>
+    <div class="welcome-content">
+        <div class="welcome-left">
+            <div class="welcome-avatar">{{ loggedMember.vorname|slice:":1" }}{{ loggedMember.name|slice:":1" }}</div>
+            <div>
+                <h2>Bonjour, {{ loggedMember.vorname }} 👋</h2>
+                <p>
+                    <i class="fa-regular fa-calendar"></i> {{ current_date_time|slice:":10" }}
+                    &nbsp;·&nbsp;
+                    <span class="welcome-role">{{ loggedMember.statut }}</span>
+                </p>
+            </div>
+        </div>
+        <div class="welcome-right">
+            <a href="intranetMonProfil" class="welcome-btn">
+                <i class="fa-solid fa-user-pen"></i> Mon profil
+            </a>
+        </div>
+    </div>
 </div>
 
 <!-- ── KPI cards ─────────────────────────────────────────────── -->
-<div class="dashboard-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr))">
+<div class="kpi-grid">
 
-    <!-- Compte pilote -->
-    <div class="card" style="border-top:3px solid {% if bilan_compte >= 0 %}#10b981{% else %}#ef4444{% endif %}">
-        <div class="card-label"><i class="fa-solid fa-wallet"></i> Mon compte pilote</div>
-        <div class="card-value {% if bilan_compte >= 0 %}positive{% else %}negative{% endif %}">
-            {{ bilan_compte|floatformat:2 }} €
+    <div class="kpi-card">
+        <div class="kpi-icon kpi-icon-green">
+            <i class="fa-solid fa-wallet"></i>
         </div>
-        <div class="card-sub">{% if bilan_compte >= 0 %}Solde créditeur ✓{% else %}Solde débiteur{% endif %}</div>
-        <div class="stat-bar" style="margin-top:12px">
-            <div class="stat-bar-fill" style="width:100%;background:{% if bilan_compte >= 0 %}#10b981{% else %}#ef4444{% endif %}"></div>
-        </div>
-    </div>
-
-    <!-- Vols cette année -->
-    <div class="card" style="border-top:3px solid #3b82f6">
-        <div class="card-label"><i class="fa-solid fa-plane-departure"></i> Mes vols {{ current_year }}</div>
-        <div class="card-value">{{ nb_mes_vols }}</div>
-        <div class="card-sub">{{ duree_mes_vols }}h {{ duree_mes_vols_min }}min de vol total</div>
-    </div>
-
-    <!-- Prochaine réservation -->
-    <div class="card" style="border-top:3px solid #8b5cf6">
-        <div class="card-label"><i class="fa-solid fa-calendar-check"></i> Prochaine résa</div>
-        {% if prochaine_resa %}
-            <div class="card-value neutral">{{ prochaine_resa.date|date:"d/m" }}</div>
-            <div class="card-sub">
-                {{ prochaine_resa.aeronef }} &nbsp;·&nbsp; {{ prochaine_resa.hInit }}–{{ prochaine_resa.hEnd }}
+        <div class="kpi-body">
+            <div class="kpi-label">Mon compte pilote</div>
+            <div class="kpi-value {% if bilan_compte >= 0 %}kpi-positive{% else %}kpi-negative{% endif %}">
+                {{ bilan_compte|floatformat:2 }} €
             </div>
-        {% else %}
-            <div class="card-value neutral" style="font-size:16px;padding-top:4px">Aucune</div>
-            <div class="card-sub">Pas de réservation à venir</div>
-        {% endif %}
+            <div class="kpi-sub">{% if bilan_compte >= 0 %}Solde créditeur ✓{% else %}Solde débiteur{% endif %}</div>
+        </div>
+        <div class="kpi-bar">
+            <div class="kpi-bar-fill {% if bilan_compte >= 0 %}kpi-bar-green{% else %}kpi-bar-red{% endif %}" style="width:100%"></div>
+        </div>
     </div>
 
-    <!-- Membres (admin) -->
+    <div class="kpi-card">
+        <div class="kpi-icon kpi-icon-blue">
+            <i class="fa-solid fa-plane-departure"></i>
+        </div>
+        <div class="kpi-body">
+            <div class="kpi-label">Mes vols {{ current_year }}</div>
+            <div class="kpi-value">{{ nb_mes_vols }}</div>
+            <div class="kpi-sub">{{ duree_mes_vols }}h {{ duree_mes_vols_min }}min de vol total</div>
+        </div>
+        <div class="kpi-bar">
+            <div class="kpi-bar-fill kpi-bar-blue" style="width:{% if nb_mes_vols > 0 %}100{% else %}0{% endif %}%"></div>
+        </div>
+    </div>
+
+    <div class="kpi-card">
+        <div class="kpi-icon kpi-icon-purple">
+            <i class="fa-solid fa-calendar-check"></i>
+        </div>
+        <div class="kpi-body">
+            <div class="kpi-label">Prochaine résa</div>
+            {% if prochaine_resa %}
+                <div class="kpi-value kpi-neutral">{{ prochaine_resa.date|date:"d/m" }}</div>
+                <div class="kpi-sub">{{ prochaine_resa.aeronef }} · {{ prochaine_resa.hInit }}–{{ prochaine_resa.hEnd }}</div>
+            {% else %}
+                <div class="kpi-value kpi-neutral kpi-sm">Aucune</div>
+                <div class="kpi-sub">Pas de réservation à venir</div>
+            {% endif %}
+        </div>
+        <div class="kpi-bar"><div class="kpi-bar-fill kpi-bar-purple" style="width:0%"></div></div>
+    </div>
+
     {% if loggedMember.statut.id <= 4 %}
-    <div class="card" style="border-top:3px solid #f59e0b">
-        <div class="card-label"><i class="fa-solid fa-users"></i> Club</div>
-        <div class="card-value">{{ nb_membres }}</div>
-        <div class="card-sub">{{ nb_pilotes }} pilote{{ nb_pilotes|pluralize }} licenciés</div>
+    <div class="kpi-card">
+        <div class="kpi-icon kpi-icon-amber">
+            <i class="fa-solid fa-users"></i>
+        </div>
+        <div class="kpi-body">
+            <div class="kpi-label">Club</div>
+            <div class="kpi-value">{{ nb_membres }}</div>
+            <div class="kpi-sub">{{ nb_pilotes }} pilote{{ nb_pilotes|pluralize }} licenciés</div>
+        </div>
+        <div class="kpi-bar">
+            <div class="kpi-bar-fill kpi-bar-amber" style="width:100%"></div>
+        </div>
     </div>
     {% endif %}
 
@@ -82,99 +115,108 @@
 </div>
 {% endif %}
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+<!-- ── Grille 2 colonnes ──────────────────────────────────────── -->
+<div class="dash-two-col">
 
-<!-- ── État aéronefs ─────────────────────────────────────────── -->
-<div class="card-section" style="margin-bottom:0">
-    <h3><i class="fa-solid fa-helicopter"></i> Navigabilité des aéronefs</h3>
-    {% if aeronefs_statut %}
-    <table class="maintenance-table" style="font-size:12.5px">
-        <thead>
-            <tr>
-                <th>Aéronef</th>
-                <th>Aptitude</th>
-                <th>LSA</th>
-                <th>Para.</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for a in aeronefs_statut %}
-            <tr>
-                <td>
-                    <strong>{{ a.aeronef.type }}</strong><br>
-                    <span style="color:#94a3b8;font-size:11px">{{ a.aeronef.immatriculation }}</span>
-                </td>
-                <td class="{{ a.classe_aptitude }}">
-                    {% if a.aeronef.limiteAptitudeVol %}
-                        <span class="badge badge-{{ a.badge_aptitude }}">
-                            {% if a.jours_aptitude < 0 %}Exp.{% elif a.jours_aptitude <= 90 %}{{ a.jours_aptitude }}j{% else %}OK{% endif %}
-                        </span>
-                    {% else %}<span class="badge badge-neutral">—</span>{% endif %}
-                </td>
-                <td class="{{ a.classe_lsa }}">
-                    {% if a.aeronef.limiteLSA %}
-                        <span class="badge badge-{{ a.badge_lsa }}">
-                            {% if a.jours_lsa < 0 %}Exp.{% elif a.jours_lsa <= 90 %}{{ a.jours_lsa }}j{% else %}OK{% endif %}
-                        </span>
-                    {% else %}<span class="badge badge-neutral">—</span>{% endif %}
-                </td>
-                <td class="{{ a.classe_parachute }}">
-                    {% if a.aeronef.limiteParachute %}
-                        <span class="badge badge-{{ a.badge_parachute }}">
-                            {% if a.jours_parachute < 0 %}Exp.{% elif a.jours_parachute <= 90 %}{{ a.jours_parachute }}j{% else %}OK{% endif %}
-                        </span>
-                    {% else %}<span class="badge badge-neutral">—</span>{% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <p style="margin-top:8px;font-size:11px;color:#94a3b8">
-        <a href="intranetAeronefSuiviMecanique" style="color:#3b82f6;text-decoration:none">
-            Voir le suivi complet →
-        </a>
-    </p>
-    {% else %}
-        <p style="color:#94a3b8;font-size:13px"><i>Aucun aéronef enregistré.</i></p>
-    {% endif %}
+    <!-- État aéronefs -->
+    <div class="card-section">
+        <h3><i class="fa-solid fa-helicopter"></i> Navigabilité des aéronefs</h3>
+        {% if aeronefs_statut %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Aéronef</th>
+                    <th>Aptitude</th>
+                    <th>LSA</th>
+                    <th>Para.</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in aeronefs_statut %}
+                <tr>
+                    <td>
+                        <strong>{{ a.aeronef.type }}</strong>
+                        <span class="table-sub">{{ a.aeronef.immatriculation }}</span>
+                    </td>
+                    <td>
+                        {% if a.aeronef.limiteAptitudeVol %}
+                            <span class="badge badge-{{ a.badge_aptitude }}">
+                                {% if a.jours_aptitude < 0 %}Exp.{% elif a.jours_aptitude <= 90 %}{{ a.jours_aptitude }}j{% else %}OK{% endif %}
+                            </span>
+                        {% else %}<span class="badge badge-neutral">—</span>{% endif %}
+                    </td>
+                    <td>
+                        {% if a.aeronef.limiteLSA %}
+                            <span class="badge badge-{{ a.badge_lsa }}">
+                                {% if a.jours_lsa < 0 %}Exp.{% elif a.jours_lsa <= 90 %}{{ a.jours_lsa }}j{% else %}OK{% endif %}
+                            </span>
+                        {% else %}<span class="badge badge-neutral">—</span>{% endif %}
+                    </td>
+                    <td>
+                        {% if a.aeronef.limiteParachute %}
+                            <span class="badge badge-{{ a.badge_parachute }}">
+                                {% if a.jours_parachute < 0 %}Exp.{% elif a.jours_parachute <= 90 %}{{ a.jours_parachute }}j{% else %}OK{% endif %}
+                            </span>
+                        {% else %}<span class="badge badge-neutral">—</span>{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="card-section-footer">
+            <a href="intranetAeronefSuiviMecanique" class="link-primary">
+                Voir le suivi complet <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fa-solid fa-helicopter"></i>
+            <p>Aucun aéronef enregistré</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Mes derniers vols -->
+    <div class="card-section">
+        <h3><i class="fa-solid fa-clock-rotate-left"></i> Mes derniers vols</h3>
+        {% if derniers_vols %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Aéronef</th>
+                    <th class="text-right">Durée</th>
+                    <th class="text-right">Montant</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for v in derniers_vols %}
+                <tr>
+                    <td>{{ v.date|date:"d/m/Y" }}</td>
+                    <td>{{ v.aeronef }}</td>
+                    <td class="text-right num">{{ v.dureeVol }}min</td>
+                    <td class="text-right num">{{ v.prixTotal|floatformat:2 }} €</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="card-section-footer">
+            <a href="intranetMonCarnetVol" class="link-primary">
+                Voir le carnet complet <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fa-solid fa-plane-circle-xmark"></i>
+            <p>Aucun vol enregistré cette année</p>
+        </div>
+        {% endif %}
+    </div>
+
 </div>
-
-<!-- ── Mes derniers vols ──────────────────────────────────────── -->
-<div class="card-section" style="margin-bottom:0">
-    <h3><i class="fa-solid fa-clock-rotate-left"></i> Mes derniers vols</h3>
-    {% if derniers_vols %}
-    <table style="font-size:12.5px">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Aéronef</th>
-                <th style="text-align:right">Durée</th>
-                <th style="text-align:right">Montant</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for v in derniers_vols %}
-            <tr>
-                <td>{{ v.date|date:"d/m/Y" }}</td>
-                <td>{{ v.aeronef }}</td>
-                <td style="text-align:right;font-variant-numeric:tabular-nums">{{ v.dureeVol }}min</td>
-                <td style="text-align:right;font-variant-numeric:tabular-nums">{{ v.prixTotal|floatformat:2 }} €</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <p style="margin-top:8px;font-size:11px">
-        <a href="intranetMonCarnetVol" style="color:#3b82f6;text-decoration:none">Voir le carnet complet →</a>
-    </p>
-    {% else %}
-        <p style="color:#94a3b8;font-size:13px"><i>Aucun vol cette année.</i></p>
-    {% endif %}
-</div>
-
-</div><!-- /grid 2col -->
 
 <!-- ── Prochaines réservations ───────────────────────────────── -->
-<div class="card-section" style="margin-top:20px">
+<div class="card-section">
     <h3><i class="fa-solid fa-calendar-days"></i> Réservations · 14 prochains jours</h3>
     {% if prochaines_resas %}
     <table>
@@ -190,16 +232,16 @@
         </thead>
         <tbody>
             {% for r in prochaines_resas %}
-            <tr {% if r.pilote == loggedMember %}style="background:#eff6ff"{% endif %}>
+            <tr {% if r.pilote == loggedMember %}class="row-highlight"{% endif %}>
                 <td>{{ r.date|date:"D d/m" }}</td>
                 <td>{{ r.aeronef }}</td>
                 <td>
                     {{ r.pilote }}
                     {% if r.pilote == loggedMember %}
-                        <span class="badge badge-primary" style="margin-left:6px">Moi</span>
+                        <span class="badge badge-primary" style="margin-left:4px">Moi</span>
                     {% endif %}
                 </td>
-                <td><i class="fa-regular fa-clock" style="color:#94a3b8"></i> {{ r.hInit }}</td>
+                <td><i class="fa-regular fa-clock" style="color:var(--text-3);margin-right:4px"></i>{{ r.hInit }}</td>
                 <td>{{ r.hEnd }}</td>
                 <td>{{ r.typeVol|default:"—" }}</td>
             </tr>
@@ -207,10 +249,13 @@
         </tbody>
     </table>
     {% else %}
-        <div class="empty-state">
-            <i class="fa-regular fa-calendar"></i>
-            <p>Aucune réservation dans les 14 prochains jours</p>
-        </div>
+    <div class="empty-state">
+        <i class="fa-regular fa-calendar-xmark"></i>
+        <p>Aucune réservation dans les 14 prochains jours</p>
+        <a href="{% url 'intranet_Reservation_Calendrier' allAeronef.first %}" class="empty-state-btn">
+            <i class="fa-solid fa-plus"></i> Créer une réservation
+        </a>
+    </div>
     {% endif %}
 </div>
 
