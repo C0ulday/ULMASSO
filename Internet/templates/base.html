@@ -4,54 +4,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}AUV - Aero ULM Valence{% endblock %}</title>
+    <title>{% block title %}AUV — Aéro ULM Valence{% endblock %}</title>
 
     <link rel="stylesheet" href="{% static 'css/base.css' %}?v={{ timestamp }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
     <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      integrity="sha512-DTOQO9RWCH3ppGqcwa8liTt+AJrcBZ0VLUFKb8XEOx3iBOU5xkShEF5ZxU6XBoD5nM4E/2tJZr74hEkjwE3U9A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
-      
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+          rel="stylesheet">
 
-    
     {% block extra_css %}{% endblock %}
 </head>
-<body>
-    <!-- Header commun -->
-    <header>
-        <div class="logo-container">
+<body class="{% block bodyClass %}{% endblock %}">
+
+    <!-- ── Header ──────────────────────────────────────────── -->
+    <header id="site-header">
+        <div class="header-inner">
             <a href="{% url 'internetAccueil' %}" class="logo">
-                <img class="logo-icone" src="{% static 'res/icones/logo.png' %}" alt="Logo du site">
+                <img src="{% static 'res/icones/logo.png' %}" alt="Logo AUV" class="logo-icone">
             </a>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="{% url 'internetAccueil' %}" class="nav-link">Accueil</a>
+                <a href="{% url 'volsDecouverte' %}" class="nav-link">Vols Découverte</a>
+                <a href="{% url 'ecoleSport' %}" class="nav-link">École de Sport</a>
+                <a href="{% url 'navigation' %}" class="nav-link">Navigation</a>
+                <a href="{% url 'leClub' %}" class="nav-link">Le Club</a>
+                <a href="{% url 'mon_Espace' %}" class="nav-link nav-link-cta">
+                    <i class="fa-solid fa-user"></i> Mon Espace
+                </a>
+            </nav>
+
+            <button class="burger" id="burgerBtn" aria-label="Ouvrir le menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
-        <div class="menu-btn"></div>
-        <nav class="navigation">
-            <div class="navigation-items">
+    </header>
+
+    <!-- ── Contenu ──────────────────────────────────────────── -->
+    {% block content %}{% endblock %}
+
+    <!-- ── Footer ──────────────────────────────────────────── -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+
+            <div class="footer-brand">
+                <img src="{% static 'res/icones/logo.png' %}" alt="Logo AUV" class="footer-logo">
+                <p>Association agréée <strong>Jeunesse & Sports</strong><br>
+                   Affiliée <strong>FFPLUM</strong> · Aéroport LFLU Chabeuil</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/aeroulmvalence26" target="_blank"
+                       rel="noopener" aria-label="Facebook">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/aeroulm" target="_blank"
+                       rel="noopener" aria-label="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/33666652339" target="_blank"
+                       rel="noopener" aria-label="WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Navigation</h4>
                 <a href="{% url 'internetAccueil' %}">Accueil</a>
                 <a href="{% url 'volsDecouverte' %}">Vols Découverte</a>
                 <a href="{% url 'ecoleSport' %}">École de Sport</a>
                 <a href="{% url 'navigation' %}">Navigation</a>
-                <a href="#">Le Club</a>
-                <a href= "{% url 'mon_Espace' %}">
-                    <i class="fa fa-user" aria-hidden="true"></i> Mon Espace
-                </a>
+                <a href="{% url 'leClub' %}">Le Club</a>
+                <a href="{% url 'mon_Espace' %}">Mon Espace</a>
             </div>
-        </nav>
-    </header>
 
-    <!-- Contenu spécifique de chaque page -->
-    {% block content %}{% endblock %}
+            <div class="footer-contact">
+                <h4>Contact</h4>
+                <p>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Pôle Aviation légère<br>
+                    Chemin du vol à voile<br>
+                    Aéroport de Valence-Chabeuil<br>
+                    26120 Chabeuil</span>
+                </p>
+                <p>
+                    <i class="fa-solid fa-phone"></i>
+                    <a href="tel:+33666652339">06 66 65 23 39</a>
+                </p>
+                <p>
+                    <i class="fa-solid fa-envelope"></i>
+                    <a href="mailto:aero-ulm-valence@orange.fr">aero-ulm-valence@orange.fr</a>
+                </p>
+                <p>
+                    <i class="fa-solid fa-tower-broadcast"></i>
+                    <span>LFLU — Valence Chabeuil</span>
+                </p>
+            </div>
 
-    <!-- JavaScript commun -->
-    <script type="text/javascript">
-        document.querySelector('.menu-btn').addEventListener('click', function() {
-            const navigation = document.querySelector('.navigation');
-            navigation.classList.toggle('active');
-            this.classList.toggle('active');
+        </div>
+        <div class="footer-bottom">
+            <p>© {% now "Y" %} Aéro ULM Valence — Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <!-- ── JS commun ────────────────────────────────────────── -->
+    <script>
+    (function () {
+        const header  = document.getElementById('site-header');
+        const burger  = document.getElementById('burgerBtn');
+        const nav     = document.getElementById('mainNav');
+
+        /* Scroll : header devient blanc */
+        function onScroll() {
+            header.classList.toggle('scrolled', window.scrollY > 60);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll(); // état initial
+
+        /* Burger */
+        burger.addEventListener('click', function () {
+            const isOpen = nav.classList.toggle('open');
+            burger.classList.toggle('open', isOpen);
+            burger.setAttribute('aria-expanded', isOpen);
+            document.body.classList.toggle('nav-open', isOpen);
         });
+
+        /* Fermer nav au clic d'un lien (mobile) */
+        nav.querySelectorAll('.nav-link').forEach(function (a) {
+            a.addEventListener('click', function () {
+                nav.classList.remove('open');
+                burger.classList.remove('open');
+                burger.setAttribute('aria-expanded', 'false');
+                document.body.classList.remove('nav-open');
+            });
+        });
+
+        /* Lien actif */
+        const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+        nav.querySelectorAll('.nav-link').forEach(function (a) {
+            try {
+                const linkPath = new URL(a.href).pathname.replace(/\/$/, '') || '/';
+                if (linkPath === currentPath) a.classList.add('active');
+            } catch (e) {}
+        });
+    })();
     </script>
 
     {% block extra_js %}{% endblock %}

@@ -1,104 +1,97 @@
-#Imports externes
-from django.shortcuts import render
-from ULMASSO.views import dateTimeParis
-from django.core.mail import EmailMessage
+# Imports externes
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.conf import settings
 from datetime import datetime
 
-from django.core.mail import send_mail
-from django.shortcuts import render, redirect
-from django.conf import settings
-from django.contrib import messages
-
-
-#imports internes
+# Imports internes
+from ULMASSO.views import dateTimeParis
 from Internet.forms import loginForm
-from Intranet.models import Member,\
-                            Aeronef
+from Intranet.models import Member, Aeronef
 from Intranet.views import intranetAccueil
 
 
-#Internet
+# ── Page d'accueil publique ─────────────────────────────────────
 def internetAccueil(request):
-    templateName = "internetAccueil.html"
-    context = {}
-    return render(request,templateName, context)
+    return render(request, 'internetAccueil.html', {})
 
-#Connexion intranet
+
+# ── Connexion intranet ──────────────────────────────────────────
 def monEspace(request):
-    templateName = "monEspace.html"
+    templateName = 'monEspace.html'
     context = {
-        'current_date_time' : dateTimeParis(),
-        'current_year' : datetime.now().year,
-        'allAeronef' : Aeronef.objects.all(),
+        'current_date_time': dateTimeParis(),
+        'current_year':      datetime.now().year,
+        'allAeronef':        Aeronef.objects.all(),
     }
-    if len(request.POST) > 0 :
+    if request.method == 'POST':
         form = loginForm(request.POST)
         if form.is_valid():
-            email = request.POST['identifiant']
-            password = request.POST['password'] 
+            email    = request.POST.get('identifiant', '')
+            password = request.POST.get('password', '')
             if email and password:
-                result = Member.objects.filter(email=email,
-                                               password = password)
-                if len(result) != 1:
-                    error = 'Identifiant ou mot de passe erroné'
-                    context['error'] = error
-                    context['form'] = form
+                result = Member.objects.filter(email=email, password=password)
+                if result.count() != 1:
+                    context['error'] = 'Identifiant ou mot de passe erroné'
+                    context['form']  = form
                 else:
-                    loggedMember = Member.objects.get(email=email)
+                    loggedMember = result.first()
                     request.session['loggedMemberId'] = loggedMember.id
-                    intranetAccueil(request)
                     context['loggedMember'] = loggedMember
                     templateName = 'intranetAccueil.html'
+                    return intranetAccueil(request)
         else:
-            form = loginForm()
-            context['form'] = form
+            context['form'] = loginForm()
     else:
-        form = loginForm()
-        context['form'] = form
-    return render(request,templateName, context)
+        context['form'] = loginForm()
+    return render(request, templateName, context)
 
+
+# ── Vols Découverte ─────────────────────────────────────────────
 def volsDecouverte(request):
-    return render(request,'volsdecouverte.html',context={})
-
-def ecoleSport(request):
-    return render(request,'ecole.html',context={})
-
-
-def fomulaireDecouverte(request):
-    
+    context = {}
     if request.method == 'POST':
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
+        name    = request.POST.get('name', '').strip()
+        phone   = request.POST.get('phone', '').strip()
+        email   = request.POST.get('email', '').strip()
+        message = request.POST.get('message', '').strip()
 
-        # Contenu du mail
-        subject = f"Nouveau message de {name} via le formulaire de contact"
-        message_body = f"""
-        Nom : {name}
-        Téléphone : {phone}
-        E-mail : {email}
-
-        Message :
-        {message}
-        """
-
-        try:
-            send_mail(
-                subject,
-                message_body,
-                settings.DEFAULT_FROM_EMAIL,  # l’expéditeur configuré
-                [settings.CONTACT_EMAIL],   # le destinataire configuré
-                fail_silently=False,
+        if name and email and message:
+            subject = f"[AUV] Nouveau message de {name}"
+            body    = (
+                f"Nom : {name}\n"
+                f"Téléphone : {phone}\n"
+                f"E-mail : {email}\n\n"
+                f"Message :\n{message}"
             )
-            messages.success(request, "Votre message a été envoyé avec succès !")
-        except Exception as e:
-            messages.error(request, f"Erreur lors de l'envoi du message : {e}")
+            try:
+                send_mail(
+                    subject,
+                    body,
+                    settings.DEFAULT_FROM_EMAIL,
+                    [settings.CONTACT_EMAIL],
+                    fail_silently=False,
+                )
+                context['form_success'] = True
+            except Exception as e:
+                context['form_error'] = f"Erreur lors de l'envoi : {e}"
+        else:
+            context['form_error'] = "Merci de remplir tous les champs obligatoires."
 
-        return redirect('vols_decouverte')  # redirige vers la même page
-
-    return render(request, 'volsDecouverte.html')
+    return render(request, 'volsDecouverte.html', context)
 
 
+# ── École de Sport ──────────────────────────────────────────────
+def ecoleSport(request):
+    return render(request, 'ecole.html', {})
+
+
+# ── Le Club ─────────────────────────────────────────────────────
+def leClub(request):
+    return render(request, 'leClub.html', {})
+
+
+# ── Navigation ──────────────────────────────────────────────────
 def navigation(request):
-    return render(request,'navigation.html',context={})
+    return render(request, 'navigation.html', {})

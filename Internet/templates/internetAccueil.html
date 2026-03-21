@@ -1,88 +1,240 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Accueil - Aero ULM Valence{% endblock %}
+{% block title %}Accueil — Aéro ULM Valence{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/accueil.css' %}">
 {% endblock %}
 
 {% block content %}
-	<section class="home">
-	    <video class="video-slide active" src="{% static 'res/videos/video1.mp4' %}" autoplay muted loop type="video/mp4"></video>
-	    <video class="video-slide" src="{% static 'res/videos/video4.mp4' %}" autoplay muted loop type="video/mp4"></video>
-	
-	    <div class="content active">
-	        <h1>Le Multi-axe.<br><span>✈️</span></h1>
-	        <p>Vous aimez la sensation de liberté, le pilotage précis et les panoramas à couper le souffle ? Le multiaxe est fait pour vous !
-	            Cet ULM à ailes fixes se rapproche de l’aviation traditionnelle par son cockpit fermé et ses commandes similaires à celles d’un avion léger.
-	            Facile à prendre en main et très maniable, il offre une expérience de vol unique, entre sécurité et adrénaline.
-	            Prenez les commandes et découvrez le ciel comme vous ne l’avez jamais vu !</p>
-	        <a href="{% url 'volsDecouverte' %}">Découvrir</a>
-	    </div>
-	
-	    <div class="content">
-	        <h1>Le Pendulaire.<br><span>🌬️</span></h1>
-	        <p>Vous aimez le vol en plein air, la sensation du vent et l’incroyable liberté du ciel ? Le pendulaire est fait pour vous !
-	            Cet ULM à aile delta se pilote par déplacement du centre de gravité du chariot, offrant une immersion totale et des sensations uniques.
-	            Léger, maniable et intuitif, il permet de voler en harmonie avec les éléments, entre douceur et adrénaline.
-	            Accessible à tous, il promet une expérience inoubliable, proche du vol libre. Prenez les commandes et laissez-vous porter par le vent !</p>
-	        <a href="{% url 'volsDecouverte' %}">Découvrir</a>
-	    </div>
-	
-			<!-- option rel pour éviter que la page ouverte communique avec notre site-->
-			 <!--Tagrel = blank pour rediriger vers une autre page-->
-		<div class="media-icons">
-			<a href="https://www.facebook.com/aeroulmvalence26" target="_blank" rel="noopener noreferrer">
-				<i class="fab fa-facebook-f"></i>
-			</a>
-			<a href="https://www.instagram.com/aeroulm" target="_blank" rel="noopener noreferrer">
-				<i class="fab fa-instagram"></i>
-			</a>
-			<a href="https://wa.me/33666652339" target="_blank" rel="noopener noreferrer">
-				<i class="fab fa-whatsapp"></i>
-			</a>
-		</div>
-		
-	
-	    <div class="slider-navigation">
-	        <div class="nav-btn active"></div>
-	        <div class="nav-btn"></div>
-	    </div>
-	</section>
+
+<!-- ── Hero vidéo slider ──────────────────────────────────────── -->
+<section class="home">
+    <video class="video-slide active" src="{% static 'res/videos/video1.mp4' %}"
+           autoplay muted loop playsinline></video>
+    <video class="video-slide" src="{% static 'res/videos/video4.mp4' %}"
+           autoplay muted loop playsinline></video>
+
+    <div class="home-overlay"></div>
+
+    <div class="content active">
+        <span class="hero-badge"><i class="fa-solid fa-tower-broadcast"></i> LFLU – Valence Chabeuil</span>
+        <h1>Le Multi-axe.</h1>
+        <p>Vous aimez la précision, les panoramas à couper le souffle et la sensation de maîtrise ?
+           Cet ULM à ailes fixes offre une expérience proche de l'aviation traditionnelle —
+           cockpit, commandes classiques, liberté totale.</p>
+        <a href="{% url 'volsDecouverte' %}" class="hero-cta">
+            Réserver un vol <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <div class="content">
+        <span class="hero-badge"><i class="fa-solid fa-wind"></i> Sensations uniques</span>
+        <h1>Le Pendulaire.</h1>
+        <p>Vol en plein air, aile delta, pilotage par le corps — le pendulaire vous plonge
+           dans une immersion totale avec les éléments. Douceur, adrénaline et liberté
+           à l'état pur.</p>
+        <a href="{% url 'volsDecouverte' %}" class="hero-cta">
+            Réserver un vol <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Icônes réseaux sociaux -->
+    <div class="media-icons">
+        <a href="https://www.facebook.com/aeroulmvalence26" target="_blank"
+           rel="noopener noreferrer" aria-label="Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+        </a>
+        <a href="https://www.instagram.com/aeroulm" target="_blank"
+           rel="noopener noreferrer" aria-label="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://wa.me/33666652339" target="_blank"
+           rel="noopener noreferrer" aria-label="WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- Navigation slider -->
+    <div class="slider-navigation">
+        <div class="nav-btn active"></div>
+        <div class="nav-btn"></div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <a href="#stats" class="scroll-indicator" aria-label="Défiler">
+        <span>Découvrir</span>
+        <i class="fa-solid fa-chevron-down"></i>
+    </a>
+</section>
+
+<!-- ── Chiffres clés ──────────────────────────────────────────── -->
+<section class="stats-strip" id="stats">
+    <div class="stats-inner">
+        <div class="stat-item">
+            <strong>80+</strong>
+            <span>Membres passionnés</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <strong>15+</strong>
+            <span>Années d'existence</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <strong>2</strong>
+            <span>Classes d'ULM</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <strong>LFLU</strong>
+            <span>Aéroport Chabeuil</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <strong>45 €</strong>
+            <span>Dès le 1er vol</span>
+        </div>
+    </div>
+</section>
+
+<!-- ── Nos services ───────────────────────────────────────────── -->
+<section class="services-section">
+    <div class="services-inner">
+        <div class="services-header">
+            <span class="section-badge">Ce Que Nous Proposons</span>
+            <h2>Volez avec nous</h2>
+            <p>Découverte, formation ou club — l'Aéro ULM Valence accompagne tous les projets aéronautiques.</p>
+        </div>
+        <div class="services-grid">
+
+            <a href="{% url 'volsDecouverte' %}" class="service-card">
+                <div class="service-img">
+                    <img src="{% static 'res/images/3axes.jpg' %}" alt="Vols Découverte" loading="lazy">
+                    <div class="service-overlay"></div>
+                </div>
+                <div class="service-body">
+                    <div class="service-icon"><i class="fa-solid fa-paper-plane"></i></div>
+                    <h3>Vols Découverte</h3>
+                    <p>Votre premier vol en ULM accompagné d'un instructeur bénévole. Formules 20, 45 ou 60 minutes à partir de 45 €.</p>
+                    <span class="service-link">Réserver <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </a>
+
+            <a href="{% url 'ecoleSport' %}" class="service-card service-card-featured">
+                <div class="service-img">
+                    <img src="{% static 'res/images/pendulaire.jpg' %}" alt="Formation Pilote" loading="lazy">
+                    <div class="service-overlay"></div>
+                    <span class="service-featured-badge">École Charles Bono</span>
+                </div>
+                <div class="service-body">
+                    <div class="service-icon service-icon-accent"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h3>Formation Pilote</h3>
+                    <p>Obtenez votre brevet de pilote ULM. Programme complet théorie + pratique, encadré par des instructeurs qualifiés.</p>
+                    <span class="service-link">En savoir plus <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </a>
+
+            <a href="{% url 'leClub' %}" class="service-card">
+                <div class="service-img">
+                    <img src="{% static 'res/images/chabeuil.jpg' %}" alt="Le Club" loading="lazy">
+                    <div class="service-overlay"></div>
+                </div>
+                <div class="service-body">
+                    <div class="service-icon"><i class="fa-solid fa-users"></i></div>
+                    <h3>Le Club</h3>
+                    <p>Rejoignez notre association loi 1901, agréée Jeunesse & Sports depuis 2009. Esprit de club, partage et convivialité.</p>
+                    <span class="service-link">Nous rejoindre <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- ── À propos ───────────────────────────────────────────────── -->
+<section class="about-section">
+    <div class="about-inner">
+        <div class="about-images">
+            <img class="about-img-main" src="{% static 'res/images/image13.jpeg' %}" alt="ULM en vol" loading="lazy">
+            <img class="about-img-sec" src="{% static 'res/images/image8.jpeg' %}" alt="Aéronef ULM" loading="lazy">
+            <div class="about-badge-float">
+                <i class="fa-solid fa-certificate"></i>
+                <span>Agréé J&S</span>
+            </div>
+        </div>
+        <div class="about-text">
+            <span class="section-badge">Notre Histoire</span>
+            <h2>L'AUV, une passion<br>qui prend de l'altitude</h2>
+            <p>Fondée en 2009 par un groupe de pilotes passionnés, l'<strong>Aéro ULM Valence</strong> est aujourd'hui l'une des associations de vol ULM les plus actives de la Drôme. Basée sur l'aéroport de Valence-Chabeuil (LFLU), elle réunit plus de 80 membres autour d'une même passion.</p>
+            <p>Agréée par le Ministère des Sports et affiliée à la FFPLUM, l'AUV propose vols découverte, formation complète et activités club dans un cadre convivial, sécurisé et ouvert à tous — débutants comme pilotes confirmés.</p>
+            <div class="about-highlights">
+                <div class="ah-item">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Sécurité & rigueur</span>
+                </div>
+                <div class="ah-item">
+                    <i class="fa-solid fa-heart"></i>
+                    <span>Bénévoles passionnés</span>
+                </div>
+                <div class="ah-item">
+                    <i class="fa-solid fa-child-reaching"></i>
+                    <span>Accessible dès 13 ans</span>
+                </div>
+                <div class="ah-item">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Ouvert toute l'année</span>
+                </div>
+            </div>
+            <a href="{% url 'leClub' %}" class="about-btn">
+                Découvrir le club <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ── CTA bandeau ────────────────────────────────────────────── -->
+<section class="home-cta">
+    <div class="home-cta-inner">
+        <div class="home-cta-text">
+            <h2>Envie de voler ?</h2>
+            <p>Réservez votre baptême de l'air dès aujourd'hui et découvrez la Drôme vue du ciel.</p>
+        </div>
+        <div class="home-cta-actions">
+            <a href="{% url 'volsDecouverte' %}#contact" class="cta-primary">
+                <i class="fa-solid fa-envelope"></i> Nous contacter
+            </a>
+            <a href="tel:+33666652339" class="cta-secondary">
+                <i class="fa-solid fa-phone"></i> 06 66 65 23 39
+            </a>
+        </div>
+    </div>
+</section>
+
 {% endblock %}
 
 {% block extra_js %}
+<script>
+(function () {
+    let currentSlide = 0;
+    const btns     = document.querySelectorAll('.slider-navigation .nav-btn');
+    const slides   = document.querySelectorAll('.video-slide');
+    const contents = document.querySelectorAll('.home .content');
 
+    function goTo(index) {
+        btns.forEach(b     => b.classList.remove('active'));
+        slides.forEach(s   => s.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        btns[index].classList.add('active');
+        slides[index].classList.add('active');
+        contents[index].classList.add('active');
+        currentSlide = index;
+    }
 
-	<script type="text/javascript">
+    btns.forEach((btn, i) => btn.addEventListener('click', () => goTo(i)));
 
-		let currentSlide = 0;
-
-	    const btns = document.querySelectorAll(".nav-btn");
-	    const slides = document.querySelectorAll(".video-slide");
-	    const contents = document.querySelectorAll(".content");
-	
-	    var sliderNav = function(manual) {
-	        btns.forEach((btn) => btn.classList.remove("active"));
-	        slides.forEach((slide) => slide.classList.remove("active"));
-	        contents.forEach((content) => content.classList.remove("active"));
-	
-	        btns[manual].classList.add("active");
-	        slides[manual].classList.add("active");
-	        contents[manual].classList.add("active");
-
-			currentSlide = manual;
-	    }
-	
-	    btns.forEach((btn, i) => {
-	        btn.addEventListener("click", () => sliderNav(i));
-	    });
-
-		setInterval(() => {
-			let nextSlide = (currentSlide + 1) % slides.length;
-			sliderNav(nextSlide);
-		}, 5000); // 2000 ms = 2 secondes
-
-	</script>
+    setInterval(() => goTo((currentSlide + 1) % slides.length), 6000);
+})();
+</script>
 {% endblock %}

@@ -8,23 +8,16 @@
   --max-width: 1200px;
 }
 
-/* === Header : tous les textes et icônes en noir === */
-header,
-header * {
-  color: #000 !important;
+/* === Header : forcé blanc pour cette page === */
+#site-header {
+    background: rgba(255,255,255,0.97) !important;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08) !important;
 }
-header {
-  position: absolute;
-  background-color: transparent; /* ou #000 */
-}
-
-header .navigation .navigation-items a {
-  color: black;
-}
-
-header .navigation .navigation-items a:before {
-  background-color: black;
-}
+#site-header .nav-link  { color: var(--text-dark) !important; }
+#site-header .nav-link:hover  { color: var(--primary) !important; }
+#site-header .nav-link.active { color: var(--primary) !important; }
+#site-header .nav-link::after { background: var(--primary) !important; }
+#site-header .burger span { background: var(--text-dark) !important; }
 
 /* === Reset === */
 * {

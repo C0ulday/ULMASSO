@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}École de Sport – Aéro ULM Valence{% endblock %}
+{% block title %}École de Sport — Formation ULM · Aéro ULM Valence{% endblock %}
+{% block bodyClass %}light-header{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/ecole.css' %}">
@@ -9,41 +10,288 @@
 
 {% block content %}
 
-<section class="ecole-sport">
-  <h1 class="ecole-title">Notre École de Sport</h1>
-  <p class="ecole-intro">
-    L’Aéro ULM Valence propose un espace d’apprentissage et de perfectionnement
-    à travers <strong>2 pôles complémentaires</strong>
-  </p>
-
-  <div class="ecole-container">
-    <!-- École Charles Bono -->
-    <div class="ecole-card">
-      <i class="fa-solid fa-school fa-3x" aria-hidden="true"></i>
-      <h2>École Charles Bono</h2>
-      <p class="ecole-description">
-        Pôle historique dédié à la <strong>formation initiale et continue</strong> des pilotes.
-        Un accompagnement personnalisé pour progresser en toute sécurité.
-      </p>
-      <a href="#charles-bono" class="ecole-btn">
-        <i class="fa-solid fa-arrow-right"></i> Découvrir les ressources
-      </a>
+<!-- ── Hero ──────────────────────────────────────────────────── -->
+<section class="ecole-hero">
+    <div class="ecole-hero-bg" style="background-image:url('{% static "res/images/fond.jpg" %}')"></div>
+    <div class="ecole-hero-overlay"></div>
+    <div class="ecole-hero-content">
+        <span class="ecole-eyebrow">
+            <i class="fa-solid fa-certificate"></i> Agréée Jeunesse & Sports
+        </span>
+        <h1>École de Sport ULM</h1>
+        <p>Formation initiale et perfectionnement au pilotage d'Ultra-Légers Motorisés<br>
+           par des moniteurs bénévoles et passionnés</p>
+        <div class="ecole-hero-actions">
+            <a href="#formation" class="hero-btn-primary">
+                <i class="fa-solid fa-graduation-cap"></i> Formation Pilote
+            </a>
+            <a href="#bia" class="hero-btn-outline">
+                <i class="fa-solid fa-book-open"></i> BIA
+            </a>
+        </div>
     </div>
+    <a href="#presentation" class="hero-scroll-arrow" aria-label="Défiler">
+        <i class="fa-solid fa-chevron-down"></i>
+    </a>
+</section>
 
-    <!-- Formation BIA -->
-    <div class="ecole-card">
-      <i class="fa-solid fa-plane-departure fa-3x" aria-hidden="true"></i>
-      <h2>Formation BIA</h2>
-      <p class="ecole-description">
-        Le <strong>Brevet d’Initiation Aéronautique</strong> (BIA) pour s’initier au monde
-        de l’aviation et découvrir les bases théoriques et pratiques du pilotage.
-      </p>
-      <a href="#formation-bia" class="ecole-btn">
-        <i class="fa-solid fa-arrow-right"></i> Accéder aux contenus
-      </a>
+<!-- ── Présentation ───────────────────────────────────────────── -->
+<section class="ecole-section" id="presentation">
+    <div class="ecole-inner ecole-center">
+        <span class="section-badge">Notre École</span>
+        <h2 class="section-title">Voler en toute confiance</h2>
+        <p class="section-sub">
+            Fondée par des pilotes passionnés, l'Aéro ULM Valence est une association agréée par le Ministère des Sports.
+            Nos instructeurs qualifiés vous accompagnent pas à pas, à votre rythme, vers l'autonomie en vol.
+        </p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon" style="background:rgba(61,92,184,0.1);color:#3d5cb8">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3>Sécurité avant tout</h3>
+                <p>Progression encadrée et rigoureuse, aéronefs régulièrement entretenus et contrôlés.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background:rgba(249,174,93,0.15);color:#d97706">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <h3>Moniteurs passionnés</h3>
+                <p>Des instructeurs bénévoles, eux-mêmes pilotes, totalement à votre écoute.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background:rgba(16,185,129,0.12);color:#10b981">
+                    <i class="fa-solid fa-child-reaching"></i>
+                </div>
+                <h3>Dès 13 ans</h3>
+                <p>La formation est accessible dès 13 ans. Le premier vol solo est possible dès 15 ans.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon" style="background:rgba(139,92,246,0.12);color:#7c3aed">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <h3>Cadre exceptionnel</h3>
+                <p>L'aéroport de Valence-Chabeuil, entre plaine drômoise et massif du Vercors.</p>
+            </div>
+        </div>
     </div>
-  </div>
+</section>
 
+<!-- ── Formation Pilote ULM ───────────────────────────────────── -->
+<section class="ecole-section ecole-alt" id="formation">
+    <div class="ecole-inner ecole-center">
+        <span class="section-badge">Brevet Pilote</span>
+        <h2 class="section-title">Devenir pilote ULM</h2>
+        <p class="section-sub">
+            Le brevet de pilote ULM est la qualification officielle pour piloter seul un Ultra-Léger Motorisé.
+            Notre programme combine cours théoriques, vols en double commande et débriefings personnalisés.
+        </p>
+        <div class="formation-grid">
+            <div class="formation-card">
+                <div class="formation-step">01</div>
+                <div class="formation-icon"><i class="fa-solid fa-book"></i></div>
+                <h3>Cours théoriques</h3>
+                <p>Météorologie, réglementation aérienne, aérodynamique, mécanique de vol et navigation. Sessions en groupe ou individuelles.</p>
+            </div>
+            <div class="formation-card">
+                <div class="formation-step">02</div>
+                <div class="formation-icon"><i class="fa-solid fa-plane-up"></i></div>
+                <h3>Vols en double commande</h3>
+                <p>Prise en main de l'appareil, circuits de piste, pannes simulées, navigation locale. Environ 20 à 25 h encadrées.</p>
+            </div>
+            <div class="formation-card">
+                <div class="formation-step">03</div>
+                <div class="formation-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+                <h3>Examen théorique</h3>
+                <p>QCM officiel portant sur la réglementation, la météo, la navigation et la sécurité. Organisé par la FFPLUM.</p>
+            </div>
+            <div class="formation-card">
+                <div class="formation-step">04</div>
+                <div class="formation-icon"><i class="fa-solid fa-star"></i></div>
+                <h3>Lâcher solo</h3>
+                <p>Premier vol en solo — une étape inoubliable, après validation du carnet de progression par votre instructeur.</p>
+            </div>
+            <div class="formation-card">
+                <div class="formation-step">05</div>
+                <div class="formation-icon"><i class="fa-solid fa-compass"></i></div>
+                <h3>Navigation croisière</h3>
+                <p>Vols en solo sur des itinéraires définis pour développer votre autonomie et votre sens de l'orientation.</p>
+            </div>
+            <div class="formation-card">
+                <div class="formation-step">06</div>
+                <div class="formation-icon"><i class="fa-solid fa-medal"></i></div>
+                <h3>Brevet final</h3>
+                <p>Test pratique avec un examinateur officiel FFPLUM. Félicitations, vous êtes pilote ULM !</p>
+            </div>
+        </div>
+        <div class="formation-info">
+            <div class="fi-item">
+                <div class="fi-icon"><i class="fa-solid fa-clock"></i></div>
+                <div>
+                    <strong>Durée estimée</strong>
+                    <span>6 à 18 mois selon disponibilités et météo</span>
+                </div>
+            </div>
+            <div class="fi-sep"></div>
+            <div class="fi-item">
+                <div class="fi-icon"><i class="fa-solid fa-plane"></i></div>
+                <div>
+                    <strong>Heures de vol</strong>
+                    <span>Environ 20–25 h de double commande minimum</span>
+                </div>
+            </div>
+            <div class="fi-sep"></div>
+            <div class="fi-item">
+                <div class="fi-icon"><i class="fa-solid fa-calendar"></i></div>
+                <div>
+                    <strong>Inscription</strong>
+                    <span>Toute l'année, sur rendez-vous</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Classes d'ULM ──────────────────────────────────────────── -->
+<section class="ecole-section" id="classes">
+    <div class="ecole-inner ecole-center">
+        <span class="section-badge">Nos Aéronefs</span>
+        <h2 class="section-title">Choisissez votre classe ULM</h2>
+        <p class="section-sub">L'AUV propose la formation sur deux classes d'ULM, chacune offrant des sensations et un pilotage uniques.</p>
+        <div class="classe-grid">
+            <div class="classe-card">
+                <div class="classe-img-wrap">
+                    <img src="{% static 'res/images/3axes.jpg' %}" alt="ULM Multiaxe" loading="lazy">
+                    <span class="classe-badge badge-blue">Classe 3</span>
+                </div>
+                <div class="classe-body">
+                    <h3><i class="fa-solid fa-plane"></i> Multi-axe</h3>
+                    <p>L'ULM à ailes fixes, proche de l'aviation traditionnelle. Cockpit fermé, commandes classiques — idéal pour la navigation longue distance.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Apprentissage progressif</li>
+                        <li><i class="fa-solid fa-check"></i> Idéal pour la navigation</li>
+                        <li><i class="fa-solid fa-check"></i> Cockpit confortable</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="classe-card">
+                <div class="classe-img-wrap">
+                    <img src="{% static 'res/images/pendulaire.jpg' %}" alt="ULM Pendulaire" loading="lazy">
+                    <span class="classe-badge badge-orange">Classe 2</span>
+                </div>
+                <div class="classe-body">
+                    <h3><i class="fa-solid fa-wind"></i> Pendulaire</h3>
+                    <p>L'ULM à aile delta, piloté par déplacement du centre de gravité. Vol en plein air, sensations incomparables, immersion totale dans le ciel.</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> Sensations uniques</li>
+                        <li><i class="fa-solid fa-check"></i> Vol en plein air</li>
+                        <li><i class="fa-solid fa-check"></i> Pilotage intuitif</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── BIA ────────────────────────────────────────────────────── -->
+<section class="ecole-section ecole-alt" id="bia">
+    <div class="ecole-inner">
+        <div class="bia-layout">
+            <div class="bia-text">
+                <span class="section-badge">Jeunes</span>
+                <h2 class="section-title" style="text-align:left">Brevet d'Initiation Aéronautique</h2>
+                <p>Le <strong>BIA</strong> est une formation théorique destinée aux lycéens qui souhaitent découvrir l'univers de l'aviation et acquérir les bases du pilotage avant de passer à la pratique en vol.</p>
+                <ul class="bia-list">
+                    <li><i class="fa-solid fa-circle-check"></i> Aérodynamique et mécanique du vol</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Météorologie appliquée</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Navigation et cartographie aérienne</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Réglementation aérienne française</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Histoire de l'aviation</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Connaissance des aéronefs</li>
+                </ul>
+                <a href="{% url 'volsDecouverte' %}" class="btn-primary-full" style="margin-top:28px">
+                    <i class="fa-solid fa-paper-plane"></i> Commencer par un vol découverte
+                </a>
+            </div>
+            <div class="bia-stats">
+                <div class="bia-stat">
+                    <span>2</span>
+                    <small>Classes ULM<br>disponibles</small>
+                </div>
+                <div class="bia-stat">
+                    <span>13+</span>
+                    <small>Ans pour<br>commencer</small>
+                </div>
+                <div class="bia-stat">
+                    <span>LFLU</span>
+                    <small>Valence<br>Chabeuil</small>
+                </div>
+                <div class="bia-stat bia-stat-accent">
+                    <span><i class="fa-solid fa-certificate" style="font-size:2rem"></i></span>
+                    <small>Agréée<br>J&S</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Ressources ─────────────────────────────────────────────── -->
+<section class="ecole-section" id="ressources">
+    <div class="ecole-inner ecole-center">
+        <span class="section-badge">Documents</span>
+        <h2 class="section-title">Ressources pédagogiques</h2>
+        <p class="section-sub">Téléchargez nos documents pour préparer vos vols et formations.</p>
+        <div class="ressources-grid">
+            <a href="{% static 'res/pdf/Check_Liste_Sky_savanah.pdf' %}" target="_blank" class="ressource-card">
+                <div class="ressource-icon"><i class="fa-solid fa-list-check"></i></div>
+                <div class="ressource-body">
+                    <h3>Check-list Sky Savannah</h3>
+                    <p>Liste de vérification complète avant vol ULM</p>
+                </div>
+                <i class="fa-solid fa-download ressource-dl"></i>
+            </a>
+            <a href="{% static 'res/pdf/PREVOL_SAVANNAH.pdf' %}" target="_blank" class="ressource-card">
+                <div class="ressource-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                <div class="ressource-body">
+                    <h3>Prévol Savannah</h3>
+                    <p>Procédure de vérification prévol détaillée</p>
+                </div>
+                <i class="fa-solid fa-download ressource-dl"></i>
+            </a>
+            <a href="{% static 'res/pdf/memo_meteo.pdf' %}" target="_blank" class="ressource-card">
+                <div class="ressource-icon"><i class="fa-solid fa-cloud-sun"></i></div>
+                <div class="ressource-body">
+                    <h3>Mémo Météo</h3>
+                    <p>Guide d'interprétation météo pour pilotes ULM</p>
+                </div>
+                <i class="fa-solid fa-download ressource-dl"></i>
+            </a>
+            <a href="{% static 'res/pdf/livre_BA.pdf' %}" target="_blank" class="ressource-card">
+                <div class="ressource-icon"><i class="fa-solid fa-book"></i></div>
+                <div class="ressource-body">
+                    <h3>B.A. BA du RTBA</h3>
+                    <p>Guide de la base aéronautique – réglementation</p>
+                </div>
+                <i class="fa-solid fa-download ressource-dl"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────────── -->
+<section class="ecole-cta">
+    <div class="ecole-cta-inner">
+        <h2>Prêt à décoller ?</h2>
+        <p>Contactez-nous pour vous inscrire à la formation ou obtenir plus d'informations.</p>
+        <div class="ecole-cta-btns">
+            <a href="{% url 'volsDecouverte' %}#contact" class="cta-btn-white">
+                <i class="fa-solid fa-envelope"></i> Nous contacter
+            </a>
+            <a href="tel:+33666652339" class="cta-btn-outline">
+                <i class="fa-solid fa-phone"></i> 06 66 65 23 39
+            </a>
+        </div>
+    </div>
 </section>
 
 {% endblock %}

@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Le Club — Aéro ULM Valence{% endblock %}
+{% block bodyClass %}light-header{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/leClub.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- ── Hero ──────────────────────────────────────────────────── -->
+<section class="club-hero">
+    <div class="club-hero-bg" style="background-image:url('{% static "res/images/chabeuil.jpg" %}')"></div>
+    <div class="club-hero-overlay"></div>
+    <div class="club-hero-content">
+        <span class="club-eyebrow">
+            <i class="fa-solid fa-tower-broadcast"></i> LFLU — Valence Chabeuil
+        </span>
+        <h1>Aéro ULM Valence</h1>
+        <p>Une association de passionnés au service du vol ULM<br>depuis plus de 15 ans</p>
+        <div class="club-hero-stats">
+            <div class="hero-stat"><strong>80+</strong><span>Membres</span></div>
+            <div class="hero-stat-sep"></div>
+            <div class="hero-stat"><strong>2009</strong><span>Fondation</span></div>
+            <div class="hero-stat-sep"></div>
+            <div class="hero-stat"><strong>2</strong><span>Classes ULM</span></div>
+            <div class="hero-stat-sep"></div>
+            <div class="hero-stat"><strong>LFLU</strong><span>Aéroport</span></div>
+        </div>
+    </div>
+    <a href="#qui-sommes-nous" class="club-hero-scroll" aria-label="Défiler">
+        <i class="fa-solid fa-chevron-down"></i>
+    </a>
+</section>
+
+<!-- ── Qui sommes-nous ────────────────────────────────────────── -->
+<section class="club-section" id="qui-sommes-nous">
+    <div class="club-inner">
+        <div class="about-layout">
+            <div class="about-text">
+                <span class="section-badge">Notre Association</span>
+                <h2 class="section-title" style="text-align:left">
+                    Une passion partagée<br>depuis 2009
+                </h2>
+                <p>L'<strong>Aéro ULM Valence (AUV)</strong> est une association loi 1901 fondée par et pour des passionnés du vol Ultra-Léger Motorisé. Basée sur l'aéroport de Valence-Chabeuil (LFLU), elle réunit des pilotes de tous niveaux dans un cadre convivial et sécurisé.</p>
+                <p style="margin-top:14px">Agréée par le <strong>Ministère des Sports</strong> depuis 2009 et affiliée à la <strong>FFPLUM</strong> (Fédération Française de Planeur Ultra-Léger Motorisé), l'AUV propose des vols découverte, une école de formation et un espace club ouvert à tous.</p>
+                <div class="about-tags">
+                    <span><i class="fa-solid fa-certificate"></i> Agréée J&S depuis 2009</span>
+                    <span><i class="fa-solid fa-star"></i> Affiliée FFPLUM</span>
+                    <span><i class="fa-solid fa-heart"></i> Bénévoles passionnés</span>
+                    <span><i class="fa-solid fa-calendar-check"></i> Ouverte toute l'année</span>
+                </div>
+            </div>
+            <div class="about-img-wrap">
+                <img src="{% static 'res/images/image7.jpeg' %}" alt="Aéro ULM Valence" loading="lazy">
+                <div class="about-img-tag">
+                    <i class="fa-solid fa-plane"></i>
+                    Aéroport LFLU · Chabeuil
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Nos valeurs ───────────────────────────────────────────── -->
+<section class="club-section club-alt" id="valeurs">
+    <div class="club-inner club-center">
+        <span class="section-badge">Ce Qui Nous Anime</span>
+        <h2 class="section-title">Nos valeurs</h2>
+        <p class="section-sub">L'AUV est portée au quotidien par des valeurs fortes, incarnées par chacun de nos membres et bénévoles.</p>
+        <div class="valeurs-grid">
+            <div class="valeur-card">
+                <div class="valeur-icon" style="background:rgba(61,92,184,0.1);color:#3d5cb8">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3>Sécurité</h3>
+                <p>Priorité absolue sur chaque vol. Procédures rigoureuses, aéronefs régulièrement contrôlés, instructeurs qualifiés.</p>
+            </div>
+            <div class="valeur-card">
+                <div class="valeur-icon" style="background:rgba(249,174,93,0.15);color:#d97706">
+                    <i class="fa-solid fa-fire-flame-curved"></i>
+                </div>
+                <h3>Passion</h3>
+                <p>Un amour sincère du vol partagé entre membres. Cette passion est le moteur de tout ce que nous faisons.</p>
+            </div>
+            <div class="valeur-card">
+                <div class="valeur-icon" style="background:rgba(16,185,129,0.12);color:#10b981">
+                    <i class="fa-solid fa-handshake"></i>
+                </div>
+                <h3>Partage</h3>
+                <p>Solidarité entre pilotes, transmission du savoir-faire, esprit de club authentique et chaleureux.</p>
+            </div>
+            <div class="valeur-card">
+                <div class="valeur-icon" style="background:rgba(139,92,246,0.12);color:#7c3aed">
+                    <i class="fa-solid fa-door-open"></i>
+                </div>
+                <h3>Accessibilité</h3>
+                <p>Le vol ULM pour tous, débutants comme confirmés. Tarifs adaptés, progression à votre rythme.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── École Charles Bono ─────────────────────────────────────── -->
+<section class="club-section" id="charles-bono">
+    <div class="club-inner">
+        <div class="bono-layout">
+            <div class="bono-visual">
+                <div class="bono-icon-wrap">
+                    <i class="fa-solid fa-person-chalkboard"></i>
+                </div>
+                <blockquote class="bono-quote">
+                    <i class="fa-solid fa-quote-left"></i>
+                    <p>Transmettre la passion du vol, c'est offrir à chacun les clés du ciel.</p>
+                </blockquote>
+            </div>
+            <div class="bono-text">
+                <span class="section-badge">Hommage</span>
+                <h2 class="section-title" style="text-align:left">École Charles Bono</h2>
+                <p>Notre école de formation porte le nom de <strong>Charles Bono</strong>, pilote emblématique et figure fondatrice de l'esprit de formation à l'Aéro ULM Valence. Il a consacré des années à former et accompagner des générations de pilotes avec rigueur, pédagogie et passion.</p>
+                <p style="margin-top:14px">Son héritage perdure à travers chaque élève qui obtient son brevet, et chaque instructeur qui transmet, à son tour, l'amour du vol.</p>
+                <a href="{% url 'ecoleSport' %}" class="btn-outline" style="margin-top:28px">
+                    <i class="fa-solid fa-graduation-cap"></i> Découvrir nos formations
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── Nos activités ──────────────────────────────────────────── -->
+<section class="club-section club-alt" id="activites">
+    <div class="club-inner club-center">
+        <span class="section-badge">Ce Que Nous Proposons</span>
+        <h2 class="section-title">Nos activités</h2>
+        <p class="section-sub">Du premier vol en passant par la formation complète, l'AUV accompagne chaque projet aéronautique.</p>
+        <div class="activites-grid">
+            <a href="{% url 'volsDecouverte' %}" class="activite-card">
+                <div class="activite-img">
+                    <img src="{% static 'res/images/3axes.jpg' %}" alt="Vols découverte" loading="lazy">
+                    <div class="activite-overlay"></div>
+                    <span class="activite-badge">À partir de 45 €</span>
+                </div>
+                <div class="activite-body">
+                    <h3><i class="fa-solid fa-paper-plane"></i> Vols Découverte</h3>
+                    <p>Découvrez les sensations uniques du vol ULM accompagné d'un instructeur bénévole. Formules 20, 45 ou 60 minutes.</p>
+                    <span class="activite-cta">Réserver <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </a>
+            <a href="{% url 'ecoleSport' %}" class="activite-card">
+                <div class="activite-img">
+                    <img src="{% static 'res/images/pendulaire.jpg' %}" alt="Formation pilote" loading="lazy">
+                    <div class="activite-overlay"></div>
+                    <span class="activite-badge">École Charles Bono</span>
+                </div>
+                <div class="activite-body">
+                    <h3><i class="fa-solid fa-graduation-cap"></i> Formation Pilote</h3>
+                    <p>Obtenez votre brevet de pilote ULM sur multiaxe ou pendulaire. Programme encadré par des moniteurs qualifiés.</p>
+                    <span class="activite-cta">En savoir plus <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </a>
+            <a href="{% url 'navigation' %}" class="activite-card">
+                <div class="activite-img">
+                    <img src="{% static 'res/images/image10.jpeg' %}" alt="Navigation" loading="lazy">
+                    <div class="activite-overlay"></div>
+                    <span class="activite-badge">Ressources libres</span>
+                </div>
+                <div class="activite-body">
+                    <h3><i class="fa-solid fa-map"></i> Navigation & Ressources</h3>
+                    <p>Préparez vos vols : météo, cartographie, check-lists, réglementation. Tout ce qu'il faut pour voler sereinement.</p>
+                    <span class="activite-cta">Accéder <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ── Rejoindre ──────────────────────────────────────────────── -->
+<section class="club-section" id="rejoindre">
+    <div class="club-inner club-center">
+        <span class="section-badge">Adhésion</span>
+        <h2 class="section-title">Rejoindre l'AUV</h2>
+        <p class="section-sub">Devenez membre et profitez de tous les avantages du club, de l'accès aux aéronefs aux événements entre passionnés.</p>
+        <div class="rejoindre-steps">
+            <div class="rejoindre-step">
+                <div class="rejoindre-num">1</div>
+                <h3>Prenez contact</h3>
+                <p>Appelez-nous ou envoyez un message pour vous renseigner et planifier une visite du club.</p>
+            </div>
+            <i class="fa-solid fa-chevron-right rejoindre-arrow"></i>
+            <div class="rejoindre-step">
+                <div class="rejoindre-num">2</div>
+                <h3>Venez nous rencontrer</h3>
+                <p>Visitez nos installations à Valence-Chabeuil, rencontrez les pilotes, effectuez un vol découverte.</p>
+            </div>
+            <i class="fa-solid fa-chevron-right rejoindre-arrow"></i>
+            <div class="rejoindre-step">
+                <div class="rejoindre-num">3</div>
+                <h3>Adhérez</h3>
+                <p>Remplissez le bulletin d'adhésion et réglez la cotisation annuelle. Bienvenue dans la famille !</p>
+            </div>
+        </div>
+        <div class="cotisation-box">
+            <div class="cotisation-icon"><i class="fa-solid fa-wallet"></i></div>
+            <div class="cotisation-text">
+                <h3>Cotisation annuelle</h3>
+                <p>Inclut l'adhésion à l'association, l'affiliation FFPLUM, l'accès aux installations et aux événements club. Tarif adapté selon profil (pilote, élève, famille…).</p>
+            </div>
+            <a href="{% url 'volsDecouverte' %}#contact" class="btn-primary">
+                <i class="fa-solid fa-envelope"></i> Demander des informations
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ── Localisation ───────────────────────────────────────────── -->
+<section class="club-section club-alt" id="localisation">
+    <div class="club-inner">
+        <div class="club-center" style="margin-bottom:48px">
+            <span class="section-badge">Où Nous Trouver</span>
+            <h2 class="section-title">L'aéroport de Valence-Chabeuil</h2>
+            <p class="section-sub">Situé à 10 km au sud de Valence, l'aéroport de Valence-Chabeuil (LFLU) est notre terrain de jeu, entre plaine drômoise et massif du Vercors.</p>
+        </div>
+        <div class="localisation-layout">
+            <div class="localisation-infos">
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <strong>Adresse</strong>
+                        <p>Pôle Aviation légère<br>Chemin du vol à voile<br>Aéroport de Valence-Chabeuil<br>26120 Chabeuil</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                    <div>
+                        <strong>Téléphone</strong>
+                        <p><a href="tel:+33666652339">06 66 65 23 39</a></p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div>
+                        <strong>E-mail</strong>
+                        <p><a href="mailto:aero-ulm-valence@orange.fr">aero-ulm-valence@orange.fr</a></p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-tower-broadcast"></i></div>
+                    <div>
+                        <strong>Indicatif OACI</strong>
+                        <p>LFLU — Valence Chabeuil</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-brands fa-facebook-f"></i></div>
+                    <div>
+                        <strong>Réseaux sociaux</strong>
+                        <div class="social-row">
+                            <a href="https://www.facebook.com/aeroulmvalence26" target="_blank" rel="noopener" class="social-pill">
+                                <i class="fa-brands fa-facebook-f"></i> Facebook
+                            </a>
+                            <a href="https://www.instagram.com/aeroulm" target="_blank" rel="noopener" class="social-pill">
+                                <i class="fa-brands fa-instagram"></i> Instagram
+                            </a>
+                            <a href="https://wa.me/33666652339" target="_blank" rel="noopener" class="social-pill">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="localisation-map">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2780.512413185603!2d4.95585631556744!3d44.91881387909816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f55b59fbe6c2b1%3A0x53c1d657ff5d3ec7!2sA%C3%A9roport%20de%20Valence-Chabeuil!5e0!3m2!1sfr!2sfr!4v1694267200000!5m2!1sfr!2sfr"
+                    width="100%" height="100%"
+                    style="border:0; border-radius:1.5rem;"
+                    allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                <a href="https://www.google.com/maps/search/?api=1&query=A%C3%A9ro-ULM-Valence+P%C3%B4le+Aviation+L%C3%A9g%C3%A8re,+730+Chem.+du+Vol+A+Voile,+26120+Chabeuil"
+                   target="_blank" rel="noopener" class="map-open-btn">
+                    <i class="fa-solid fa-up-right-from-square"></i> Ouvrir dans Maps
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CTA final ──────────────────────────────────────────────── -->
+<section class="club-cta">
+    <div class="club-cta-inner">
+        <h2>Envie de nous rejoindre ?</h2>
+        <p>Contactez-nous pour une visite, un vol découverte ou toute information sur l'adhésion.</p>
+        <div class="club-cta-btns">
+            <a href="{% url 'volsDecouverte' %}#contact" class="cta-btn-white">
+                <i class="fa-solid fa-envelope"></i> Nous contacter
+            </a>
+            <a href="{% url 'volsDecouverte' %}" class="cta-btn-outline">
+                <i class="fa-solid fa-plane-departure"></i> Réserver un vol
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

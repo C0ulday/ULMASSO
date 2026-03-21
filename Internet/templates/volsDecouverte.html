@@ -89,25 +89,42 @@
 
   <div class="contact-wrapper">
     <!-- Colonne formulaire -->
-    <form class="contact-form" method="post" action="#">
+    <form class="contact-form" method="post" action="{% url 'volsDecouverte' %}#contact">
       {% csrf_token %}
+
+      {% if form_success %}
+      <div style="background:#d1fae5;border:1px solid #6ee7b7;color:#065f46;padding:14px 18px;border-radius:0.75rem;margin-bottom:1.5rem;font-size:0.9rem;display:flex;align-items:center;gap:10px">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Votre message a bien été envoyé ! Nous vous répondrons très prochainement.</span>
+      </div>
+      {% endif %}
+
+      {% if form_error %}
+      <div style="background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;padding:14px 18px;border-radius:0.75rem;margin-bottom:1.5rem;font-size:0.9rem;display:flex;align-items:center;gap:10px">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span>{{ form_error }}</span>
+      </div>
+      {% endif %}
+
       <div class="form-group">
-        <label for="name">Nom</label>
+        <label for="name">Nom *</label>
         <input type="text" id="name" name="name" placeholder="Votre nom" required>
       </div>
       <div class="form-group">
         <label for="phone">Téléphone</label>
-        <input type="tel" id="phone" name="phone" placeholder="Votre numéro de téléphone" required>
+        <input type="tel" id="phone" name="phone" placeholder="Votre numéro de téléphone">
       </div>
       <div class="form-group">
-        <label for="email">E-mail</label>
+        <label for="email">E-mail *</label>
         <input type="email" id="email" name="email" placeholder="Votre e-mail" required>
       </div>
       <div class="form-group">
-        <label for="message">Message</label>
+        <label for="message">Message *</label>
         <textarea id="message" name="message" rows="5" placeholder="Votre message" required></textarea>
       </div>
-      <button type="submit" class="contact-btn">Envoyer</button>
+      <button type="submit" class="contact-btn">
+        <i class="fa-solid fa-paper-plane" style="margin-right:8px"></i>Envoyer
+      </button>
     </form>
 
     <!-- Colonne Google Maps -->
